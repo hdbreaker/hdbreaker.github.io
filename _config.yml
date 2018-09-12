@@ -19,7 +19,7 @@ resume-url: https://google.com/?q=my+resume
 url: https://hdbreaker.github.io
 # your url: http://USERNAME.github.io
 
-#permalink: /:title/
+permalink: /:title/
 
 # To enable google analytics, supply your token below
 # analytics-google: 'UA-MYANALYTICS'
@@ -104,7 +104,7 @@ animation: true
 plugins:
   - jekyll-seo-tag
   - jekyll-gist
-  - jekyll-feed
+  #- jekyll-feed
   - jemoji
   - jekyll-admin
 
