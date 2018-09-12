@@ -53,7 +53,7 @@ quora: Alejandro-Parodi-1-1
 # lanyrd: mylanyrd
 email: aparodi@secsignal.org
 
-authors:
+#authors:
     #alejandroparodi:
     #    name: John Doe
     #    bio: A Man who travels the world eating noodles
@@ -77,8 +77,7 @@ width: normal
 # paginate_path: "blog/:num/"
 
 # if you don't need projects, comment the *projects* configs below
-projects: true
-test: true
+#projects: true
 
 # if you don't need "about" or "blog", comment them out below
 about: true
@@ -94,7 +93,7 @@ blog: true
 #related: true
 
 # Display links for next and previous posts for the specified categories
-post-advance-links: [SecSignal, Hackmetrix]
+#post-advance-links: [SecSignal, Hackmetrix]
 
 # show author block at the end of a post ?
 #show-author: true
