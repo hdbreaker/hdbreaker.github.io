@@ -37,15 +37,6 @@ const { class: className, title, tools, ...props } = Astro.props
 					target='_blank'
 				>
 					<div class='relative flex flex-col px-4 py-4 transition-all hover:bg-[#57FD6B]/5 rounded-lg border border-[#57FD6B]/10 hover:border-[#57FD6B]/30'>
-						{/* Status tag arriba a la derecha */}
-						{tool.status && (
-							<div class='absolute top-4 right-4'>
-								<span class='px-2 py-1 text-xs font-medium rounded-full bg-[#57FD6B]/10 text-[#57FD6B] border border-[#57FD6B]/30'>
-									{tool.status}
-								</span>
-							</div>
-						)}
-						
 						{/* Main content area */}
 						<div class='flex flex-row items-center gap-x-6'>
 							<div class='flex-shrink-0'>
@@ -64,7 +55,14 @@ const { class: className, title, tools, ...props } = Astro.props
 								)}
 							</div>
 							<div class='flex-1 flex flex-col gap-y-2'>
-								<h3 class='font-semibold text-[#F5F5F5] text-lg pr-24 sm:pr-20'>{tool.name}</h3>
+								<div class='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-y-1 sm:gap-y-0'>
+									<h3 class='font-semibold text-[#F5F5F5] text-lg'>{tool.name}</h3>
+									{tool.status && (
+										<span class='px-2 py-1 text-xs font-medium rounded-full bg-[#57FD6B]/10 text-[#57FD6B] border border-[#57FD6B]/30 w-fit'>
+											{tool.status}
+										</span>
+									)}
+								</div>
 								<p class='text-[#A0A0A0] leading-relaxed'>{tool.description}</p>
 								{tool.tech && (
 									<div class='flex flex-wrap gap-x-2 gap-y-1'>
