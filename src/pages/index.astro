@@ -8,6 +8,7 @@ import SkillLayout from '../components/SkillLayout.astro'
 import PostPreview from '@/components/blog/PostPreview.astro'
 
 import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
 import wolfImage from '../assets/wolf.png'
 
 import { getAllPosts, sortMDByDate } from '@/utils'
@@ -328,7 +329,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 				<div class='text-center mb-6'>
 					<div class='flex items-center justify-center gap-3 mb-3'>
 						<div class='w-12 h-12 bg-[#57FD6B]/20 rounded-full flex items-center justify-center'>
-							<i class="fa-solid fa-trophy text-xl text-[#57FD6B]"></i>
+							<Icon name="fa-solid:trophy" class='w-6 h-6 text-[#57FD6B]' />
 						</div>
 					</div>
 					<h3 class='text-xl font-bold text-[#F5F5F5] mb-2'>Bug Bounty Achievements</h3>
@@ -369,7 +370,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 				<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-2xl p-6 hover:border-[#57FD6B]/40 transition-all'>
 					<div class='flex items-start gap-6'>
 						<div class='w-12 h-12 bg-[#57FD6B]/20 rounded-lg flex items-center justify-center flex-shrink-0'>
-							<i class="fa-solid fa-terminal text-[#57FD6B] text-xl"></i>
+							<Icon name="fa-solid:terminal" class='w-6 h-6 text-[#57FD6B]' />
 						</div>
 						<div class='flex-1'>
 							<div class='mb-4'>
@@ -389,7 +390,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 				<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-2xl p-6 hover:border-[#57FD6B]/40 transition-all'>
 					<div class='flex items-start gap-6'>
 						<div class='w-12 h-12 bg-[#57FD6B]/20 rounded-lg flex items-center justify-center flex-shrink-0'>
-							<i class="fa-solid fa-code text-[#57FD6B] text-xl"></i>
+							<Icon name="fa-solid:code" class='w-6 h-6 text-[#57FD6B]' />
 						</div>
 						<div class='flex-1'>
 							<div class='mb-4'>
@@ -408,7 +409,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 				<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-2xl p-6 hover:border-[#57FD6B]/40 transition-all'>
 					<div class='flex items-start gap-6'>
 						<div class='w-12 h-12 bg-[#57FD6B]/20 rounded-lg flex items-center justify-center flex-shrink-0'>
-							<i class="fa-solid fa-search text-[#57FD6B] text-xl"></i>
+							<Icon name="fa-solid:search" class='w-6 h-6 text-[#57FD6B]' />
 						</div>
 						<div class='flex-1'>
 							<div class='mb-4'>
@@ -434,7 +435,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 				<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-2xl p-6 hover:border-[#57FD6B]/40 transition-all'>
 					<div class='flex items-start gap-6'>
 						<div class='w-12 h-12 bg-[#57FD6B]/20 rounded-lg flex items-center justify-center flex-shrink-0'>
-							<i class="fa-solid fa-network-wired text-[#57FD6B] text-xl"></i>
+							<Icon name="fa-solid:network-wired" class='w-6 h-6 text-[#57FD6B]' />
 						</div>
 						<div class='flex-1'>
 							<div class='mb-4'>
@@ -455,7 +456,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 				<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-2xl p-6 hover:border-[#57FD6B]/40 transition-all'>
 					<div class='flex items-start gap-6'>
 						<div class='w-12 h-12 bg-[#57FD6B]/20 rounded-lg flex items-center justify-center flex-shrink-0'>
-							<i class="fa-solid fa-rocket text-[#57FD6B] text-xl"></i>
+							<Icon name="fa-solid:rocket" class='w-6 h-6 text-[#57FD6B]' />
 						</div>
 						<div class='flex-1'>
 							<div class='mb-4'>

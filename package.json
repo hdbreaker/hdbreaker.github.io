@@ -15,6 +15,8 @@
 		"@astrojs/rss": "^4.0.12",
 		"@astrojs/sitemap": "^3.0.4",
 		"@astrojs/tailwind": "^5.1.0",
+		"@iconify-json/fa-solid": "^1.2.1",
+		"@iconify/json": "^2.2.364",
 		"@tailwindcss/aspect-ratio": "^0.4.2",
 		"@tailwindcss/typography": "^0.5.16",
 		"astro": "^4.4.0",
