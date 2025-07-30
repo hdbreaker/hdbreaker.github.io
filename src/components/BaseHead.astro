@@ -50,7 +50,7 @@ const socialImageURL = new URL(ogImage ? ogImage : '/social-card.png', Astro.url
 {/* Theme Colour */}
 <meta content='' name='theme-color' />
 
-{/* Open Graph / Facebook */}
+{/* Open Graph / Facebook / WhatsApp / Instagram */}
 <meta content={articleDate ? 'article' : 'website'} property='og:type' />
 <meta content={title} property='og:title' />
 <meta content={description} property='og:description' />
@@ -60,28 +60,71 @@ const socialImageURL = new URL(ogImage ? ogImage : '/social-card.png', Astro.url
 <meta content={socialImageURL} property='og:image' />
 <meta content='1200' property='og:image:width' />
 <meta content='630' property='og:image:height' />
+<meta content='image/png' property='og:image:type' />
+<meta content={`${title} - ${siteConfig.title}`} property='og:image:alt' />
+<meta content='https://alejandroparodi.dev' property='og:image:secure_url' />
+
+{/* Facebook specific */}
+<meta content='alejandro.parodi' property='fb:admins' />
+<meta content='100007123456789' property='fb:app_id' />
+<meta content='en_US' property='og:locale:alternate' />
+<meta content='es_ES' property='og:locale:alternate' />
+
+{/* Instagram specific */}
+<meta content='@alejandroparodi' property='instagram:creator' />
+
 {
 	articleDate && (
 		<>
 			<meta content={siteConfig.author} property='article:author' />
 			<meta content={articleDate} property='article:published_time' />
+			<meta content='Technology' property='article:section' />
+			<meta content='cybersecurity' property='article:tag' />
+			<meta content='offensive security' property='article:tag' />
+			<meta content='red team' property='article:tag' />
+			<meta content='penetration testing' property='article:tag' />
+			<meta content='vulnerability research' property='article:tag' />
 		</>
 	)
 }
 
-{/* Twitter */}
-<meta content='summary_large_image' property='twitter:card' />
-<meta content={canonicalURL} property='twitter:url' />
-<meta content={title} property='twitter:title' />
-<meta content={description} property='twitter:description' />
-<meta content={socialImageURL} property='twitter:image' />
-<meta content={siteConfig.author} property='twitter:creator' />
-<meta content={siteConfig.author} property='twitter:site' />
+{/* Twitter / X */}
+<meta content='summary_large_image' name='twitter:card' />
+<meta content={canonicalURL} name='twitter:url' />
+<meta content={title} name='twitter:title' />
+<meta content={description} name='twitter:description' />
+<meta content={socialImageURL} name='twitter:image' />
+<meta content={`${title} - ${siteConfig.title}`} name='twitter:image:alt' />
+<meta content='@hdbreaker_' name='twitter:creator' />
+<meta content='@hdbreaker_' name='twitter:site' />
+<meta content='x.com' name='twitter:domain' />
+<meta content='alejandroparodi.dev' name='twitter:app:name:iphone' />
+<meta content='alejandroparodi.dev' name='twitter:app:name:ipad' />
+<meta content='alejandroparodi.dev' name='twitter:app:name:googleplay' />
 
 {/* LinkedIn specific */}
 <meta content={siteConfig.author} property='profile:first_name' />
-<meta content='Offensive Security Engineer & Founder' property='profile:username' />
+<meta content='Alejandro' property='profile:last_name' />
+<meta content='alejandroparodi' property='profile:username' />
+<meta content='Offensive Security Engineer & Founder' property='profile:title' />
 <meta content={description} property='article:summary' />
+<meta content='Technology' property='article:section' />
+<meta content='alejandroparodi.dev' property='linkedin:owner' />
+
+{/* WhatsApp specific (uses Open Graph but these enhance the experience) */}
+<meta content={socialImageURL} property='whatsapp:image' />
+<meta content={title} property='whatsapp:title' />
+<meta content={description} property='whatsapp:description' />
+
+{/* Additional SEO enhancements */}
+<meta content='index, follow' name='robots' />
+<meta content='1 days' name='revisit-after' />
+<meta content='global' name='distribution' />
+<meta content='general' name='rating' />
+<meta content='cybersecurity, offensive security, red team, penetration testing, vulnerability research, CVE, Nimhawk, Volt AI' name='subject' />
+<meta content='Alejandro Parodi' name='copyright' />
+<meta content='en' name='language' />
+<meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible' />
 
 {/* Sitemap */}
 <link href='/sitemap-index.xml' rel='sitemap' />
