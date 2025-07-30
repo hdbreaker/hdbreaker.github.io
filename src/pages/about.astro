@@ -3,6 +3,8 @@ import PageLayout from '@/layouts/BaseLayout.astro'
 import Section from '@/components/Section.astro'
 import Card from '@/components/Card.astro'
 import Button from '@/components/Button.astro'
+import { Image } from 'astro:assets'
+import wolfImage from '../assets/wolf.png'
 
 const title = "About - Alejandro Parodi";
 const description = "Offensive Security Engineer, Red Teamer, and Founder with over 10 years of experience";
@@ -34,10 +36,11 @@ const description = "Offensive Security Engineer, Red Teamer, and Founder with o
 					<div class='flex flex-col items-center text-center gap-y-8'>
 						<div class='relative'>
 							<div class='w-32 h-32 rounded-full border-4 border-[#57FD6B]/50 overflow-hidden bg-gradient-to-br from-[#2A2A2A] to-[#1A1A1A] drop-shadow-volt'>
-								<img 
-									src='/src/assets/wolf.png' 
+								<Image 
+									src={wolfImage} 
 									alt='Wolf Profile' 
 									class='w-full h-full object-cover'
+									loading="eager"
 								/>
 							</div>
 							<div class='absolute inset-0 rounded-full border-4 border-[#57FD6B]/20 animate-pulse-glow'></div>

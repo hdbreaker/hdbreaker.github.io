@@ -8,7 +8,7 @@ import SkillLayout from '../components/SkillLayout.astro'
 import PostPreview from '@/components/blog/PostPreview.astro'
 
 import { Image } from 'astro:assets'
-// Removed astro import - using generic icon instead
+import wolfImage from '../assets/wolf.png'
 
 import { getAllPosts, sortMDByDate } from '@/utils'
 
@@ -32,10 +32,11 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 				<!-- Wolf Profile Logo -->
 				<div class='relative'>
 					<div class='w-32 h-32 rounded-full border-4 border-[#57FD6B]/50 overflow-hidden bg-gradient-to-br from-[#2A2A2A] to-[#1A1A1A] drop-shadow-volt'>
-						<img 
-							src='/src/assets/wolf.png' 
+						<Image 
+							src={wolfImage} 
 							alt='Wolf Profile' 
 							class='w-full h-full object-cover'
+							loading="eager"
 						/>
 					</div>
 					<div class='absolute inset-0 rounded-full border-4 border-[#57FD6B]/20 animate-pulse-glow'></div>
