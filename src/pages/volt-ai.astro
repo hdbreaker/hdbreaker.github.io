@@ -1,0 +1,195 @@
+---
+import PageLayout from '@/layouts/BaseLayout.astro'
+import Section from '@/components/Section.astro'
+import Card from '@/components/Card.astro'
+import Button from '@/components/Button.astro'
+
+const title = "Volt AI - Alejandro Parodi";
+const description = "Securing the next wave of AI-powered technologies";
+---
+
+<PageLayout meta={{ title: 'Volt AI' }}>
+	<div class='w-full'>
+		<Button title='Back' href='/' style='button' class='bg-[#57FD6B]/10 border-[#57FD6B]/30 text-[#57FD6B] hover:bg-[#57FD6B]/20'>
+			<svg
+				xmlns='http://www.w3.org/2000/svg'
+				width='14'
+				height='14'
+				viewBox='0 0 24 24'
+				slot='icon-before'
+			>
+				<path
+					fill='currentColor'
+					d='m6.921 12.5l5.792 5.792L12 19l-7-7l7-7l.713.708L6.921 11.5H19v1z'
+				>
+				</path>
+			</svg>
+		</Button>
+
+		<div class='mt-8 flex w-full flex-col gap-y-12'>
+			<!-- Hero Section -->
+			<div class='relative w-full overflow-hidden rounded-2xl bg-gradient-to-br from-[#1A1A1A] to-[#0A0A0A] border border-[#57FD6B]/20 shadow-volt-soft'>
+				<div class='absolute inset-0 bg-gradient-to-r from-[#57FD6B]/5 to-transparent'></div>
+				<div class='relative px-8 py-16 sm:px-12 sm:py-20'>
+					<div class='flex flex-col items-center text-center gap-y-8'>
+						<div class='relative'>
+							<svg class='h-32 w-32 text-[#57FD6B] drop-shadow-volt' viewBox='0 0 24 24' fill='currentColor'>
+								<path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z'/>
+								<path d='M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z'/>
+								<path d='M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z'/>
+							</svg>
+							<div class='absolute inset-0 animate-pulse-glow'>
+								<svg class='h-32 w-32 text-[#57FD6B]/30' viewBox='0 0 24 24' fill='currentColor'>
+									<path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z'/>
+								</svg>
+							</div>
+						</div>
+
+						<div class='flex flex-col items-center gap-y-6'>
+							<h1 class='text-4xl font-bold text-[#F5F5F5] sm:text-5xl'>Volt AI</h1>
+							<p class='text-xl text-[#A0A0A0] font-medium'>Securing the Next Wave of AI-Powered Technologies</p>
+							<p class='text-lg text-[#A0A0A0] max-w-2xl'>
+								Building trust in AI models, protecting critical infrastructure, and designing secure-by-default AI systems 
+								that blend offensive security expertise with deep understanding of AI architecture.
+							</p>
+							
+							<a
+								href='https://www.voltsec.ai'
+								target='_blank'
+								class='flex flex-row items-center gap-x-3 rounded-3xl border border-[#57FD6B]/30 bg-[#57FD6B]/10 px-6 py-3 text-sm shadow-sm transition-all hover:shadow-volt-glow hover:bg-[#57FD6B]/20'
+							>
+								<span class='relative flex items-center justify-center'>
+									<span
+										class='absolute inline-flex h-2 w-2 animate-ping rounded-full border border-[#57FD6B] bg-[#57FD6B] opacity-75'
+									></span>
+									<span class='relative inline-flex h-2 w-2 rounded-full bg-[#57FD6B]'></span>
+								</span>
+
+								<p class='font-medium text-[#57FD6B]'>Visit Volt AI</p>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Mission Section -->
+			<Section title='Our Mission' class='mb-8'>
+				<p class='text-[#A0A0A0] text-lg leading-relaxed'>
+					Volt AI is focused on securing the next wave of AI-powered technologies. We help organizations build trust in their models, 
+					protect critical infrastructure, and design secure-by-default AI systems that blend offensive security expertise with deep understanding of AI architecture.
+				</p>
+			</Section>
+
+			<!-- Services Section -->
+			<Section title='Services' class='mb-8'>
+				<div class='flex flex-col gap-y-8'>
+					<Card
+						heading='AI Security Assessment'
+						subheading='Comprehensive security evaluation of AI systems'
+						date='Core Service'
+						class='border-[#57FD6B]/20 hover:border-[#57FD6B]/40 transition-all'
+					>
+						<ul class='ml-4 list-disc text-[#A0A0A0] space-y-2'>
+							<li>Vulnerability assessment of AI models and infrastructure</li>
+							<li>Adversarial testing of machine learning systems</li>
+							<li>Security architecture review for AI deployments</li>
+							<li>Threat modeling for AI-powered applications</li>
+						</ul>
+					</Card>
+					<Card
+						heading='Secure AI Development'
+						subheading='Building secure-by-default AI systems'
+						date='Development'
+						class='border-[#57FD6B]/20 hover:border-[#57FD6B]/40 transition-all'
+					>
+						<ul class='ml-4 list-disc text-[#A0A0A0] space-y-2'>
+							<li>Secure AI model development and deployment</li>
+							<li>Implementation of AI security best practices</li>
+							<li>Integration of security controls in AI pipelines</li>
+							<li>Training and awareness for AI security teams</li>
+						</ul>
+					</Card>
+					<Card
+						heading='AI Incident Response'
+						subheading='Specialized response for AI security incidents'
+						date='Response'
+						class='border-[#57FD6B]/20 hover:border-[#57FD6B]/40 transition-all'
+					>
+						<ul class='ml-4 list-disc text-[#A0A0A0] space-y-2'>
+							<li>Rapid response to AI security breaches</li>
+							<li>Forensic analysis of AI system compromises</li>
+							<li>Recovery and remediation strategies</li>
+							<li>Post-incident security hardening</li>
+						</ul>
+					</Card>
+				</div>
+			</Section>
+
+			<!-- Focus Areas -->
+			<Section title='Focus Areas' class='mb-8'>
+				<div class='grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-8'>
+					<div class='flex flex-col gap-y-4'>
+						<h3 class='text-xl font-semibold text-[#F5F5F5]'>AI Model Security</h3>
+						<ul class='ml-4 list-disc text-[#A0A0A0] space-y-2'>
+							<li>Adversarial machine learning attacks</li>
+							<li>Model poisoning and backdoor detection</li>
+							<li>Privacy-preserving AI techniques</li>
+							<li>Secure model deployment strategies</li>
+						</ul>
+					</div>
+					<div class='flex flex-col gap-y-4'>
+						<h3 class='text-xl font-semibold text-[#F5F5F5]'>Infrastructure Security</h3>
+						<ul class='ml-4 list-disc text-[#A0A0A0] space-y-2'>
+							<li>AI infrastructure vulnerability assessment</li>
+							<li>Secure AI pipeline development</li>
+							<li>Cloud AI security controls</li>
+							<li>AI-specific threat detection</li>
+						</ul>
+					</div>
+					<div class='flex flex-col gap-y-4'>
+						<h3 class='text-xl font-semibold text-[#F5F5F5]'>AI Governance</h3>
+						<ul class='ml-4 list-disc text-[#A0A0A0] space-y-2'>
+							<li>AI security policy development</li>
+							<li>Compliance frameworks for AI</li>
+							<li>Risk assessment methodologies</li>
+							<li>AI security training programs</li>
+						</ul>
+					</div>
+					<div class='flex flex-col gap-y-4'>
+						<h3 class='text-xl font-semibold text-[#F5F5F5]'>Research & Innovation</h3>
+						<ul class='ml-4 list-disc text-[#A0A0A0] space-y-2'>
+							<li>Novel AI security techniques</li>
+							<li>Emerging threat research</li>
+							<li>Open source security tools</li>
+							<li>Industry collaboration</li>
+						</ul>
+					</div>
+				</div>
+			</Section>
+
+			<!-- Contact CTA -->
+			<Section title='Get in Touch' class='mb-8'>
+				<div class='text-center'>
+					<p class='text-[#A0A0A0] text-lg leading-relaxed mb-8'>
+						Ready to secure your AI systems? Let's discuss how Volt AI can help protect your organization's AI infrastructure.
+					</p>
+					<div class='flex flex-col sm:flex-row gap-4 justify-center'>
+						<a
+							href='https://www.voltsec.ai'
+							target='_blank'
+							class='inline-flex flex-row items-center gap-x-3 rounded-3xl border border-[#57FD6B]/30 bg-[#57FD6B]/10 px-6 py-3 text-sm shadow-sm transition-all hover:shadow-volt-glow hover:bg-[#57FD6B]/20'
+						>
+							<p class='font-medium text-[#57FD6B]'>Visit Website</p>
+						</a>
+						<a
+							href='mailto:contact@voltsec.ai'
+							class='inline-flex flex-row items-center gap-x-3 rounded-3xl border border-[#57FD6B]/30 bg-[#57FD6B]/10 px-6 py-3 text-sm shadow-sm transition-all hover:shadow-volt-glow hover:bg-[#57FD6B]/20'
+						>
+							<p class='font-medium text-[#57FD6B]'>Contact Us</p>
+						</a>
+					</div>
+				</div>
+			</Section>
+		</div>
+	</div>
+</PageLayout> 

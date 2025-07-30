@@ -1,0 +1,693 @@
+---
+import PageLayout from '../layouts/BaseLayout.astro'
+import Section from '../components/Section.astro'
+import Card from '../components/Card.astro'
+import ProjectCard from '../components/ProjectCard.astro'
+import Label from '../components/Label.astro'
+import SkillLayout from '../components/SkillLayout.astro'
+import PostPreview from '@/components/blog/PostPreview.astro'
+
+import { Image } from 'astro:assets'
+// Removed astro import - using generic icon instead
+
+import { getAllPosts, sortMDByDate } from '@/utils'
+
+const languages = ['Nim', 'C#', 'Python', 'Go', 'Assembly', 'C/C++', 'Java', 'PHP']
+const frontend = ['HTML/CSS', 'JavaScript', 'React', 'Angular', 'Tailwind CSS']
+const backend = ['C#/.NET', 'Python', 'Go', 'Node.js', 'SQL', 'MongoDB', 'Django']
+const cloud = ['AWS', 'Google Cloud', 'Azure', 'Terraform', 'Pulumi', 'CI/CD']
+const offensive = ['Red Teaming', 'EDR Evasion', 'Direct Syscalls', 'C4 Frameworks', 'OPSEC', 'Social Engineering', 'OSINT']
+
+const MAX_POSTS = 10
+const allPosts = await getAllPosts()
+const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
+---
+
+<PageLayout meta={{ title: 'Home' }}>
+	<!-- Hero Banner -->
+	<div class='relative w-full mb-20 overflow-hidden rounded-2xl bg-gradient-to-br from-[#1A1A1A] to-[#0A0A0A] border border-[#57FD6B]/20 shadow-volt-soft'>
+		<div class='absolute inset-0 bg-gradient-to-r from-[#57FD6B]/5 to-transparent'></div>
+		<div class='relative px-8 py-16 sm:px-12 sm:py-20'>
+			<div class='flex flex-col items-center text-center gap-y-8'>
+				<!-- Wolf Profile Logo -->
+				<div class='relative'>
+					<div class='w-32 h-32 rounded-full border-4 border-[#57FD6B]/50 overflow-hidden bg-gradient-to-br from-[#2A2A2A] to-[#1A1A1A] drop-shadow-volt'>
+						<img 
+							src='/src/assets/wolf.png' 
+							alt='Wolf Profile' 
+							class='w-full h-full object-cover'
+						/>
+					</div>
+					<div class='absolute inset-0 rounded-full border-4 border-[#57FD6B]/20 animate-pulse-glow'></div>
+				</div>
+
+				<div class='flex flex-col items-center gap-y-6'>
+					<h1 class='text-4xl font-bold text-[#F5F5F5] sm:text-5xl'>Alejandro Parodi</h1>
+					<p class='text-xl text-[#A0A0A0] font-medium'>Offensive Security Engineer & Founder</p>
+					<p class='text-lg text-[#A0A0A0] max-w-2xl'>
+						Offensive Security Engineer, Red Teamer, and Founder with over 10 years of hands-on experience in cybersecurity, 
+						deep tech, and startup building. Currently building <strong class='text-[#57FD6B]'>Volt AI</strong>, combining offensive security expertise with AI-driven automation to identify, exploit, and remediate vulnerabilities across modern infrastructure.
+					</p>
+					
+					<a
+						href='https://github.com/hdbreaker'
+						class='flex flex-row items-center gap-x-3 rounded-3xl border border-[#57FD6B]/30 bg-[#57FD6B]/10 px-6 py-3 text-sm shadow-sm transition-all hover:shadow-volt-glow hover:bg-[#57FD6B]/20'
+					>
+						<span class='relative flex items-center justify-center'>
+							<span
+								class='absolute inline-flex h-2 w-2 animate-ping rounded-full border border-[#57FD6B] bg-[#57FD6B] opacity-75'
+							></span>
+							<span class='relative inline-flex h-2 w-2 rounded-full bg-[#57FD6B]'></span>
+						</span>
+
+						<p class='font-medium text-[#57FD6B]'>Available for opportunities</p>
+					</a>
+					
+					<div class='flex flex-wrap justify-center gap-x-6 gap-y-4'>
+						<Label title='Offensive Security' class='bg-[#57FD6B]/10 border-[#57FD6B]/30 text-[#57FD6B]'>
+							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='h-5 w-5' slot='icon'
+								><path
+									fill='currentColor'
+									d='M4.615 20q-.69 0-1.152-.462Q3 19.075 3 18.385v-9.77q0-.69.463-1.152Q3.925 7 4.615 7H9V5.615q0-.69.463-1.152Q9.925 4 10.615 4h2.77q.69 0 1.153.463q.462.462.462 1.152V7h4.385q.69 0 1.152.463q.463.462.463 1.152v9.77q0 .69-.462 1.152q-.463.463-1.153.463zm0-1h14.77q.23 0 .423-.192q.192-.193.192-.423v-9.77q0-.23-.192-.423Q19.615 8 19.385 8H4.615q-.23 0-.423.192Q4 8.385 4 8.615v9.77q0 .23.192.423q.193.192.423.192M10 7h4V5.615q0-.23-.192-.423Q13.615 5 13.385 5h-2.77q-.23 0-.423.192q-.192.193-.192.423zM4 19V8z'
+								></path></svg
+							>
+						</Label>
+						<Label title='Remote / Relocate' class='bg-[#57FD6B]/10 border-[#57FD6B]/30 text-[#57FD6B]'>
+							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='h-5 w-5' slot='icon'
+								><path
+									fill='currentColor'
+									d='M12.003 11.73q.668 0 1.14-.475q.472-.475.472-1.143t-.475-1.14q-.476-.472-1.143-.472t-1.14.476q-.472.475-.472 1.143t.475 1.14q.476.472 1.143.472M12 19.677q2.82-2.454 4.458-4.991q1.638-2.538 1.638-4.39q0-2.744-1.737-4.53T12 3.981q-2.621 0-4.359 1.785t-1.737 4.53q0 1.852 1.638 4.39q1.639 2.537 4.458 4.99m0 1.343q-3.525-3.117-5.31-5.814q-1.786-2.697-1.786-4.909q0-3.173 2.066-5.234Q9.037 3 12 3t5.03 2.062q2.066 2.061 2.066 5.234q0 2.212-1.785 4.909q-1.786 2.697-5.311 5.814m0-10.904'
+								></path></svg
+							>
+						</Label>
+						<Label
+							title='Connect on Linkedin'
+							as='a'
+							href='https://www.linkedin.com/in/alejandroparodi/'
+							target='_blank'
+							class='bg-[#57FD6B]/10 border-[#57FD6B]/30 text-[#57FD6B] hover:bg-[#57FD6B]/20'
+						>
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								viewBox='0 0 16 16'
+								slot='icon'
+								class='h-5 w-5'
+								><path
+									fill='currentColor'
+									d='M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248c-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586c.173-.431.568-.878 1.232-.878c.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252c-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z'
+								></path></svg
+							>
+						</Label>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class='flex w-full flex-col gap-y-16'>
+		<Section title='About' class='mb-8'>
+			<p class='text-[#A0A0A0] text-lg leading-relaxed'>
+				I blend deep technical expertise with strategic leadership. I've led red teams, trained offensive engineers, built advanced tooling for exploitation and post-exploitation, closed security deals with CXOs, and supported startups from both a technical and business standpoint. 
+				I'm currently building Volt AI, a platform that merges offensive security with autonomous AI agents simulating real-world attacks, exploiting vulnerabilities, and delivering code-level fixes at scale.
+			</p>
+		</Section>
+
+		<Section title='Current Projects' class='mb-8'>
+			<div class='flex flex-col space-y-4'>
+				<ProjectCard
+					href='https://voltsec.ai'
+					heading='Volt AI'
+					subheading='AI Security for the Future. We combine cybersecurity with artificial intelligence to anticipate, detect and neutralize threats in real-time. Protect your business with the power of AI.'
+					imagePath='/src/assets/voltai.png'
+					altText='Volt AI Security'
+					class='w-full border-[#57FD6B]/20 hover:border-[#57FD6B]/40 transition-all project-card'
+				/>
+				<ProjectCard
+					href='https://www.hackmetrix.com'
+					heading='Hackmetrix'
+					subheading='Increase your company security and obtain certifications easily. Get certified 10 times faster in standards like ISO 27001 and PCI DSS with our platform.'
+					imagePath='/src/assets/hackmetrix.jpg'
+					altText='Hackmetrix Cybersecurity'
+					class='w-full border-[#57FD6B]/40 hover:border-[#57FD6B]/60 transition-all project-card'
+				/>
+				<ProjectCard
+					href='https://github.com/hdbreaker/Nimhawk'
+					heading='Nimhawk Framework'
+					subheading='A powerful, modular, lightweight and efficient command & control framework written in Nim. Advanced C4 framework with reflective .NET execution, direct syscalls, and encrypted communication between implants.'
+					imagePath='/src/assets/nimhawk.png'
+					altText='Nimhawk C4 Framework'
+					class='w-full border-[#57FD6B]/20 hover:border-[#57FD6B]/40 transition-all project-card'
+				/>
+				<ProjectCard
+					href='#'
+					heading='Offensive Crew'
+					subheading='Autonomous AI-driven system designed to perform end-to-end web application penetration testing — from reconnaissance to exploitation, reporting, and remediation. Built as a graph of specialized agents with autonomous offensive reasoning.'
+					imagePath='/offensive-crew-logo.svg'
+					altText='Offensive Crew AI'
+					class='w-full border-[#57FD6B]/20 hover:border-[#57FD6B]/40 transition-all project-card'
+				/>
+				
+				<!-- GitHub Button - Centered in the projects flow -->
+				<div class='flex justify-center pt-6'>
+				<a
+					href='https://github.com/hdbreaker'
+					target='_blank'
+					rel='noopener noreferrer'
+						class='inline-flex items-center gap-x-4 rounded-xl border border-[#57FD6B]/30 bg-[#57FD6B]/10 px-8 py-4 text-lg font-medium text-[#57FD6B] shadow-sm transition-all hover:shadow-volt-glow hover:bg-[#57FD6B]/20 hover:scale-105'
+				>
+						<svg class='w-6 h-6' fill='currentColor' viewBox='0 0 24 24'>
+							<path d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.30.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z'/>
+					</svg>
+					<span>View My GitHub</span>
+				</a>
+			</div>
+		</div>
+		</Section>
+
+		<Section title='My TOP Research' class='mb-8'>
+			<ul class='flex flex-col gap-y-4'>
+				<li class='flex flex-col gap-x-2 sm:flex-row'>
+					<div class='flex flex-col gap-y-1.5'>
+						<a href='/blog/cve-2018-16119-tp-link-router-rce' class='text-[#F5F5F5] hover:text-[#57FD6B] transition-colors'>
+							<span class='text-lg font-medium'>CVE-2018-16119: TP-Link Router Remote Code Execution</span>
+						</a>
+						<p class='text-sm text-[#A0A0A0]'>Remote Code Execution vulnerability in MIPS-based TP-LINK router firmware with advanced ROP exploitation.</p>
+					</div>
+				</li>
+				<li class='flex flex-col gap-x-2 sm:flex-row'>
+					<div class='flex flex-col gap-y-1.5'>
+						<a href='/blog/escalating-tplink-firmware-vulnerabilities' class='text-[#F5F5F5] hover:text-[#57FD6B] transition-colors'>
+							<span class='text-lg font-medium'>TP-Link Firmware Vulnerabilities: Automated Analysis</span>
+						</a>
+						<p class='text-sm text-[#A0A0A0]'>Advanced firmware vulnerability research using Ghidra scripting and automated binary analysis.</p>
+					</div>
+				</li>
+				<li class='flex flex-col gap-x-2 sm:flex-row'>
+					<div class='flex flex-col gap-y-1.5'>
+						<a href='/blog/vlc-vob-stack-overflow-vulnerability' class='text-[#F5F5F5] hover:text-[#57FD6B] transition-colors'>
+							<span class='text-lg font-medium'>VLC 2.2.6 Stack Overflow: ActiveX Plugin Exploitation</span>
+						</a>
+						<p class='text-sm text-[#A0A0A0]'>Stack overflow vulnerability in VLC Media Player exploitable via Internet Explorer ActiveX plugin with heap spraying.</p>
+					</div>
+				</li>
+				<li class='flex flex-col gap-x-2 sm:flex-row'>
+					<div class='flex flex-col gap-y-1.5'>
+						<a href='/blog/audacious-stack-overflow-vulnerability' class='text-[#F5F5F5] hover:text-[#57FD6B] transition-colors'>
+							<span class='text-lg font-medium'>Audacious 3.8/3.9 Stack Overflow: Deep Dive Analysis</span>
+						</a>
+						<p class='text-sm text-[#A0A0A0]'>Critical stack overflow vulnerability in Audacious Player discovered through advanced fuzzing and exploitation techniques.</p>
+					</div>
+				</li>
+				<li class='flex flex-col gap-x-2 sm:flex-row'>
+					<div class='flex flex-col gap-y-1.5'>
+						<a href='/blog/qqplayer-heap-overflow-vulnerability' class='text-[#F5F5F5] hover:text-[#57FD6B] transition-colors'>
+							<span class='text-lg font-medium'>QQPlayer 3.9 Heap Overflow: Matroska Exploitation</span>
+						</a>
+						<p class='text-sm text-[#A0A0A0]'>Heap overflow vulnerability in QQPlayer discovered through WinAFL fuzzing with Matroska container exploitation.</p>
+					</div>
+				</li>
+				<li class='flex flex-col gap-x-2 sm:flex-row'>
+					<div class='flex flex-col gap-y-1.5'>
+						<a href='/blog/limesurvey-rce-tcpdf-serialization' class='text-[#F5F5F5] hover:text-[#57FD6B] transition-colors'>
+							<span class='text-lg font-medium'>LimeSurvey RCE via TCPDF PHP Object Injection</span>
+						</a>
+						<p class='text-sm text-[#A0A0A0]'>Remote Code Execution through TCPDF PHAR deserialization attacks demonstrating advanced PHP object injection techniques.</p>
+					</div>
+				</li>
+				<li class='flex flex-col gap-x-2 sm:flex-row'>
+					<div class='flex flex-col gap-y-1.5'>
+						<a href='/blog/wix-premium-zone-bypass-vulnerability' class='text-[#F5F5F5] hover:text-[#57FD6B] transition-colors'>
+							<span class='text-lg font-medium'>WIX Premium Zone Bypass: API Security Vulnerability</span>
+						</a>
+						<p class='text-sm text-[#A0A0A0]'>Critical authentication bypass vulnerability in WIX.com's premium zone allowing unauthorized access to protected content.</p>
+					</div>
+				</li>
+				<li class='flex flex-col gap-x-2 sm:flex-row'>
+					<div class='flex flex-col gap-y-1.5'>
+						<a href='/blog/shellshock-qmail-exploitation' class='text-[#F5F5F5] hover:text-[#57FD6B] transition-colors'>
+							<span class='text-lg font-medium'>Shellshock QMAIL Exploitation: SMTP Injection Attack</span>
+						</a>
+						<p class='text-sm text-[#A0A0A0]'>Advanced exploitation of CVE-2014-6271 (Shellshock) through QMAIL SMTP servers via header injection techniques.</p>
+					</div>
+				</li>
+				<li class='flex flex-col gap-x-2 sm:flex-row'>
+					<div class='flex flex-col gap-y-1.5'>
+						<a href='/blog/license-plate-hacking-argentina' class='text-[#F5F5F5] hover:text-[#57FD6B] transition-colors'>
+							<span class='text-lg font-medium'>License Plate OSINT: Argentina Vehicle Registry</span>
+						</a>
+						<p class='text-sm text-[#A0A0A0]'>Reverse-engineering Argentina's license plate system to track hit-and-run drivers using client-side JavaScript vulnerabilities.</p>
+					</div>
+				</li>
+			</ul>
+			
+			<!-- Check My Blog Button - Centered -->
+			<div class='flex justify-center pt-6'>
+				<a
+					href='/blog'
+					class='inline-flex items-center gap-x-4 rounded-xl border border-[#57FD6B]/30 bg-[#57FD6B]/10 px-8 py-4 text-lg font-medium text-[#57FD6B] shadow-sm transition-all hover:shadow-volt-glow hover:bg-[#57FD6B]/20 hover:scale-105'
+				>
+					<svg class='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+						<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'/>
+					</svg>
+					Check My Blog
+				</a>
+			</div>
+		</Section>
+
+		<Section title='CVEs' class='mb-8'>
+			<div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+				<!-- CVE-2019-12739 - Nextcloud Extract RCE -->
+				<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-xl p-4 hover:border-[#57FD6B]/40 transition-all flex flex-col h-full'>
+					<div class='flex items-center justify-between mb-2'>
+						<span class='text-sm font-mono text-[#57FD6B]'>CVE-2019-12739</span>
+						<span class='text-xs text-red-400 bg-red-400/10 px-2 py-1 rounded'>Critical</span>
+					</div>
+					<h3 class='text-sm font-semibold text-[#F5F5F5] mb-2'>Nextcloud Extract RCE</h3>
+					<p class='text-xs text-[#A0A0A0] mb-3 flex-grow'>Remote Code Execution via shell metacharacters in RAR filename extraction.</p>
+					<a href='/blog/limesurvey-rce-tcpdf-serialization' class='text-xs text-[#57FD6B] hover:underline mt-auto'>Read Blog Post →</a>
+				</div>
+
+				<!-- CVE-2019-9960 - LimeSurvey Path Traversal -->
+				<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-xl p-4 hover:border-[#57FD6B]/40 transition-all flex flex-col h-full'>
+					<div class='flex items-center justify-between mb-2'>
+						<span class='text-sm font-mono text-[#57FD6B]'>CVE-2019-9960</span>
+						<span class='text-xs text-red-400 bg-red-400/10 px-2 py-1 rounded'>Critical</span>
+					</div>
+					<h3 class='text-sm font-semibold text-[#F5F5F5] mb-2'>LimeSurvey Path Traversal</h3>
+					<p class='text-xs text-[#A0A0A0] mb-3 flex-grow'>Directory traversal vulnerability enabling arbitrary file downloads via unsanitized parameters.</p>
+					<a href='/blog/cve-2019-9960-limesurvey-path-traversal' class='text-xs text-[#57FD6B] hover:underline mt-auto'>Read Blog Post →</a>
+				</div>
+
+				<!-- CVE-2019-3809 - Moodle Blind SSRF -->
+				<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-xl p-4 hover:border-[#57FD6B]/40 transition-all flex flex-col h-full'>
+					<div class='flex items-center justify-between mb-2'>
+						<span class='text-sm font-mono text-[#57FD6B]'>CVE-2019-3809</span>
+						<span class='text-xs text-orange-400 bg-orange-400/10 px-2 py-1 rounded'>Medium</span>
+					</div>
+					<h3 class='text-sm font-semibold text-[#F5F5F5] mb-2'>Moodle Blind SSRF</h3>
+					<p class='text-xs text-[#A0A0A0] mb-3 flex-grow'>Blind Server-Side Request Forgery vulnerability allowing internal network reconnaissance and data exfiltration.</p>
+					<a href='/blog/cve-2019-3809-moodle-blind-ssrf' class='text-xs text-[#57FD6B] hover:underline mt-auto'>Read Blog Post →</a>
+				</div>
+
+				<!-- CVE-2018-16119 - TP-LINK RCE -->
+				<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-xl p-4 hover:border-[#57FD6B]/40 transition-all flex flex-col h-full'>
+					<div class='flex items-center justify-between mb-2'>
+						<span class='text-sm font-mono text-[#57FD6B]'>CVE-2018-16119</span>
+						<span class='text-xs text-red-400 bg-red-400/10 px-2 py-1 rounded'>Critical</span>
+					</div>
+					<h3 class='text-sm font-semibold text-[#F5F5F5] mb-2'>TP-LINK WR1043ND RCE</h3>
+					<p class='text-xs text-[#A0A0A0] mb-3 flex-grow'>Remote Code Execution vulnerability in MIPS-based TP-LINK router firmware.</p>
+					<a href='/blog/cve-2018-16119-tp-link-router-rce' class='text-xs text-[#57FD6B] hover:underline mt-auto'>Read Blog Post →</a>
+				</div>
+
+				<!-- CVE-TBD-001 - Coming Soon -->
+				<div class='bg-[#1A1A1A]/30 border border-[#57FD6B]/10 rounded-xl p-4 hover:border-[#57FD6B]/20 transition-all opacity-75 flex flex-col h-full'>
+					<div class='flex items-center justify-between mb-2'>
+						<span class='text-sm font-mono text-[#57FD6B]/70'>CVE-XXXX-XXXX</span>
+					</div>
+					<h3 class='text-sm font-semibold text-[#F5F5F5]/70 mb-2'>Always searching for new ones.</h3>
+					<p class='text-xs text-[#A0A0A0]/70 mb-3 flex-grow'>Active vulnerability research in progress across multiple target platforms and applications.</p>
+					<span class='text-xs text-[#57FD6B]/70 mt-auto'>Stay tuned...</span>
+				</div>
+
+				<!-- CVE-TBD-002 - Coming Soon -->
+				<div class='bg-[#1A1A1A]/30 border border-[#57FD6B]/10 rounded-xl p-4 hover:border-[#57FD6B]/20 transition-all opacity-75 flex flex-col h-full'>
+					<div class='flex items-center justify-between mb-2'>
+						<span class='text-sm font-mono text-[#57FD6B]/70'>CVE-XXXX-XXXX</span>
+					</div>
+					<h3 class='text-sm font-semibold text-[#F5F5F5]/70 mb-2'>Always searching for new ones.</h3>
+					<p class='text-xs text-[#A0A0A0]/70 mb-3 flex-grow'>Active vulnerability research in progress across multiple target platforms and applications.</p>
+					<span class='text-xs text-[#57FD6B]/70 mt-auto'>Coming soon...</span>
+				</div>
+			</div>
+			
+			<!-- Bug Bounty Achievements -->
+			<div class='mt-8 bg-gradient-to-r from-[#57FD6B]/10 to-[#57FD6B]/5 border border-[#57FD6B]/20 rounded-2xl p-6'>
+				<div class='text-center mb-6'>
+					<div class='flex items-center justify-center gap-3 mb-3'>
+						<div class='w-12 h-12 bg-[#57FD6B]/20 rounded-full flex items-center justify-center'>
+							<i class="fa-solid fa-trophy text-xl text-[#57FD6B]"></i>
+						</div>
+					</div>
+					<h3 class='text-xl font-bold text-[#F5F5F5] mb-2'>Bug Bounty Achievements</h3>
+					<p class='text-[#A0A0A0] text-sm'>Real impact, real rewards</p>
+				</div>
+				
+				<div class='grid grid-cols-1 md:grid-cols-2 gap-4'>
+					<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-xl p-4 text-center'>
+						<div class='text-2xl font-bold text-[#57FD6B] mb-1'>$5,000</div>
+						<div class='text-[#F5F5F5] font-medium mb-1'>MercadoLibre</div>
+						<div class='text-xs text-[#A0A0A0]'>Multiple vulnerabilities discovered</div>
+					</div>
+					
+					<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-xl p-4 text-center'>
+						<div class='text-2xl font-bold text-[#57FD6B] mb-1'>$2,000</div>
+						<div class='text-[#F5F5F5] font-medium mb-1'>Yahoo</div>
+						<div class='text-xs text-[#A0A0A0]'>Critical security findings</div>
+					</div>
+				</div>
+				
+				<div class='text-center mt-4'>
+					<div class='text-lg font-bold text-[#F5F5F5] mb-1'>
+						Total: <span class='text-[#57FD6B]'>$7,000+ USD</span>
+					</div>
+					<p class='text-[#A0A0A0] text-sm'>
+						I don’t do side projects — I do side payloads.
+					</p>
+					<p class='text-[#A0A0A0] text-sm'>
+						Some of my work can't be showed due NDAs.
+					</p>
+				</div>
+			</div>
+		</Section>
+
+		<Section title='Contributions and Collaborations' class='mb-8'>
+			<div class='space-y-4'>
+				<!-- Metasploit Framework - First -->
+				<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-2xl p-6 hover:border-[#57FD6B]/40 transition-all'>
+					<div class='flex items-start gap-6'>
+						<div class='w-12 h-12 bg-[#57FD6B]/20 rounded-lg flex items-center justify-center flex-shrink-0'>
+							<i class="fa-solid fa-terminal text-[#57FD6B] text-xl"></i>
+						</div>
+						<div class='flex-1'>
+							<div class='mb-4'>
+								<h3 class='text-lg font-semibold text-[#F5F5F5]'>Metasploit Framework</h3>
+								<p class='text-sm text-[#A0A0A0]'>Contributor to exploitation modules</p>
+							</div>
+							<div class='flex flex-col gap-y-1'>
+								<a href='https://github.com/rapid7/metasploit-framework/pull/13215' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>LimeSurvey Directory Traversals (CVE-2019-9960)</a>
+								<a href='https://github.com/rapid7/metasploit-framework/blob/master/modules/auxiliary/dos/dns/bind_tsig.rb' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>ISC BIND DNS DoS Module (CVE-2016-2776)</a>
+								<a href='https://www.rapid7.com/db/modules/auxiliary/scanner/http/limesurvey_zip_traversals/' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>LimeSurvey Zip Traversals Scanner</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Open Source Tools - Second -->
+				<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-2xl p-6 hover:border-[#57FD6B]/40 transition-all'>
+					<div class='flex items-start gap-6'>
+						<div class='w-12 h-12 bg-[#57FD6B]/20 rounded-lg flex items-center justify-center flex-shrink-0'>
+							<i class="fa-solid fa-code text-[#57FD6B] text-xl"></i>
+						</div>
+						<div class='flex-1'>
+							<div class='mb-4'>
+								<h3 class='text-lg font-semibold text-[#F5F5F5]'>Open Source Tools</h3>
+								<p class='text-sm text-[#A0A0A0]'>Contributions to security tooling</p>
+							</div>
+							<div class='flex flex-col gap-y-1'>
+								<a href='https://github.com/OJ/gobuster/pull/169' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>Gobuster DNS Injection Points</a>
+								<a href='https://github.com/reconness/reconness-agents/pull/1' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>Reconness Amass Agent</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Private Vulnerability Disclosure - Third -->
+				<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-2xl p-6 hover:border-[#57FD6B]/40 transition-all'>
+					<div class='flex items-start gap-6'>
+						<div class='w-12 h-12 bg-[#57FD6B]/20 rounded-lg flex items-center justify-center flex-shrink-0'>
+							<i class="fa-solid fa-search text-[#57FD6B] text-xl"></i>
+						</div>
+						<div class='flex-1'>
+							<div class='mb-4'>
+								<h3 class='text-lg font-semibold text-[#F5F5F5]'>Private Vulnerability Disclosure</h3>
+								<p class='text-sm text-[#A0A0A0]'>Academic institutions and major platforms</p>
+							</div>
+							<div class='flex flex-col gap-y-1'>
+								<span class='text-sm text-[#57FD6B]'>Stored XSS in MercadoPago allows admin account takeover - MercadoLibre (2021)</span>
+								<span class='text-sm text-[#57FD6B]'>IDOR in QR Systems allows Payment Manipulation - MercadoLibre (2020)</span>
+								<span class='text-sm text-[#57FD6B]'>Remote Code Execution - MIT (2015)</span>
+								<span class='text-sm text-[#57FD6B]'>Arbitrary File Download - MIT (2015)</span>
+								<span class='text-sm text-[#57FD6B]'>Cross Site Scripting - MIT (2015)</span>
+								<span class='text-sm text-[#57FD6B]'>SQL Injection - Universidad de Murcia (2015)</span>
+								<span class='text-sm text-[#57FD6B]'>XSS - San Francisco Chronicle (2015)</span>
+								<span class='text-sm text-[#57FD6B]'>XSS - Claro Video Argentina (2015)</span>
+								<span class='text-xs text-[#A0A0A0] mt-2'>All vulnerabilities reported and fixed</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- C2 Framework Development - Fourth -->
+				<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-2xl p-6 hover:border-[#57FD6B]/40 transition-all'>
+					<div class='flex items-start gap-6'>
+						<div class='w-12 h-12 bg-[#57FD6B]/20 rounded-lg flex items-center justify-center flex-shrink-0'>
+							<i class="fa-solid fa-network-wired text-[#57FD6B] text-xl"></i>
+						</div>
+						<div class='flex-1'>
+							<div class='mb-4'>
+								<h3 class='text-lg font-semibold text-[#F5F5F5]'>C2 Framework Development</h3>
+								<p class='text-sm text-[#A0A0A0]'>Advanced command & control framework research</p>
+							</div>
+							<div class='flex flex-col gap-y-1'>
+								<a href='https://github.com/hdbreaker/Nimhawk' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>Nimhawk C2 Framework - Open Source APT-style C2</a>
+								<a href='https://docs.google.com/spreadsheets/d/1b4mUxa6cDQuTV2BPC6aA-GR4zGZi0ooPYtBe4IgPsSc/edit?gid=0#gid=0' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>SANS C2 Matrix - Nimhawk Evaluation & Documentation</a>
+								<a href='https://howto.thec2matrix.com/slingshot-c2-matrix-edition' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>SANS Slingshot C2 Matrix VM - Framework Integration</a>
+								<span class='text-xs text-[#A0A0A0] mt-2'>Developing next-generation red team capabilities</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Exploit Code Shared with Community - Fifth -->
+				<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-2xl p-6 hover:border-[#57FD6B]/40 transition-all'>
+					<div class='flex items-start gap-6'>
+						<div class='w-12 h-12 bg-[#57FD6B]/20 rounded-lg flex items-center justify-center flex-shrink-0'>
+							<i class="fa-solid fa-rocket text-[#57FD6B] text-xl"></i>
+						</div>
+						<div class='flex-1'>
+							<div class='mb-4'>
+								<h3 class='text-lg font-semibold text-[#F5F5F5]'>Exploit Code Shared with Community</h3>
+								<p class='text-sm text-[#A0A0A0]'>Public exploit releases and PoC code</p>
+							</div>
+							<div class='flex flex-col gap-y-1'>
+								<a href='https://www.exploit-db.com/exploits/40453' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>ISC BIND DNS DoS (CVE-2016-2776)</a>
+								<a href='https://www.exploit-db.com/exploits/45220' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>SEIG Modbus RCE (CVE-2013-0662)</a>
+								<a href='https://www.exploit-db.com/exploits/45218' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>SEIG SCADA RCE (CVE-2013-0657)</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</Section>
+
+		<Section title='Experience' class='mb-8'>
+			<div class='flex flex-col gap-y-8'>
+				<Card
+					heading='Founder'
+					subheading='Volt AI'
+					date='2025 – Present'
+					class='border-[#57FD6B]/20 hover:border-[#57FD6B]/40 transition-all'
+				>
+					<ul class='ml-4 list-disc text-[#A0A0A0] space-y-2'>
+						<li>Building a company focused on scaling offensive security through autonomous AI agents</li>
+						<li>Helping organizations identify, exploit, and remediate vulnerabilities — from web apps to AI systems</li>
+						<li>Designing secure-by-default AI architectures by blending red team tactics with modern ML pipelines</li>
+						<li>Developing custom offensive tooling and methodologies for LLMs, vector databases, and agentic systems</li>
+					</ul>
+				</Card>
+				<Card
+					heading='Co-Founder & CTO'
+					subheading='Hackmetrix'
+					date='2018 - 2025'
+					class='border-[#57FD6B]/20 hover:border-[#57FD6B]/40 transition-all'
+				>
+					<ul class='ml-4 list-disc text-[#A0A0A0] space-y-2'>
+						<li>Co-founded cybersecurity startup that raised $3M in venture capital</li>
+						<li>Expanded operations to 7 countries across Latin America</li>
+						<li>Reached $3M in annual recurring revenue (ARR)</li>
+						<li>Led the Offensive Security division managing technical teams and building offensive pipelines</li>
+						<li>Translated business risks into real-world attack simulations</li>
+					</ul>
+				</Card>
+				<Card
+					heading='Senior Security Consultant'
+					subheading='Include Security, VerSprite, Faraday'
+					date='2015 - 2018'
+					class='border-[#57FD6B]/20 hover:border-[#57FD6B]/40 transition-all'
+				>
+					<ul class='ml-4 list-disc text-[#A0A0A0] space-y-2'>
+						<li>Conducted red team engagements and penetration testing</li>
+						<li>Specialized in web application and network security</li>
+						<li>Participated in research groups and contributed to CVEs</li>
+						<li>Developed custom offensive tools and methodologies</li>
+					</ul>
+				</Card>
+			</div>
+		</Section>
+
+		<Section title='Press & Media' class='mb-8'>
+			<div class='space-y-4'>
+				<!-- Financial Media -->
+				<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-2xl p-6 hover:border-[#57FD6B]/40 transition-all'>
+					<div class='flex items-start gap-6'>
+						<div class='w-12 h-12 bg-[#57FD6B]/20 rounded-lg flex items-center justify-center flex-shrink-0'>
+							<svg class='w-6 h-6 text-[#57FD6B]' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+								<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z'></path>
+							</svg>
+						</div>
+						<div class='flex-1'>
+							<div class='mb-4'>
+								<h3 class='text-lg font-semibold text-[#F5F5F5]'>Financial Media</h3>
+								<p class='text-sm text-[#A0A0A0]'>Major financial publications coverage</p>
+							</div>
+							<div class='flex flex-col gap-y-1'>
+								<a href='https://forbes.cl/negocios/2023-06-08/hackmetrix-cierra-ronda-inversion-fondo-startups' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>Forbes Chile - Hackmetrix Investment Round</a>
+								<a href='https://www.df.cl/df-lab/innovacion-y-startups/hackmetrix-cierra-ronda-con-inversiones-de-fondo-ligado-a-cristobal' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>Diario Financiero - Hackmetrix Funding Round</a>
+								<a href='https://www.latercera.com/piensa-digital/noticia/la-startup-de-ciberseguridad-que-apuesta-por-el-trabajo-remoto/TAYPZYT4K5EADEY567MR7SVANE/' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>La Tercera - Remote Cybersecurity Startup</a>
+								<a href='https://www.fintechile.org/noticias/hackmetrix-cierra-ronda-con-inversiones-de-fondo-de-cristobal-pinera-y-de-cofundador-de-cornershop' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>Fintechile - Investment Round Coverage</a>
+								<a href='https://www.larepublica.co/globoeconomia/startup-chilena-pacta-alianza-con-amazon-web-services-para-planes-en-ciberseguridad-3564685' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>La República - AWS Partnership</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Tech & Startup Media -->
+				<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-2xl p-6 hover:border-[#57FD6B]/40 transition-all'>
+					<div class='flex items-start gap-6'>
+						<div class='w-12 h-12 bg-[#57FD6B]/20 rounded-lg flex items-center justify-center flex-shrink-0'>
+							<svg class='w-6 h-6 text-[#57FD6B]' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+								<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'></path>
+							</svg>
+						</div>
+						<div class='flex-1'>
+							<div class='mb-4'>
+								<h3 class='text-lg font-semibold text-[#F5F5F5]'>Tech Publications</h3>
+								<p class='text-sm text-[#A0A0A0]'>Startup & technology media</p>
+							</div>
+							<div class='flex flex-col gap-y-1'>
+								<a href='https://startupslatam.com/hackmetrix-la-startup-chilena-de-ciberseguridad-levanta-us-15-millones/' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>Startups Latam - $1.5M Funding</a>
+								<a href='https://elreferente.es/inversiones/startup-ciberseguridad-hackmetrix-levanta-1-millones-dolares/' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>El Referente - Investment Coverage</a>
+								<a href='https://techla.pro/2021/11/25/hackmetrix-cierra-segunda-ronda-semilla-mas-grande-de-latinoamerica-en-ciberseguridad/' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>TechLA - Largest Cybersecurity Seed Round</a>
+								<a href='https://contxto.com/es/noticias/hackmetrix-15-mdd-ronda-semilla-cometa-ventures-ciberseguridad/' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>Contxto - Seed Round Analysis</a>
+								<a href='https://miranda-newswire.com/es/hackmetrix-aterriza-en-mexico-con-la-mision-de-reclutar-y-capacitar-hackers-que-detengan-ciberataques-corporativos/' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>Miranda NewsWire - Mexico Expansion</a>
+								<a href='https://www.milenio.com/negocios/hackmetrix-abrira-academia-digital-seguridad-cibernetica' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>Milenio - Digital Academy Launch</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Video & Audio Media -->
+				<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-2xl p-6 hover:border-[#57FD6B]/40 transition-all'>
+					<div class='flex items-start gap-6'>
+						<div class='w-12 h-12 bg-[#57FD6B]/20 rounded-lg flex items-center justify-center flex-shrink-0'>
+							<svg class='w-6 h-6 text-[#57FD6B]' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+								<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z'></path>
+							</svg>
+						</div>
+						<div class='flex-1'>
+							<div class='mb-4'>
+								<h3 class='text-lg font-semibold text-[#F5F5F5]'>Video & Podcasts</h3>
+								<p class='text-sm text-[#A0A0A0]'>TV interviews & digital content</p>
+							</div>
+							<div class='flex flex-col gap-y-1'>
+								<a href='https://www.youtube.com/watch?v=piZvEvQ0GQ4' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>El Mercurio - Innovación TV</a>
+								<a href='https://www.youtube.com/watch?v=pA781Zqun3I' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>Infochannel Chile</a>
+								<a href='https://www.youtube.com/watch?v=hAmYl2oxFic' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>Blockchain Summit Latam 2018 - Part 1</a>
+								<a href='https://www.youtube.com/watch?v=U1hJ9KdWzBA' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>Blockchain Summit Latam 2018 - Part 2</a>
+								<a href='https://open.spotify.com/episode/0sVvjB26LTZ1EAt5Z6gLcs' target='_blank' class='text-sm text-[#57FD6B] hover:underline'>Spotify Podcast Interview</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</Section>
+
+
+		<Section title='Certifications' class='mb-8'>
+			<div class='flex flex-col gap-y-6'>
+				<Card
+					as='a'
+					heading='OSCP - Offensive Security Certified Professional'
+					subheading='Advanced penetration testing and ethical hacking certification'
+					date='2023'
+					href='https://www.credential.net/2dd22c80-9c9e-411b-8661-a475e3fa5510#acc.CRrfaibG'
+					class='border-[#57FD6B]/20 hover:border-[#57FD6B]/40 transition-all'
+				/>
+			</div>
+		</Section>
+
+		<Section title='Want to know what I am reading? ' class='mb-8'>
+			<div class='bg-[#1A1A1A] rounded-lg p-6 border border-[#57FD6B]/20'>
+				<div class='mb-4'>
+					<h3 class='text-lg font-semibold text-[#F5F5F5] mb-2'>X Posts</h3>
+					<p class='text-[#A0A0A0] text-sm'>Latest insights on offensive security, cybersecurity research, and my way to see the world</p>
+				</div>
+				
+				<!-- RSS.app Widget -->
+				<rssapp-list id="9w5ndFrgFmYTGYEi"></rssapp-list>
+				<script src="https://widget.rss.app/v1/list.js" type="text/javascript" async></script>
+				
+				<div class='mt-4 text-center'>
+					<p class='text-[#A0A0A0] text-xs'>
+						Follow me on <a href="https://x.com/hdbreaker_" target="_blank" class="text-[#57FD6B] hover:underline">Twitter @hdbreaker_</a> for real-time updates
+					</p>
+				</div>
+			</div>
+		</Section>
+
+		<Section title='Wanna hear me play some music?' class='mb-8'>
+			<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-2xl p-6 hover:border-[#57FD6B]/40 transition-all'>
+				<div class='flex items-start gap-6'>
+					<div class='w-12 h-12 bg-[#57FD6B]/20 rounded-lg flex items-center justify-center flex-shrink-0'>
+						<svg class='w-6 h-6 text-[#57FD6B]' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+							<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3'></path>
+						</svg>
+					</div>
+					<div class='flex-1'>
+						<div class='mb-4'>
+							<h3 class='text-lg font-semibold text-[#F5F5F5]'>Music & Creativity</h3>
+						</div>
+						<div class='flex flex-col gap-y-3'>
+							<p class='text-[#A0A0A0] text-sm'>
+								Music helps me think differently about problem-solving and creativity. Check out my tracks where I explore different genres and experiment with sound.
+							</p>
+							<a 
+								href='https://soundcloud.com/hdbreaker-pentest' 
+								target='_blank' 
+								rel='noopener noreferrer'
+								class='inline-flex items-center gap-x-3 rounded-xl border border-[#57FD6B]/30 bg-[#57FD6B]/10 px-6 py-3 text-sm font-medium text-[#57FD6B] shadow-sm transition-all hover:shadow-volt-glow hover:bg-[#57FD6B]/20 hover:scale-105 w-fit'
+							>
+								<svg class='w-5 h-5' fill='currentColor' viewBox='0 0 24 24'>
+									<path d='M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z'/>
+								</svg>
+								<span>Listen on SoundCloud</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</Section>
+	</div>
+	
+	<script is:inline>
+		function toggleProjectDetails(button) {
+			const card = button.closest('.project-card');
+			const details = card.querySelector('.project-details');
+			const icon = button.querySelector('svg');
+			
+			if (details.classList.contains('hidden')) {
+				details.classList.remove('hidden');
+				icon.classList.add('rotate-180');
+			} else {
+				details.classList.add('hidden');
+				icon.classList.remove('rotate-180');
+			}
+		}
+		
+		// Prevent event bubbling for buttons inside cards
+		document.addEventListener('DOMContentLoaded', function() {
+			const projectCards = document.querySelectorAll('.project-card');
+			projectCards.forEach(card => {
+				const button = card.querySelector('button');
+				if (button) {
+					button.addEventListener('click', function(e) {
+						e.preventDefault();
+						e.stopPropagation();
+					});
+				}
+			});
+		});
+	</script>
+</PageLayout>

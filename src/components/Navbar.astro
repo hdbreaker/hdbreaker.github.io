@@ -1,0 +1,157 @@
+---
+---
+
+<!-- Navbar principal -->
+<nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 px-6 pt-6 pb-4 lg:px-24 relative">
+  <!-- Enhanced gradient background -->
+  <div class="absolute inset-0 opacity-90">
+    <!-- Subtle gradient overlay -->
+    <div class="absolute inset-0 bg-gradient-to-b from-volt/5 via-transparent to-volt/8"></div>
+    
+    <!-- Radial gradients for depth -->
+    <div class="absolute top-0 left-0 w-96 h-96 bg-gradient-radial from-volt/10 to-transparent blur-2xl"></div>
+    <div class="absolute bottom-0 right-0 w-80 h-80 bg-gradient-radial from-volt/12 to-transparent blur-2xl"></div>
+    
+    <!-- Diagonal gradient streaks -->
+    <div class="absolute inset-0 bg-gradient-to-br from-transparent via-volt/3 to-transparent opacity-50"></div>
+  </div>
+
+  <div class="flex items-center justify-between relative z-10 backdrop-blur-sm">
+    <!-- Logo -->
+    <a href="/" aria-label="Alejandro Parodi - Inicio" class="flex items-center group">
+      <div class="text-2xl font-bold text-volt group-hover:scale-105 transition-all duration-300 drop-shadow-volt">
+        AP
+      </div>
+    </a>
+
+    <!-- Navigation Links - Desktop -->
+    <div class="hidden md:flex items-center space-x-8">
+      <a href="/" class="group text-sm font-medium text-text-secondary hover:text-text-primary transition-colors relative">
+        Home
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-volt to-emerald-400 group-hover:w-full transition-all duration-300 shadow-volt-soft"></span>
+      </a>
+      <a href="/about" class="group text-sm font-medium text-text-secondary hover:text-text-primary transition-colors relative">
+        About
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-volt to-emerald-400 group-hover:w-full transition-all duration-300 shadow-volt-soft"></span>
+      </a>
+      <a href="/projects" class="group text-sm font-medium text-text-secondary hover:text-text-primary transition-colors relative">
+        Projects
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-volt to-emerald-400 group-hover:w-full transition-all duration-300 shadow-volt-soft"></span>
+      </a>
+      <a href="/research" class="group text-sm font-medium text-text-secondary hover:text-text-primary transition-colors relative">
+        Research
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-volt to-emerald-400 group-hover:w-full transition-all duration-300 shadow-volt-soft"></span>
+      </a>
+      <a href="/cves" class="group text-sm font-medium text-text-secondary hover:text-text-primary transition-colors relative">
+        CVEs
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-volt to-emerald-400 group-hover:w-full transition-all duration-300 shadow-volt-soft"></span>
+      </a>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button id="mobile-menu-button" class="md:hidden text-text-primary drop-shadow-volt z-50 relative" aria-label="Open menu">
+      <svg id="menu-icon" class="w-6 h-6 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+      <svg id="close-icon" class="w-6 h-6 absolute top-0 left-0 transition-transform duration-300 opacity-0 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+
+    <!-- CTA Button - Desktop -->
+    <div class="hidden md:block">
+      <a href="/contact" class="px-6 py-2 rounded-full bg-gradient-to-r from-volt to-emerald-400 text-gray-900 hover:from-volt/90 hover:to-emerald-400/90 transition-all duration-300 font-semibold backdrop-blur-sm shadow-volt-soft">
+        Contact
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu - Separado del navbar -->
+<div id="mobile-menu" class="fixed inset-0 z-40 md:hidden transform translate-x-full transition-transform duration-300 ease-in-out">
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-dark-primary/95 backdrop-blur-md"></div>
+  
+  <!-- Menu Content -->
+  <div class="relative h-full flex flex-col">
+    <!-- Spacer for navbar -->
+    <div class="h-20"></div>
+    
+    <!-- Menu Items -->
+    <div class="flex-1 px-6 py-8 space-y-6">
+      <a href="/" class="block text-2xl font-medium text-text-secondary hover:text-text-primary transition-colors py-3 border-b border-volt/10">
+        Home
+      </a>
+      <a href="/about" class="block text-2xl font-medium text-text-secondary hover:text-text-primary transition-colors py-3 border-b border-volt/10">
+        About
+      </a>
+      <a href="/projects" class="block text-2xl font-medium text-text-secondary hover:text-text-primary transition-colors py-3 border-b border-volt/10">
+        Projects
+      </a>
+      <a href="/research" class="block text-2xl font-medium text-text-secondary hover:text-text-primary transition-colors py-3 border-b border-volt/10">
+        Research
+      </a>
+      <a href="/cves" class="block text-2xl font-medium text-text-secondary hover:text-text-primary transition-colors py-3 border-b border-volt/10">
+        CVEs
+      </a>
+      <a href="/contact" class="block text-2xl font-medium text-text-secondary hover:text-text-primary transition-colors py-3 border-b border-volt/10">
+        Contact
+      </a>
+    </div>
+    
+    <!-- Mobile CTA -->
+    <div class="px-6 py-8">
+      <a href="/contact" class="block w-full text-center px-6 py-4 rounded-xl bg-gradient-to-r from-volt to-emerald-400 text-gray-900 font-semibold hover:from-volt/90 hover:to-emerald-400/90 transition-all duration-300">
+        Get in Touch
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Mobile menu functionality
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+  const closeIcon = document.getElementById('close-icon');
+
+  if (mobileMenuButton && mobileMenu && menuIcon && closeIcon) {
+    mobileMenuButton.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.contains('translate-x-0');
+      
+      if (isOpen) {
+        mobileMenu.classList.remove('translate-x-0');
+        mobileMenu.classList.add('translate-x-full');
+        menuIcon.classList.remove('opacity-0', 'rotate-180');
+        closeIcon.classList.add('opacity-0', 'rotate-180');
+      } else {
+        mobileMenu.classList.add('translate-x-0');
+        mobileMenu.classList.remove('translate-x-full');
+        menuIcon.classList.add('opacity-0', 'rotate-180');
+        closeIcon.classList.remove('opacity-0', 'rotate-180');
+      }
+    });
+  }
+
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  if (navbar) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('bg-dark-primary/80', 'backdrop-blur-md');
+      } else {
+        navbar.classList.remove('bg-dark-primary/80', 'backdrop-blur-md');
+      }
+    });
+  }
+</script>
+
+<style>
+  .bg-gradient-radial {
+    background: radial-gradient(circle, var(--tw-gradient-stops));
+  }
+
+  .drop-shadow-volt {
+    filter: drop-shadow(0 0 8px rgba(87,253,107,0.5));
+  }
+</style> 

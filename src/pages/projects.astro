@@ -1,0 +1,427 @@
+---
+// Projects page
+const title = "Projects - Alejandro Parodi";
+const description = "Offensive security tools, frameworks, and research projects";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <a href="/" class="back-link">← Back to Portfolio</a>
+        <h1>Offensive Security Projects</h1>
+        <p>Tools, frameworks, and research projects focused on offensive security</p>
+      </header>
+
+      <div class="projects-container">
+        <!-- Nimhawk Framework -->
+        <div class="project-item featured">
+          <div class="project-header">
+            <h2>Nimhawk Framework</h2>
+            <span class="project-status">Active Development</span>
+          </div>
+          <p class="project-description">
+            Advanced C4 (Command & Control) framework written in Nim with reflective .NET execution, direct syscalls for evasion, and encrypted communication between implants. Designed for advanced red team operations and security research.
+          </p>
+          <div class="project-details">
+            <div class="detail-item">
+              <strong>Language:</strong> Nim
+            </div>
+            <div class="detail-item">
+              <strong>Architecture:</strong> Modular C2 Framework
+            </div>
+            <div class="detail-item">
+              <strong>Features:</strong> Reflective .NET, Direct Syscalls, Encrypted Comms
+            </div>
+            <div class="detail-item">
+              <strong>Status:</strong> In Development
+            </div>
+          </div>
+          <div class="project-tags">
+            <span class="tag">C2 Framework</span>
+            <span class="tag">Nim</span>
+            <span class="tag">Red Team</span>
+            <span class="tag">Evasion</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/hdbreaker/Nimhawk" class="project-link">View on GitHub</a>
+            <a href="/research/nimhawk-framework-overview" class="project-link">Documentation</a>
+          </div>
+        </div>
+
+        <!-- EDR Evasion Suite -->
+        <div class="project-item">
+          <div class="project-header">
+            <h2>EDR Evasion Suite</h2>
+            <span class="project-status">Research</span>
+          </div>
+          <p class="project-description">
+            Collection of techniques and tools for evading Endpoint Detection and Response systems. Developing novel approaches to bypass modern security controls and detection mechanisms.
+          </p>
+          <div class="project-details">
+            <div class="detail-item">
+              <strong>Type:</strong> Research & Tools
+            </div>
+            <div class="detail-item">
+              <strong>Languages:</strong> Assembly, C++, Nim
+            </div>
+            <div class="detail-item">
+              <strong>Focus:</strong> Direct Syscalls, Process Injection
+            </div>
+          </div>
+          <div class="project-tags">
+            <span class="tag">EDR Evasion</span>
+            <span class="tag">Direct Syscalls</span>
+            <span class="tag">Process Injection</span>
+            <span class="tag">Research</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/hdbreaker" class="project-link">View on GitHub</a>
+          </div>
+        </div>
+
+        <!-- OPSEC Toolkit -->
+        <div class="project-item">
+          <div class="project-header">
+            <h2>OPSEC Toolkit</h2>
+            <span class="project-status">Planning</span>
+          </div>
+          <p class="project-description">
+            Operational security tools and methodologies for red team engagements. Includes techniques for maintaining stealth, avoiding detection, and ensuring operational security during offensive operations.
+          </p>
+          <div class="project-details">
+            <div class="detail-item">
+              <strong>Type:</strong> Security Tools
+            </div>
+            <div class="detail-item">
+              <strong>Languages:</strong> Go, Rust, Python
+            </div>
+            <div class="detail-item">
+              <strong>Focus:</strong> Steganography, Traffic Analysis
+            </div>
+          </div>
+          <div class="project-tags">
+            <span class="tag">OPSEC</span>
+            <span class="tag">Steganography</span>
+            <span class="tag">Traffic Analysis</span>
+            <span class="tag">Red Team</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/hdbreaker" class="project-link">View on GitHub</a>
+          </div>
+        </div>
+
+        <!-- CVE Research -->
+        <div class="project-item">
+          <div class="project-header">
+            <h2>CVE Research</h2>
+            <span class="project-status">Ongoing</span>
+          </div>
+          <p class="project-description">
+            Vulnerability research and responsible disclosure contributions. Discovering and reporting security vulnerabilities in enterprise software and web applications.
+          </p>
+          <div class="project-details">
+            <div class="detail-item">
+              <strong>Type:</strong> Research
+            </div>
+            <div class="detail-item">
+              <strong>Focus:</strong> Web Apps, Network, IoT
+            </div>
+            <div class="detail-item">
+              <strong>Approach:</strong> Responsible Disclosure
+            </div>
+          </div>
+          <div class="project-tags">
+            <span class="tag">CVE Research</span>
+            <span class="tag">Vulnerability Assessment</span>
+            <span class="tag">Responsible Disclosure</span>
+            <span class="tag">Security Research</span>
+          </div>
+          <div class="project-links">
+            <a href="/cves" class="project-link">View CVEs</a>
+            <a href="/research" class="project-link">Research Blog</a>
+          </div>
+        </div>
+
+        <!-- Red Team Methodologies -->
+        <div class="project-item">
+          <div class="project-header">
+            <h2>Red Team Methodologies</h2>
+            <span class="project-status">Documentation</span>
+          </div>
+          <p class="project-description">
+            Advanced red teaming techniques and methodologies documentation. Sharing knowledge about offensive security operations, TTPs, and best practices for red team engagements.
+          </p>
+          <div class="project-details">
+            <div class="detail-item">
+              <strong>Type:</strong> Documentation
+            </div>
+            <div class="detail-item">
+              <strong>Focus:</strong> Methodologies, TTPs, OPSEC
+            </div>
+            <div class="detail-item">
+              <strong>Format:</strong> Technical Articles
+            </div>
+          </div>
+          <div class="project-tags">
+            <span class="tag">Red Teaming</span>
+            <span class="tag">TTPs</span>
+            <span class="tag">Methodologies</span>
+            <span class="tag">Knowledge Sharing</span>
+          </div>
+          <div class="project-links">
+            <a href="/research" class="project-link">View Articles</a>
+            <a href="/contact" class="project-link">Collaborate</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      /* Reset and base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      /* Header styles */
+      .header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2rem 0;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .back-link {
+        display: inline-block;
+        color: white;
+        text-decoration: none;
+        margin-bottom: 1rem;
+        font-weight: 500;
+        transition: opacity 0.3s ease;
+      }
+
+      .back-link:hover {
+        opacity: 0.8;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      }
+
+      .header p {
+        color: #e0e0e0;
+        font-size: 1.1rem;
+      }
+
+      /* Projects container */
+      .projects-container {
+        margin-bottom: 3rem;
+      }
+
+      /* Project items */
+      .project-item {
+        background: rgba(255, 255, 255, 0.95);
+        margin-bottom: 2rem;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        backdrop-filter: blur(10px);
+        border-left: 4px solid #00ff88;
+      }
+
+      .project-item.featured {
+        border-left: 4px solid #00cc6a;
+        background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(255, 255, 255, 0.95) 100%);
+      }
+
+      .project-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .project-header h2 {
+        font-size: 1.8rem;
+        color: #2d3748;
+        margin: 0;
+      }
+
+      .project-status {
+        background: #00ff88;
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .project-description {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        color: #4a5568;
+        line-height: 1.7;
+      }
+
+      .project-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .detail-item {
+        background: rgba(0, 255, 136, 0.1);
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 255, 136, 0.3);
+      }
+
+      .detail-item strong {
+        color: #00cc6a;
+        display: block;
+        margin-bottom: 0.3rem;
+      }
+
+      .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .tag {
+        background: rgba(0, 255, 136, 0.2);
+        color: #00cc6a;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .project-links {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .project-link {
+        background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+        color: white;
+        padding: 0.8rem 1.5rem;
+        text-decoration: none;
+        border-radius: 25px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      .project-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      }
+
+      /* Section styles */
+      .section {
+        background: rgba(255, 255, 255, 0.95);
+        margin-bottom: 2rem;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        backdrop-filter: blur(10px);
+      }
+
+      .section h2 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        color: #2d3748;
+        border-bottom: 3px solid #00ff88;
+        padding-bottom: 0.5rem;
+      }
+
+      /* Categories grid */
+      .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+
+      .category-item {
+        background: rgba(0, 255, 136, 0.1);
+        padding: 1.5rem;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 255, 136, 0.3);
+        text-align: center;
+      }
+
+      .category-item h3 {
+        color: #00cc6a;
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+      }
+
+      .category-item p {
+        color: #4a5568;
+        font-size: 1rem;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+        .header h1 {
+          font-size: 2rem;
+        }
+        .project-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .project-details {
+          grid-template-columns: 1fr;
+        }
+        .project-links {
+          flex-direction: column;
+        }
+        .categories-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </body>
+</html> 

@@ -1,0 +1,487 @@
+---
+// Research/Blog page
+const title = "Research - Alejandro Parodi";
+const description = "Technical articles and cybersecurity research";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <a href="/" class="back-link">← Back to Portfolio</a>
+        <h1>Research & Blog</h1>
+        <p>Technical articles, security research, and offensive techniques</p>
+      </header>
+
+      <div class="content">
+        <!-- Featured Article -->
+        <section class="section featured-article">
+          <div class="article-meta">
+            <span class="article-date">January 15, 2024</span>
+            <span class="article-category">EDR Evasion</span>
+          </div>
+          <h2>Advanced EDR Evasion Techniques: Bypassing Modern Security Controls</h2>
+          <p class="article-excerpt">
+            An in-depth analysis of advanced techniques for evading Endpoint Detection and Response systems. This article covers novel approaches to bypass modern security controls, including direct syscalls, reflective loading, and encrypted communication methods.
+          </p>
+          <div class="article-tags">
+            <span class="tag">EDR</span>
+            <span class="tag">Evasion</span>
+            <span class="tag">Red Team</span>
+            <span class="tag">Advanced</span>
+          </div>
+          <a href="/research/edr-evasion-techniques" class="read-more">Read Full Article →</a>
+        </section>
+
+        <!-- Article Grid -->
+        <section class="section">
+          <h2>Latest Articles</h2>
+          <div class="articles-grid">
+            <article class="article-card">
+              <div class="article-meta">
+                <span class="article-date">January 10, 2024</span>
+                <span class="article-category">OPSEC</span>
+              </div>
+              <h3>Operational Security in Red Team Engagements</h3>
+              <p>Best practices for maintaining operational security during red team operations, including network reconnaissance, persistence mechanisms, and lateral movement techniques.</p>
+              <div class="article-tags">
+                <span class="tag">OPSEC</span>
+                <span class="tag">Red Team</span>
+                <span class="tag">Best Practices</span>
+              </div>
+              <a href="/research/operational-security-red-team" class="read-more">Read More →</a>
+            </article>
+
+            <article class="article-card">
+              <div class="article-meta">
+                <span class="article-date">December 20, 2023</span>
+                <span class="article-category">Framework</span>
+              </div>
+              <h3>Nimhawk Framework: Architecture and Design</h3>
+              <p>Technical deep-dive into the Nimhawk C2 framework architecture, covering reflective .NET execution, direct syscalls, and modular design principles.</p>
+              <div class="article-tags">
+                <span class="tag">Nimhawk</span>
+                <span class="tag">Framework</span>
+                <span class="tag">C2</span>
+                <span class="tag">Architecture</span>
+              </div>
+              <a href="/research/nimhawk-framework-overview" class="read-more">Read More →</a>
+            </article>
+
+            <article class="article-card">
+              <div class="article-meta">
+                <span class="article-date">December 5, 2023</span>
+                <span class="article-category">Vulnerability Research</span>
+              </div>
+              <h3>Modern Exploit Development Techniques</h3>
+              <p>Advanced techniques for developing exploits in modern environments, including bypassing ASLR, DEP, and other security mitigations.</p>
+              <div class="article-tags">
+                <span class="tag">Exploit Development</span>
+                <span class="tag">Research</span>
+                <span class="tag">Advanced</span>
+              </div>
+              <a href="/research/modern-exploit-development" class="read-more">Read More →</a>
+            </article>
+
+            <article class="article-card">
+              <div class="article-meta">
+                <span class="article-date">November 15, 2023</span>
+                <span class="article-category">Tooling</span>
+              </div>
+              <h3>Building Custom Red Team Tools</h3>
+              <p>Guide to developing custom offensive security tools, from initial concept to deployment in red team operations.</p>
+              <div class="article-tags">
+                <span class="tag">Tool Development</span>
+                <span class="tag">Red Team</span>
+                <span class="tag">Custom Tools</span>
+              </div>
+              <a href="/research/building-custom-red-team-tools" class="read-more">Read More →</a>
+            </article>
+
+            <article class="article-card">
+              <div class="article-meta">
+                <span class="article-date">October 30, 2023</span>
+                <span class="article-category">CVE Research</span>
+              </div>
+              <h3>CVE-2023-XXXX: Analysis and Exploitation</h3>
+              <p>Detailed analysis of a recently discovered vulnerability, including root cause analysis, exploitation techniques, and mitigation strategies.</p>
+              <div class="article-tags">
+                <span class="tag">CVE</span>
+                <span class="tag">Vulnerability</span>
+                <span class="tag">Analysis</span>
+              </div>
+              <a href="/research/cve-2023-xxxx-analysis" class="read-more">Read More →</a>
+            </article>
+
+            <article class="article-card">
+              <div class="article-meta">
+                <span class="article-date">October 10, 2023</span>
+                <span class="article-category">Methodology</span>
+              </div>
+              <h3>Red Team Methodology: From Reconnaissance to Persistence</h3>
+              <p>Comprehensive guide to red team methodology, covering all phases from initial reconnaissance to establishing persistence and maintaining access.</p>
+              <div class="article-tags">
+                <span class="tag">Methodology</span>
+                <span class="tag">Red Team</span>
+                <span class="tag">Comprehensive</span>
+              </div>
+              <a href="/research/red-team-methodology" class="read-more">Read More →</a>
+            </article>
+          </div>
+        </section>
+
+        <!-- Research Categories -->
+        <section class="section">
+          <h2>Research Categories</h2>
+          <div class="categories-grid">
+            <div class="category-item">
+              <h3>🔍 EDR Evasion</h3>
+              <p>Advanced techniques for bypassing endpoint detection and response systems</p>
+              <span class="article-count">3 articles</span>
+            </div>
+            <div class="category-item">
+              <h3>🛠️ Tool Development</h3>
+              <p>Building custom offensive security tools and frameworks</p>
+              <span class="article-count">5 articles</span>
+            </div>
+            <div class="category-item">
+              <h3>🔬 Vulnerability Research</h3>
+              <p>CVE analysis, exploit development, and vulnerability discovery</p>
+              <span class="article-count">4 articles</span>
+            </div>
+            <div class="category-item">
+              <h3>📋 Methodology</h3>
+              <p>Red team methodologies and operational security practices</p>
+              <span class="article-count">2 articles</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Newsletter Signup -->
+        <section class="section newsletter">
+          <h2>Stay Updated</h2>
+          <p>Subscribe to receive notifications about new research articles and technical content.</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Enter your email" required class="email-input">
+            <button type="submit" class="subscribe-btn">Subscribe</button>
+          </form>
+        </section>
+      </div>
+    </div>
+
+    <style>
+      /* Reset and base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      /* Header styles */
+      .header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2rem 0;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .back-link {
+        display: inline-block;
+        color: white;
+        text-decoration: none;
+        margin-bottom: 1rem;
+        font-weight: 500;
+        transition: opacity 0.3s ease;
+      }
+
+      .back-link:hover {
+        opacity: 0.8;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      }
+
+      .header p {
+        color: #e0e0e0;
+        font-size: 1.1rem;
+      }
+
+      /* Section styles */
+      .section {
+        background: rgba(255, 255, 255, 0.95);
+        margin-bottom: 2rem;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        backdrop-filter: blur(10px);
+      }
+
+      .section h2 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        color: #2d3748;
+        border-bottom: 3px solid #00ff88;
+        padding-bottom: 0.5rem;
+      }
+
+      /* Featured article */
+      .featured-article {
+        background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(255, 255, 255, 0.95) 100%);
+        border-left: 4px solid #00ff88;
+      }
+
+      .article-meta {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .article-date {
+        color: #718096;
+        font-size: 0.9rem;
+      }
+
+      .article-category {
+        background: #00ff88;
+        color: white;
+        padding: 0.2rem 0.6rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .featured-article h2 {
+        font-size: 2.2rem;
+        margin-bottom: 1rem;
+        color: #2d3748;
+        border: none;
+        padding: 0;
+      }
+
+      .article-excerpt {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        color: #4a5568;
+        line-height: 1.7;
+      }
+
+      .article-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .tag {
+        background: rgba(0, 255, 136, 0.2);
+        color: #00cc6a;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .read-more {
+        background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+        color: white;
+        padding: 0.8rem 1.5rem;
+        text-decoration: none;
+        border-radius: 25px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: inline-block;
+      }
+
+      .read-more:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      }
+
+      /* Articles grid */
+      .articles-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-top: 1.5rem;
+      }
+
+      .article-card {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 1.5rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+        border: 1px solid rgba(0, 255, 136, 0.1);
+      }
+
+      .article-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .article-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        color: #2d3748;
+      }
+
+      .article-card p {
+        color: #4a5568;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+      }
+
+      .article-card .article-tags {
+        margin-bottom: 1rem;
+      }
+
+      .article-card .read-more {
+        font-size: 0.9rem;
+        padding: 0.6rem 1.2rem;
+      }
+
+      /* Categories grid */
+      .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+
+      .category-item {
+        background: rgba(0, 255, 136, 0.1);
+        padding: 1.5rem;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 255, 136, 0.3);
+        text-align: center;
+      }
+
+      .category-item h3 {
+        color: #00cc6a;
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+      }
+
+      .category-item p {
+        color: #4a5568;
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .article-count {
+        color: #718096;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      /* Newsletter */
+      .newsletter {
+        text-align: center;
+        background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(255, 255, 255, 0.95) 100%);
+      }
+
+      .newsletter p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        color: #4a5568;
+      }
+
+      .newsletter-form {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .email-input {
+        flex: 1;
+        min-width: 250px;
+        padding: 1rem;
+        border: 2px solid rgba(0, 255, 136, 0.3);
+        border-radius: 25px;
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.3s ease;
+      }
+
+      .email-input:focus {
+        border-color: #00ff88;
+      }
+
+      .subscribe-btn {
+        background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 25px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .subscribe-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+        .header h1 {
+          font-size: 2rem;
+        }
+        .featured-article h2 {
+          font-size: 1.8rem;
+        }
+        .articles-grid {
+          grid-template-columns: 1fr;
+        }
+        .newsletter-form {
+          flex-direction: column;
+          align-items: center;
+        }
+        .email-input {
+          min-width: 100%;
+        }
+        .categories-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </body>
+</html> 

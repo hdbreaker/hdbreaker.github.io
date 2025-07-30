@@ -1,0 +1,416 @@
+---
+// Contact page
+const title = "Contact - Alejandro Parodi";
+const description = "Get in touch with Alejandro Parodi";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <a href="/" class="back-link">← Back to Portfolio</a>
+        <h1>Get In Touch</h1>
+        <p>Let's connect and discuss opportunities</p>
+      </header>
+
+      <div class="content">
+        <!-- Contact Information -->
+        <section class="section">
+          <h2>Contact Information</h2>
+          <div class="contact-grid">
+            <div class="contact-item">
+              <div class="contact-icon">📧</div>
+              <h3>Email</h3>
+              <a href="mailto:contact@alejandroparodi.com">contact@alejandroparodi.com</a>
+              <p>Primary contact method for professional inquiries</p>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">💼</div>
+              <h3>LinkedIn</h3>
+              <a href="https://linkedin.com/in/alejandro-parodi" target="_blank">linkedin.com/in/alejandro-parodi</a>
+              <p>Professional network and updates</p>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">🐙</div>
+              <h3>GitHub</h3>
+              <a href="https://github.com/hdbreaker" target="_blank">github.com/hdbreaker</a>
+              <p>Open source projects and code contributions</p>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">🌍</div>
+              <h3>Location</h3>
+              <p>Argentina / Remote</p>
+              <p>Available for remote opportunities worldwide</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Contact Form -->
+        <section class="section">
+          <h2>Send a Message</h2>
+          <form class="contact-form">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <select id="subject" name="subject" required>
+                <option value="">Select a topic</option>
+                <option value="collaboration">Collaboration Opportunity</option>
+                <option value="consulting">Consulting Inquiry</option>
+                <option value="research">Research Discussion</option>
+                <option value="speaking">Speaking Engagement</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="6" required placeholder="Tell me about your project or opportunity..."></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message</button>
+          </form>
+        </section>
+
+        <!-- Availability -->
+        <section class="section">
+          <h2>Current Availability</h2>
+          <div class="availability-grid">
+            <div class="availability-item">
+              <h3>🎯 Seeking Opportunities</h3>
+              <p>Currently looking for collaboration with high-level offensive security teams and advanced research opportunities.</p>
+              <div class="availability-tags">
+                <span class="tag">Red Team</span>
+                <span class="tag">Research</span>
+                <span class="tag">Consulting</span>
+              </div>
+            </div>
+            <div class="availability-item">
+              <h3>⏰ Response Time</h3>
+              <p>I typically respond to professional inquiries within 24-48 hours during business days.</p>
+              <div class="availability-tags">
+                <span class="tag">24-48h</span>
+                <span class="tag">Professional</span>
+              </div>
+            </div>
+            <div class="availability-item">
+              <h3>🌐 Remote Work</h3>
+              <p>Available for remote opportunities worldwide, with flexibility for different time zones.</p>
+              <div class="availability-tags">
+                <span class="tag">Remote</span>
+                <span class="tag">Global</span>
+                <span class="tag">Flexible</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Professional Interests -->
+        <section class="section">
+          <h2>Professional Interests</h2>
+          <div class="interests-grid">
+            <div class="interest-item">
+              <h3>🔴 Advanced Red Teaming</h3>
+              <p>Complex offensive operations, advanced evasion techniques, and sophisticated attack methodologies.</p>
+            </div>
+            <div class="interest-item">
+              <h3>🔬 Vulnerability Research</h3>
+              <p>Deep technical research, CVE discovery, and responsible disclosure practices.</p>
+            </div>
+            <div class="interest-item">
+              <h3>🛠️ Tool Development</h3>
+              <p>Custom offensive tools, C2 frameworks, and security research tooling.</p>
+            </div>
+            <div class="interest-item">
+              <h3>📚 Knowledge Sharing</h3>
+              <p>Technical presentations, research papers, and mentoring in offensive security.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <style>
+      /* Reset and base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      /* Header styles */
+      .header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2rem 0;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .back-link {
+        display: inline-block;
+        color: white;
+        text-decoration: none;
+        margin-bottom: 1rem;
+        font-weight: 500;
+        transition: opacity 0.3s ease;
+      }
+
+      .back-link:hover {
+        opacity: 0.8;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      }
+
+      .header p {
+        color: #e0e0e0;
+        font-size: 1.1rem;
+      }
+
+      /* Section styles */
+      .section {
+        background: rgba(255, 255, 255, 0.95);
+        margin-bottom: 2rem;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        backdrop-filter: blur(10px);
+      }
+
+      .section h2 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        color: #2d3748;
+        border-bottom: 3px solid #00ff88;
+        padding-bottom: 0.5rem;
+      }
+
+      /* Contact grid */
+      .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 1.5rem;
+      }
+
+      .contact-item {
+        background: rgba(0, 255, 136, 0.1);
+        padding: 2rem;
+        border-radius: 15px;
+        border: 1px solid rgba(0, 255, 136, 0.3);
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+
+      .contact-item:hover {
+        transform: translateY(-5px);
+      }
+
+      .contact-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .contact-item h3 {
+        color: #00cc6a;
+        margin-bottom: 0.5rem;
+        font-size: 1.3rem;
+      }
+
+      .contact-item a {
+        color: #00cc6a;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      .contact-item a:hover {
+        color: #00ff88;
+      }
+
+      .contact-item p {
+        color: #4a5568;
+        font-size: 0.9rem;
+      }
+
+      /* Contact form */
+      .contact-form {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #2d3748;
+        font-weight: 500;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid rgba(0, 255, 136, 0.3);
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+        background: white;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: #00ff88;
+      }
+
+      .submit-btn {
+        background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 25px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      }
+
+      /* Availability grid */
+      .availability-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 1.5rem;
+      }
+
+      .availability-item {
+        background: rgba(0, 255, 136, 0.1);
+        padding: 2rem;
+        border-radius: 15px;
+        border: 1px solid rgba(0, 255, 136, 0.3);
+      }
+
+      .availability-item h3 {
+        color: #00cc6a;
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+      }
+
+      .availability-item p {
+        color: #4a5568;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+
+      .availability-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .tag {
+        background: rgba(0, 255, 136, 0.2);
+        color: #00cc6a;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      /* Interests grid */
+      .interests-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 1.5rem;
+      }
+
+      .interest-item {
+        background: rgba(0, 255, 136, 0.1);
+        padding: 1.5rem;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 255, 136, 0.3);
+      }
+
+      .interest-item h3 {
+        color: #00cc6a;
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+      }
+
+      .interest-item p {
+        color: #4a5568;
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+        .header h1 {
+          font-size: 2rem;
+        }
+        .contact-grid {
+          grid-template-columns: 1fr;
+        }
+        .availability-grid {
+          grid-template-columns: 1fr;
+        }
+        .interests-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </body>
+</html> 
