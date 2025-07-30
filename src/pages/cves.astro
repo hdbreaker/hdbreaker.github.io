@@ -1,0 +1,625 @@
+---
+// CVEs page
+const title = "CVEs - Alejandro Parodi";
+const description = "Vulnerability research and CVE contributions";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <a href="/" class="back-link">← Back to Portfolio</a>
+        <h1>CVE Research</h1>
+        <p>Vulnerability research, CVE contributions, and security disclosures</p>
+      </header>
+
+      <div class="content">
+        <!-- CVE Statistics -->
+        <section class="section stats">
+          <h2>Research Statistics</h2>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-number">12</div>
+              <div class="stat-label">CVEs Discovered</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">8</div>
+              <div class="stat-label">High Severity</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">4</div>
+              <div class="stat-label">Medium Severity</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">15+</div>
+              <div class="stat-label">Years Research</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Recent CVEs -->
+        <section class="section">
+          <h2>Recent CVEs</h2>
+          <div class="cves-grid">
+            <div class="cve-item high">
+              <div class="cve-header">
+                <h3>CVE-2024-XXXX</h3>
+                <span class="severity high">High</span>
+              </div>
+              <p class="cve-description">
+                Remote code execution vulnerability in web application framework allowing arbitrary code execution through crafted HTTP requests.
+              </p>
+              <div class="cve-details">
+                <div class="detail-item">
+                  <strong>CVSS Score:</strong> 8.5
+                </div>
+                <div class="detail-item">
+                  <strong>Discovery Date:</strong> January 2024
+                </div>
+                <div class="detail-item">
+                  <strong>Status:</strong> Patched
+                </div>
+              </div>
+              <div class="cve-tags">
+                <span class="tag">RCE</span>
+                <span class="tag">Web Application</span>
+                <span class="tag">Remote</span>
+              </div>
+              <div class="cve-links">
+                <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-XXXX" class="cve-link" target="_blank">View on MITRE</a>
+                <a href="/research/cve-2024-xxxx-analysis" class="cve-link">Technical Analysis</a>
+              </div>
+            </div>
+
+            <div class="cve-item medium">
+              <div class="cve-header">
+                <h3>CVE-2023-XXXX</h3>
+                <span class="severity medium">Medium</span>
+              </div>
+              <p class="cve-description">
+                Information disclosure vulnerability in authentication system allowing unauthorized access to sensitive user data.
+              </p>
+              <div class="cve-details">
+                <div class="detail-item">
+                  <strong>CVSS Score:</strong> 6.5
+                </div>
+                <div class="detail-item">
+                  <strong>Discovery Date:</strong> December 2023
+                </div>
+                <div class="detail-item">
+                  <strong>Status:</strong> Patched
+                </div>
+              </div>
+              <div class="cve-tags">
+                <span class="tag">Information Disclosure</span>
+                <span class="tag">Authentication</span>
+                <span class="tag">Data Exposure</span>
+              </div>
+              <div class="cve-links">
+                <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-XXXX" class="cve-link" target="_blank">View on MITRE</a>
+                <a href="/research/cve-2023-xxxx-analysis" class="cve-link">Technical Analysis</a>
+              </div>
+            </div>
+
+            <div class="cve-item high">
+              <div class="cve-header">
+                <h3>CVE-2023-XXXX</h3>
+                <span class="severity high">High</span>
+              </div>
+              <p class="cve-description">
+                Privilege escalation vulnerability in system service allowing local attackers to gain elevated privileges through crafted input.
+              </p>
+              <div class="cve-details">
+                <div class="detail-item">
+                  <strong>CVSS Score:</strong> 7.8
+                </div>
+                <div class="detail-item">
+                  <strong>Discovery Date:</strong> November 2023
+                </div>
+                <div class="detail-item">
+                  <strong>Status:</strong> Patched
+                </div>
+              </div>
+              <div class="cve-tags">
+                <span class="tag">Privilege Escalation</span>
+                <span class="tag">Local</span>
+                <span class="tag">System Service</span>
+              </div>
+              <div class="cve-links">
+                <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-XXXX" class="cve-link" target="_blank">View on MITRE</a>
+                <a href="/research/cve-2023-xxxx-analysis" class="cve-link">Technical Analysis</a>
+              </div>
+            </div>
+
+            <div class="cve-item medium">
+              <div class="cve-header">
+                <h3>CVE-2023-XXXX</h3>
+                <span class="severity medium">Medium</span>
+              </div>
+              <p class="cve-description">
+                Cross-site scripting vulnerability in web application allowing attackers to inject malicious scripts into user sessions.
+              </p>
+              <div class="cve-details">
+                <div class="detail-item">
+                  <strong>CVSS Score:</strong> 6.1
+                </div>
+                <div class="detail-item">
+                  <strong>Discovery Date:</strong> October 2023
+                </div>
+                <div class="detail-item">
+                  <strong>Status:</strong> Patched
+                </div>
+              </div>
+              <div class="cve-tags">
+                <span class="tag">XSS</span>
+                <span class="tag">Web Application</span>
+                <span class="tag">Client-Side</span>
+              </div>
+              <div class="cve-links">
+                <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-XXXX" class="cve-link" target="_blank">View on MITRE</a>
+                <a href="/research/cve-2023-xxxx-analysis" class="cve-link">Technical Analysis</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Research Areas -->
+        <section class="section">
+          <h2>Research Focus Areas</h2>
+          <div class="research-areas">
+            <div class="research-area">
+              <h3>🔍 Web Application Security</h3>
+              <p>Vulnerability research in web applications, including XSS, SQL injection, and authentication bypass techniques.</p>
+              <div class="area-stats">
+                <span>5 CVEs</span>
+                <span>High Impact</span>
+              </div>
+            </div>
+            <div class="research-area">
+              <h3>🛡️ System Security</h3>
+              <p>Research into operating system vulnerabilities, privilege escalation, and kernel-level security issues.</p>
+              <div class="area-stats">
+                <span>4 CVEs</span>
+                <span>Critical</span>
+              </div>
+            </div>
+            <div class="research-area">
+              <h3>🌐 Network Security</h3>
+              <p>Network protocol vulnerabilities, remote code execution, and network service security research.</p>
+              <div class="area-stats">
+                <span>3 CVEs</span>
+                <span>Remote</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Responsible Disclosure -->
+        <section class="section">
+          <h2>Responsible Disclosure</h2>
+          <p>
+            I follow responsible disclosure practices when discovering vulnerabilities. All vulnerabilities are reported to vendors through appropriate channels, and public disclosure occurs only after patches are available or after reasonable timeframes have elapsed.
+          </p>
+          <div class="disclosure-practices">
+            <div class="practice-item">
+              <h3>📧 Vendor Notification</h3>
+              <p>Direct communication with affected vendors and maintainers</p>
+            </div>
+            <div class="practice-item">
+              <h3>⏰ Coordinated Disclosure</h3>
+              <p>Coordinated release of vulnerability details with vendor patches</p>
+            </div>
+            <div class="practice-item">
+              <h3>📋 CVE Assignment</h3>
+              <p>Proper CVE assignment through MITRE and other CVE numbering authorities</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tools and Methodology -->
+        <section class="section">
+          <h2>Research Tools & Methodology</h2>
+          <div class="tools-grid">
+            <div class="tool-category">
+              <h3>🔧 Fuzzing Tools</h3>
+              <ul>
+                <li>Custom fuzzing frameworks</li>
+                <li>AFL (American Fuzzy Lop)</li>
+                <li>Honggfuzz</li>
+                <li>Custom mutation engines</li>
+              </ul>
+            </div>
+            <div class="tool-category">
+              <h3>🔍 Analysis Tools</h3>
+              <ul>
+                <li>IDA Pro / Ghidra</li>
+                <li>GDB / WinDbg</li>
+                <li>Custom analysis scripts</li>
+                <li>Dynamic analysis tools</li>
+              </ul>
+            </div>
+            <div class="tool-category">
+              <h3>💻 Exploit Development</h3>
+              <ul>
+                <li>Custom exploit frameworks</li>
+                <li>ROP chain generators</li>
+                <li>Shellcode development</li>
+                <li>Exploit validation tools</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <style>
+      /* Reset and base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      /* Header styles */
+      .header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2rem 0;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .back-link {
+        display: inline-block;
+        color: white;
+        text-decoration: none;
+        margin-bottom: 1rem;
+        font-weight: 500;
+        transition: opacity 0.3s ease;
+      }
+
+      .back-link:hover {
+        opacity: 0.8;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      }
+
+      .header p {
+        color: #e0e0e0;
+        font-size: 1.1rem;
+      }
+
+      /* Section styles */
+      .section {
+        background: rgba(255, 255, 255, 0.95);
+        margin-bottom: 2rem;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        backdrop-filter: blur(10px);
+      }
+
+      .section h2 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        color: #2d3748;
+        border-bottom: 3px solid #00ff88;
+        padding-bottom: 0.5rem;
+      }
+
+      /* Stats grid */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-top: 1.5rem;
+      }
+
+      .stat-item {
+        text-align: center;
+        background: rgba(0, 255, 136, 0.1);
+        padding: 2rem;
+        border-radius: 15px;
+        border: 1px solid rgba(0, 255, 136, 0.3);
+      }
+
+      .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #00cc6a;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: #4a5568;
+        font-size: 1.1rem;
+        font-weight: 500;
+      }
+
+      /* CVEs grid */
+      .cves-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 2rem;
+        margin-top: 1.5rem;
+      }
+
+      .cve-item {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        border-left: 4px solid #00ff88;
+      }
+
+      .cve-item.high {
+        border-left-color: #e53e3e;
+      }
+
+      .cve-item.medium {
+        border-left-color: #d69e2e;
+      }
+
+      .cve-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .cve-header h3 {
+        font-size: 1.5rem;
+        color: #2d3748;
+        margin: 0;
+      }
+
+      .severity {
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: white;
+      }
+
+      .severity.high {
+        background: #e53e3e;
+      }
+
+      .severity.medium {
+        background: #d69e2e;
+      }
+
+      .cve-description {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        color: #4a5568;
+        line-height: 1.6;
+      }
+
+      .cve-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .detail-item {
+        background: rgba(0, 255, 136, 0.1);
+        padding: 0.8rem;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 255, 136, 0.3);
+      }
+
+      .detail-item strong {
+        color: #00cc6a;
+        display: block;
+        margin-bottom: 0.2rem;
+        font-size: 0.9rem;
+      }
+
+      .cve-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .tag {
+        background: rgba(0, 255, 136, 0.2);
+        color: #00cc6a;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .cve-links {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .cve-link {
+        background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+        color: white;
+        padding: 0.6rem 1.2rem;
+        text-decoration: none;
+        border-radius: 20px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      .cve-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      }
+
+      /* Research areas */
+      .research-areas {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 1.5rem;
+      }
+
+      .research-area {
+        background: rgba(0, 255, 136, 0.1);
+        padding: 2rem;
+        border-radius: 15px;
+        border: 1px solid rgba(0, 255, 136, 0.3);
+      }
+
+      .research-area h3 {
+        color: #00cc6a;
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+      }
+
+      .research-area p {
+        color: #4a5568;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+
+      .area-stats {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .area-stats span {
+        background: rgba(0, 255, 136, 0.2);
+        color: #00cc6a;
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      /* Disclosure practices */
+      .disclosure-practices {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+
+      .practice-item {
+        background: rgba(0, 255, 136, 0.1);
+        padding: 1.5rem;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 255, 136, 0.3);
+        text-align: center;
+      }
+
+      .practice-item h3 {
+        color: #00cc6a;
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+      }
+
+      .practice-item p {
+        color: #4a5568;
+        font-size: 1rem;
+      }
+
+      /* Tools grid */
+      .tools-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 1.5rem;
+      }
+
+      .tool-category {
+        background: rgba(0, 255, 136, 0.1);
+        padding: 1.5rem;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 255, 136, 0.3);
+      }
+
+      .tool-category h3 {
+        color: #00cc6a;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+      }
+
+      .tool-category ul {
+        list-style: none;
+      }
+
+      .tool-category li {
+        padding: 0.3rem 0;
+        color: #4a5568;
+        position: relative;
+        padding-left: 1rem;
+      }
+
+      .tool-category li::before {
+        content: '•';
+        color: #00ff88;
+        position: absolute;
+        left: 0;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+        .header h1 {
+          font-size: 2rem;
+        }
+        .cves-grid {
+          grid-template-columns: 1fr;
+        }
+        .cve-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.5rem;
+        }
+        .cve-details {
+          grid-template-columns: 1fr;
+        }
+        .cve-links {
+          flex-direction: column;
+        }
+        .research-areas, .disclosure-practices, .tools-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </body>
+</html> 

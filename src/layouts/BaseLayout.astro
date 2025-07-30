@@ -1,0 +1,35 @@
+---
+import type { SiteMeta } from '@/types'
+
+import BaseHead from '@/components/BaseHead.astro'
+import Footer from '@/components/layout/Footer.astro'
+import Header from '@/components/layout/Header.astro'
+import ThemeProvider from '@/components/ThemeProvider.astro'
+
+import { siteConfig } from '@/site-config'
+
+interface Props {
+	meta: SiteMeta
+}
+
+const {
+	meta: { articleDate, description = siteConfig.description, ogImage, title }
+} = Astro.props
+---
+
+<html lang={siteConfig.lang} class=''>
+	<head>
+		<BaseHead articleDate={articleDate} description={description} ogImage={ogImage} title={title} />
+	</head>
+
+	<body class='flex justify-center bg-[#0A0A0A] text-[#F5F5F5]'>
+		<ThemeProvider />
+		<main
+			class='flex min-h-screen w-screen max-w-[70rem] flex-col items-center px-8 pb-16 pt-8 font-satoshi text-[0.92rem] leading-relaxed sm:px-12 lg:px-16'
+		>
+			<Header />
+			<slot />
+			<Footer />
+		</main>
+	</body>
+</html>

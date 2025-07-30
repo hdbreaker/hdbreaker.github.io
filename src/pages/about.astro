@@ -1,0 +1,192 @@
+---
+import PageLayout from '@/layouts/BaseLayout.astro'
+import Section from '@/components/Section.astro'
+import Card from '@/components/Card.astro'
+import Button from '@/components/Button.astro'
+
+const title = "About - Alejandro Parodi";
+const description = "Offensive Security Engineer, Red Teamer, and Founder with over 10 years of experience";
+---
+
+<PageLayout meta={{ title: 'About' }}>
+	<div class='w-full'>
+		<Button title='Back' href='/' style='button' class='bg-[#57FD6B]/10 border-[#57FD6B]/30 text-[#57FD6B] hover:bg-[#57FD6B]/20'>
+			<svg
+				xmlns='http://www.w3.org/2000/svg'
+				width='14'
+				height='14'
+				viewBox='0 0 24 24'
+				slot='icon-before'
+			>
+				<path
+					fill='currentColor'
+					d='m6.921 12.5l5.792 5.792L12 19l-7-7l7-7l.713.708L6.921 11.5H19v1z'
+				>
+				</path>
+			</svg>
+		</Button>
+
+		<div class='mt-8 flex w-full flex-col gap-y-12'>
+			<!-- Hero Section -->
+			<div class='relative w-full overflow-hidden rounded-2xl bg-gradient-to-br from-[#1A1A1A] to-[#0A0A0A] border border-[#57FD6B]/20 shadow-volt-soft'>
+				<div class='absolute inset-0 bg-gradient-to-r from-[#57FD6B]/5 to-transparent'></div>
+				<div class='relative px-8 py-16 sm:px-12 sm:py-20'>
+					<div class='flex flex-col items-center text-center gap-y-8'>
+						<div class='relative'>
+							<div class='w-32 h-32 rounded-full border-4 border-[#57FD6B]/50 overflow-hidden bg-gradient-to-br from-[#2A2A2A] to-[#1A1A1A] drop-shadow-volt'>
+								<img 
+									src='/src/assets/wolf.png' 
+									alt='Wolf Profile' 
+									class='w-full h-full object-cover'
+								/>
+							</div>
+							<div class='absolute inset-0 rounded-full border-4 border-[#57FD6B]/20 animate-pulse-glow'></div>
+						</div>
+
+						<div class='flex flex-col items-center gap-y-6'>
+							<h1 class='text-4xl font-bold text-[#F5F5F5] sm:text-5xl'>Alejandro Parodi</h1>
+							<p class='text-xl text-[#A0A0A0] font-medium'>Offensive Security Engineer & Founder</p>
+							<p class='text-lg text-[#A0A0A0] max-w-2xl'>
+								Offensive Security Engineer, Red Teamer, and Founder with over 10 years of hands-on experience in cybersecurity, 
+								deep tech, and startup building. Currently building <strong class='text-[#57FD6B]'>Volt AI</strong> to secure the next wave of AI-powered technologies.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Personal Background -->
+			<Section title='Personal Background' class='mb-8'>
+				<p class='text-[#A0A0A0] text-lg leading-relaxed'>
+					I'm a 32-year-old Argentine cybersecurity professional with a passion for offensive security. My journey began over a decade ago, 
+					working with leading companies in Argentina and the United States. I've participated in research groups in the United States, 
+					contributed to CVEs, and have strong experience in real red teaming: initial access, lateral movement, persistence, and evasion.
+				</p>
+			</Section>
+
+			<!-- Professional Journey -->
+			<Section title='Professional Journey' class='mb-8'>
+				<div class='flex flex-col gap-y-8'>
+					<Card
+						heading='Early Career'
+						subheading='Include Security, VerSprite, Faraday'
+						date='2013 - 2018'
+						class='border-[#57FD6B]/20 hover:border-[#57FD6B]/40 transition-all'
+					>
+						<ul class='ml-4 list-disc text-[#A0A0A0] space-y-2'>
+							<li>Conducted red team engagements and penetration testing</li>
+							<li>Specialized in web application and network security</li>
+							<li>Participated in research groups and contributed to CVEs</li>
+							<li>Developed custom offensive tools and methodologies</li>
+						</ul>
+					</Card>
+					<Card
+						heading='Hackmetrix'
+						subheading='Co-Founder & CTO'
+						date='2018 - 2022'
+						class='border-[#57FD6B]/20 hover:border-[#57FD6B]/40 transition-all'
+					>
+						<ul class='ml-4 list-disc text-[#A0A0A0] space-y-2'>
+							<li>Co-founded cybersecurity startup that raised $3M in venture capital</li>
+							<li>Expanded operations to 7 countries across Latin America</li>
+							<li>Reached $3M in annual recurring revenue (ARR)</li>
+							<li>Led the Offensive Security division managing technical teams</li>
+							<li>Translated business risks into real-world attack simulations</li>
+						</ul>
+					</Card>
+					<Card
+						heading='Return to Technical Focus'
+						subheading='Volt AI & Independent Research'
+						date='2023 - Present'
+						class='border-[#57FD6B]/20 hover:border-[#57FD6B]/40 transition-all'
+					>
+						<ul class='ml-4 list-disc text-[#A0A0A0] space-y-2'>
+							<li>Building Volt AI to secure AI-powered technologies</li>
+							<li>Developing Nimhawk C4 framework in Nim</li>
+							<li>Contributing to research groups and CVE discovery</li>
+							<li>Specializing in EDR evasion and OPSEC techniques</li>
+							<li>Seeking collaboration with high-level offensive teams</li>
+						</ul>
+					</Card>
+				</div>
+			</Section>
+
+			<!-- Current Focus -->
+			<Section title='Current Focus' class='mb-8'>
+				<div class='grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-8'>
+					<div class='flex flex-col gap-y-4'>
+						<h3 class='text-xl font-semibold text-[#F5F5F5]'>Red Team Operations</h3>
+						<ul class='ml-4 list-disc text-[#A0A0A0] space-y-2'>
+							<li>Initial Access techniques</li>
+							<li>Lateral Movement strategies</li>
+							<li>Persistence mechanisms</li>
+							<li>OPSEC best practices</li>
+						</ul>
+					</div>
+					<div class='flex flex-col gap-y-4'>
+						<h3 class='text-xl font-semibold text-[#F5F5F5]'>Low-level R&D</h3>
+						<ul class='ml-4 list-disc text-[#A0A0A0] space-y-2'>
+							<li>Exploit development</li>
+							<li>Direct Syscalls</li>
+							<li>Reflective loaders</li>
+							<li>Injection techniques</li>
+						</ul>
+					</div>
+					<div class='flex flex-col gap-y-4'>
+						<h3 class='text-xl font-semibold text-[#F5F5F5]'>Custom C2 Development</h3>
+						<ul class='ml-4 list-disc text-[#A0A0A0] space-y-2'>
+							<li>Nimhawk framework</li>
+							<li>Multi-platform support</li>
+							<li>Encrypted communication</li>
+							<li>Advanced evasion techniques</li>
+						</ul>
+					</div>
+					<div class='flex flex-col gap-y-4'>
+						<h3 class='text-xl font-semibold text-[#F5F5F5]'>AI Security</h3>
+						<ul class='ml-4 list-disc text-[#A0A0A0] space-y-2'>
+							<li>Volt AI company</li>
+							<li>AI model security</li>
+							<li>Infrastructure protection</li>
+							<li>Secure-by-default design</li>
+						</ul>
+					</div>
+				</div>
+			</Section>
+
+			<!-- Contact CTA -->
+			<Section title='Get in Touch' class='mb-8'>
+				<div class='text-center'>
+					<p class='text-[#A0A0A0] text-lg leading-relaxed mb-8'>
+						Interested in collaborating on offensive security, red teaming, or building something meaningful in cybersecurity or AI? Let's connect.
+					</p>
+					<div class='flex flex-col sm:flex-row gap-4 justify-center'>
+						<a
+							href='https://www.linkedin.com/in/alejandroparodi/'
+							target='_blank'
+							class='inline-flex flex-row items-center gap-x-3 rounded-3xl border border-[#57FD6B]/30 bg-[#57FD6B]/10 px-6 py-3 text-sm shadow-sm transition-all hover:shadow-volt-glow hover:bg-[#57FD6B]/20'
+						>
+							<p class='font-medium text-[#57FD6B]'>Connect on LinkedIn</p>
+						</a>
+						<a
+							href='https://github.com/hdbreaker'
+							target='_blank'
+							class='inline-flex flex-row items-center gap-x-3 rounded-3xl border border-[#57FD6B]/30 bg-[#57FD6B]/10 px-6 py-3 text-sm shadow-sm transition-all hover:shadow-volt-glow hover:bg-[#57FD6B]/20'
+						>
+							<p class='font-medium text-[#57FD6B]'>View GitHub</p>
+						</a>
+					</div>
+				</div>
+			</Section>
+		</div>
+	</div>
+</PageLayout>
+
+<style>
+  .bg-gradient-radial {
+    background: radial-gradient(circle, var(--tw-gradient-stops));
+  }
+
+  .drop-shadow-volt {
+    filter: drop-shadow(0 0 8px rgba(87,253,107,0.5));
+  }
+</style> 

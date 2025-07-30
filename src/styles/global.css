@@ -1,0 +1,368 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Variables CSS personalizadas */
+:root {
+  --color-dark-primary: #0f111a;
+  --color-dark-secondary: #181b2a;
+  --color-volt: #57fd6b;
+  --color-volt-soft: rgba(87, 253, 107, 0.15);
+  --color-text-primary: #f7f8fa;
+  --color-text-secondary: rgba(247, 248, 250, 0.7);
+}
+
+/* Estilos base personalizados */
+@layer base {
+  html {
+    font-family: "DM Sans", sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-dark-primary text-text-primary antialiased;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+/* Componentes personalizados */
+@layer components {
+  .scroll-animate {
+    @apply opacity-0 transform translate-y-8;
+    transition: all 0.6s ease-out;
+  }
+
+  .animate-slide-up {
+    @apply opacity-100 transform translate-y-0;
+  }
+
+  /* Clases de utilidad críticas para colores */
+  .bg-dark-primary {
+    background-color: var(--color-dark-primary);
+  }
+
+  .bg-dark-secondary {
+    background-color: var(--color-dark-secondary);
+  }
+
+  .text-text-primary {
+    color: var(--color-text-primary);
+  }
+
+  .text-text-secondary {
+    color: var(--color-text-secondary);
+  }
+
+  .text-volt {
+    color: var(--color-volt);
+  }
+
+  /* Clases de utilidad para bordes con opacidad */
+  .border-volt\/10 {
+    border-color: rgba(87, 253, 107, 0.1);
+  }
+
+  .border-volt\/20 {
+    border-color: rgba(87, 253, 107, 0.2);
+  }
+
+  .border-volt\/30 {
+    border-color: rgba(87, 253, 107, 0.3);
+  }
+
+  .border-volt\/40 {
+    border-color: rgba(87, 253, 107, 0.4);
+  }
+
+  /* Clases de utilidad para fondos con opacidad */
+  .bg-volt\/5 {
+    background-color: rgba(87, 253, 107, 0.05);
+  }
+
+  .bg-volt\/10 {
+    background-color: rgba(87, 253, 107, 0.1);
+  }
+
+  .bg-volt\/15 {
+    background-color: rgba(87, 253, 107, 0.15);
+  }
+
+  .bg-volt\/20 {
+    background-color: rgba(87, 253, 107, 0.2);
+  }
+
+  .bg-volt\/30 {
+    background-color: rgba(87, 253, 107, 0.3);
+  }
+
+  .text-volt\/80 {
+    color: rgba(87, 253, 107, 0.8);
+  }
+
+  .text-volt\/90 {
+    color: rgba(87, 253, 107, 0.9);
+  }
+
+  /* Clases de utilidad para emerald */
+  .bg-emerald-400\/10 {
+    background-color: rgba(74, 222, 128, 0.1);
+  }
+
+  .bg-emerald-400\/15 {
+    background-color: rgba(74, 222, 128, 0.15);
+  }
+
+  .bg-emerald-400\/20 {
+    background-color: rgba(74, 222, 128, 0.2);
+  }
+
+  .border-emerald-400\/30 {
+    border-color: rgba(74, 222, 128, 0.3);
+  }
+
+  .border-emerald-400\/40 {
+    border-color: rgba(74, 222, 128, 0.4);
+  }
+
+  .text-emerald-400 {
+    color: #4ade80;
+  }
+
+  /* Clases de utilidad para texto con opacidad */
+  .text-text-secondary\/70 {
+    color: rgba(247, 248, 250, 0.7);
+  }
+
+  .text-text-secondary\/80 {
+    color: rgba(247, 248, 250, 0.8);
+  }
+
+  /* Clases de utilidad para fondos con opacidad */
+  .bg-dark-primary\/20 {
+    background-color: rgba(15, 17, 26, 0.2);
+  }
+
+  .bg-dark-primary\/50 {
+    background-color: rgba(15, 17, 26, 0.5);
+  }
+
+  .bg-dark-primary\/80 {
+    background-color: rgba(15, 17, 26, 0.8);
+  }
+
+  .bg-dark-secondary\/30 {
+    background-color: rgba(24, 27, 42, 0.3);
+  }
+
+  .bg-dark-secondary\/50 {
+    background-color: rgba(24, 27, 42, 0.5);
+  }
+
+  .bg-dark-secondary\/90 {
+    background-color: rgba(24, 27, 42, 0.9);
+  }
+
+  .bg-dark-secondary\/95 {
+    background-color: rgba(24, 27, 42, 0.95);
+  }
+
+  /* Clases de utilidad para bordes blancos */
+  .border-white\/10 {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .text-white\/40 {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* Gradientes personalizados */
+  .bg-gradient-radial {
+    background: radial-gradient(circle, var(--tw-gradient-stops));
+  }
+
+  /* Sombras personalizadas */
+  .drop-shadow-volt {
+    filter: drop-shadow(0 0 8px rgba(87,253,107,0.5));
+  }
+
+  .shadow-volt-glow {
+    box-shadow: 0 0 40px rgba(87,253,107,0.6);
+  }
+
+  .shadow-volt-soft {
+    box-shadow: 0 0 20px rgba(87,253,107,0.3);
+  }
+
+  /* Animaciones personalizadas */
+  .animate-float-slow {
+    animation: float-slow 6s ease-in-out infinite;
+  }
+
+  .animate-float-medium {
+    animation: float-medium 4s ease-in-out infinite;
+  }
+
+  .animate-float-fast {
+    animation: float-fast 3s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-neon-slide {
+    animation: neon-slide 3s ease-in-out infinite;
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 20s linear infinite;
+  }
+
+  .animate-spin-reverse {
+    animation: spin-reverse 15s linear infinite;
+  }
+
+  /* Delays para animaciones */
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .delay-500 {
+    animation-delay: 500ms;
+  }
+
+  .delay-700 {
+    animation-delay: 700ms;
+  }
+
+  .delay-1000 {
+    animation-delay: 1000ms;
+  }
+
+  .delay-1500 {
+    animation-delay: 1500ms;
+  }
+}
+
+/* Media queries para responsive */
+@media (max-width: 768px) {
+  .md\:hidden {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:flex {
+    display: flex;
+  }
+
+  .md\:block {
+    display: block;
+  }
+
+  .md\:text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .md\:text-5xl {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .md\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:px-24 {
+    padding-left: 6rem;
+    padding-right: 6rem;
+  }
+
+  .lg\:text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .lg\:text-5xl {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .lg\:text-6xl {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+
+  .lg\:text-7xl {
+    font-size: 4.5rem;
+    line-height: 1;
+  }
+}
+
+/* Estilos de selección */
+::selection {
+  background-color: rgba(87, 253, 107, 0.3);
+  color: #f7f8fa;
+}
+
+::-moz-selection {
+  background-color: rgba(87, 253, 107, 0.3);
+  color: #f7f8fa;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f111a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #57fd6b, #4ade80);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #4ade80, #57fd6b);
+}
+
+/* Focus states */
+*:focus {
+  outline: 2px solid #57fd6b;
+  outline-offset: 2px;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Smooth transitions */
+* {
+  transition: all 0.3s ease;
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+} 

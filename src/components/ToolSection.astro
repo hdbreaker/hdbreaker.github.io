@@ -1,0 +1,95 @@
+---
+import { cn } from '@/utils'
+import { Icon } from 'astro-icon/components'
+
+interface Props {
+	class?: string
+	title?: string
+	tools: {
+		name: string
+		description: string
+		href: string
+		iconPath?: string
+		iconSvg?: string
+		iconBgColour: string
+		status?: string
+		tech?: string[]
+	}[]
+}
+const { class: className, title, tools, ...props } = Astro.props
+---
+
+<div
+	class={cn(
+		className,
+		'flex flex-col rounded-xl border border-[#57FD6B]/20 bg-[#1A1A1A]/50 py-6 px-4 gap-y-6 backdrop-blur-sm'
+	)}
+	{...props}
+>
+	{title && <h2 class='px-2 text-xl font-semibold text-[#F5F5F5]'>{title}</h2>}
+	<div class='flex flex-col gap-y-4'>
+		{
+			tools.map((tool) => (
+				<a
+					class='group relative hover:bg-transparent transition-all duration-300'
+					href={tool.href}
+					id={tool.name}
+					target='_blank'
+				>
+					<div class='relative flex flex-col px-4 py-4 transition-all hover:bg-[#57FD6B]/5 rounded-lg border border-[#57FD6B]/10 hover:border-[#57FD6B]/30'>
+						{/* Status tag arriba a la derecha */}
+						{tool.status && (
+							<div class='absolute top-4 right-4'>
+								<span class='px-2 py-1 text-xs font-medium rounded-full bg-[#57FD6B]/10 text-[#57FD6B] border border-[#57FD6B]/30'>
+									{tool.status}
+								</span>
+							</div>
+						)}
+						
+						{/* Main content area */}
+						<div class='flex flex-row items-center gap-x-6'>
+							<div class='flex-shrink-0'>
+								{tool.iconSvg ? (
+									<div 
+										class='h-12 w-12 rounded-lg p-2 flex items-center justify-center' 
+										style={`background-color: ${tool.iconBgColour}`}
+										set:html={tool.iconSvg}
+									/>
+								) : (
+									<Icon 
+										name={tool.iconPath} 
+										class='h-12 w-12 rounded-lg p-2' 
+										style={`background-color: ${tool.iconBgColour}`}
+									/>
+								)}
+							</div>
+							<div class='flex-1 flex flex-col gap-y-2'>
+								<h3 class='font-semibold text-[#F5F5F5] text-lg pr-20'>{tool.name}</h3>
+								<p class='text-[#A0A0A0] leading-relaxed'>{tool.description}</p>
+								{tool.tech && (
+									<div class='flex flex-wrap gap-x-2 gap-y-1'>
+										{tool.tech.map((tech) => (
+											<span class='px-2 py-1 text-xs font-medium rounded-full bg-[#57FD6B]/5 text-[#57FD6B]/80 border border-[#57FD6B]/20'>
+												{tech}
+											</span>
+										))}
+									</div>
+								)}
+							</div>
+							<div class='flex-shrink-0'>
+								<svg 
+									class='h-5 w-5 text-[#57FD6B] opacity-0 group-hover:opacity-100 transition-opacity' 
+									fill='none' 
+									stroke='currentColor' 
+									viewBox='0 0 24 24'
+								>
+									<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14' />
+								</svg>
+							</div>
+						</div>
+					</div>
+				</a>
+			))
+		}
+	</div>
+</div>
