@@ -24,7 +24,11 @@ const allPosts = await getAllPosts()
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 ---
 
-<PageLayout meta={{ title: 'Home' }}>
+<PageLayout meta={{ 
+	title: 'Alejandro Parodi - Offensive Security Engineer & Founder',
+	description: 'Offensive Security Engineer, Red Teamer, and Founder with 10+ years experience. Currently building Volt AI. CVE researcher, Nimhawk developer, and cybersecurity expert.',
+	ogImage: '/social-card.png'
+}}>
 	<!-- Hero Banner -->
 	<div class='relative w-full mb-20 overflow-hidden rounded-2xl bg-gradient-to-br from-[#1A1A1A] to-[#0A0A0A] border border-[#57FD6B]/20 shadow-volt-soft'>
 		<div class='absolute inset-0 bg-gradient-to-r from-[#57FD6B]/5 to-transparent'></div>

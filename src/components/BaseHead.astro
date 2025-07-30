@@ -45,9 +45,7 @@ const socialImageURL = new URL(ogImage ? ogImage : '/social-card.png', Astro.url
 <meta content={siteTitle} name='title' />
 <meta content={description} name='description' />
 <meta content={siteConfig.author} name='author' />
-
-{/* Font Awesome */}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<meta content='cybersecurity,offensive security,red team,penetration testing,vulnerability research,CVE,Nimhawk,Volt AI' name='keywords' />
 
 {/* Theme Colour */}
 <meta content='' name='theme-color' />
@@ -77,6 +75,13 @@ const socialImageURL = new URL(ogImage ? ogImage : '/social-card.png', Astro.url
 <meta content={title} property='twitter:title' />
 <meta content={description} property='twitter:description' />
 <meta content={socialImageURL} property='twitter:image' />
+<meta content={siteConfig.author} property='twitter:creator' />
+<meta content={siteConfig.author} property='twitter:site' />
+
+{/* LinkedIn specific */}
+<meta content={siteConfig.author} property='profile:first_name' />
+<meta content='Offensive Security Engineer & Founder' property='profile:username' />
+<meta content={description} property='article:summary' />
 
 {/* Sitemap */}
 <link href='/sitemap-index.xml' rel='sitemap' />
