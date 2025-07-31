@@ -2,7 +2,7 @@
 title: "Mercury Browser Intent Hijacking: Android File Manager RCE"
 publishDate: "2017-06-15"
 description: "Critical intent hijacking vulnerability in Mercury Browser for Android enabling arbitrary file upload and code execution through file manager abuse."
-tags: ["android", "intent-hijacking", "mobile-security", "mercury-browser", "file-upload", "directory-traversal", "vulnerability", "exploit"]
+tags: ["android", "intent", "mobile", "mercury", "rce", "vulnerability", "browser", "exploit"]
 draft: false
 ---
 
