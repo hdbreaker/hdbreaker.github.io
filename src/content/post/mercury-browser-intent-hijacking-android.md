@@ -12,8 +12,6 @@ During our comprehensive security assessment of popular Android applications, we
 
 The vulnerability leverages Mercury Browser's exported activities and intent handlers to bypass normal security restrictions, allowing remote attackers to upload malicious files to specific device locations and trigger their execution through the browser's integrated file manager.
 
-![Mercury Browser Vulnerability](/assets/blog/mercury-browser-vulnerability.png)
-
 ## Vulnerability Discovery
 
 ### Research Context
