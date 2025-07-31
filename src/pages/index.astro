@@ -314,7 +314,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 					</div>
 					<h3 class='text-sm font-semibold text-[#F5F5F5]/70 mb-2'>Always searching for new ones.</h3>
 					<p class='text-xs text-[#A0A0A0]/70 mb-3 flex-grow'>Active vulnerability research in progress across multiple target platforms and applications.</p>
-					<span class='text-xs text-[#57FD6B]/70 mt-auto'>Stay tuned...</span>
+					<span class='text-xs text-[#57FD6B]/70 mt-auto'>Coming soon...</span>
 				</div>
 
 				<!-- CVE-TBD-002 - Coming Soon -->
@@ -342,27 +342,40 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 				
 				<div class='grid grid-cols-1 md:grid-cols-2 gap-4'>
 					<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-xl p-4 text-center'>
-						<div class='text-2xl font-bold text-[#57FD6B] mb-1'>$5,000</div>
-						<div class='text-[#F5F5F5] font-medium mb-1'>MercadoLibre</div>
+						<div class='flex justify-center mb-3'>
+							<div class='w-32 h-20 bg-white rounded-lg border border-[#57FD6B]/30 flex items-center justify-center p-1 overflow-hidden'>
+								<img 
+									src='/assets/blog/meli.jpg' 
+									alt='Mercado Libre' 
+									class='w-40 h-28 object-contain'
+								/>
+							</div>
+						</div>
+						<div class='text-[#F5F5F5] font-medium mb-1'>Mercado libre</div>
 						<div class='text-xs text-[#A0A0A0]'>Multiple vulnerabilities discovered</div>
 					</div>
 					
 					<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-xl p-4 text-center'>
-						<div class='text-2xl font-bold text-[#57FD6B] mb-1'>$2,000</div>
+						<div class='flex justify-center mb-3'>
+							<div class='w-32 h-20 bg-white rounded-lg border border-[#57FD6B]/30 flex items-center justify-center p-3'>
+								<img 
+									src='/assets/blog/yahoo.png' 
+									alt='Yahoo' 
+									class='max-w-full max-h-full object-contain'
+								/>
+							</div>
+						</div>
 						<div class='text-[#F5F5F5] font-medium mb-1'>Yahoo</div>
 						<div class='text-xs text-[#A0A0A0]'>Critical security findings</div>
 					</div>
 				</div>
 				
 				<div class='text-center mt-4'>
-					<div class='text-lg font-bold text-[#F5F5F5] mb-1'>
-						Total: <span class='text-[#57FD6B]'>$7,000+ USD</span>
-					</div>
 					<p class='text-[#A0A0A0] text-sm'>
 						I don’t do side projects — I do side payloads.
 					</p>
 					<p class='text-[#A0A0A0] text-sm'>
-						Some of my work can't be showed due NDAs.
+						Some of my work can't be showed due to NDAs.
 					</p>
 				</div>
 			</div>
@@ -421,8 +434,8 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 								<p class='text-sm text-[#A0A0A0]'>Academic institutions and major platforms</p>
 							</div>
 							<div class='flex flex-col gap-y-1'>
-								<span class='text-sm text-[#57FD6B]'>Stored XSS in MercadoPago allows admin account takeover - MercadoLibre (2021)</span>
-								<span class='text-sm text-[#57FD6B]'>IDOR in QR Systems allows Payment Manipulation - MercadoLibre (2020)</span>
+								<span class='text-sm text-[#57FD6B]'>Stored XSS in MercadoPago allows admin account takeover - Mercado libre (2021)</span>
+								<span class='text-sm text-[#57FD6B]'>IDOR in QR Systems allows Payment Manipulation - Mercado libre (2020)</span>
 								<span class='text-sm text-[#57FD6B]'>Remote Code Execution - MIT (2015)</span>
 								<span class='text-sm text-[#57FD6B]'>Arbitrary File Download - MIT (2015)</span>
 								<span class='text-sm text-[#57FD6B]'>Cross Site Scripting - MIT (2015)</span>
