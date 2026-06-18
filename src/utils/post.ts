@@ -8,6 +8,25 @@ export async function getAllPosts() {
 	})
 }
 
+/**
+ * Posts that should surface in listings (blog index, RSS, tag pages).
+ * Excludes posts flagged `listed: false` — e.g. inner chapters of a series
+ * and alternate-language versions, which are reachable via their own route
+ * and the in-post series/language navigation, but not listed on their own.
+ */
+export async function getListedPosts() {
+	const posts = await getAllPosts()
+	return posts.filter((post) => post.data.listed !== false)
+}
+
+/** Chapters of a given series, in the given language, sorted by chapter order. */
+export async function getSeriesPosts(series: string, lang: 'en' | 'es') {
+	const posts = await getAllPosts()
+	return posts
+		.filter((post) => post.data.series === series && (post.data.lang ?? 'en') === lang)
+		.sort((a, b) => (a.data.seriesOrder ?? 0) - (b.data.seriesOrder ?? 0))
+}
+
 export function sortMDByDate(posts: Array<CollectionEntry<'post'>>) {
 	return posts.sort((a, b) => {
 		const aDate = new Date(a.data.updatedDate ?? a.data.publishDate).valueOf()
