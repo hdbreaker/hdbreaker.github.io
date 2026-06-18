@@ -1,0 +1,111 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { getSeriesPosts } from '@/utils'
+
+interface Props {
+	post: CollectionEntry<'post'>
+	/** 'top' renders the language tab + chapter index; 'bottom' renders prev/next. */
+	position?: 'top' | 'bottom'
+}
+
+const { post, position = 'top' } = Astro.props
+const { series, seriesOrder, lang = 'en', altSlug } = post.data
+
+// Only render when the post is part of a series.
+const chapters = series ? await getSeriesPosts(series, lang) : []
+const currentIndex = chapters.findIndex((c) => c.slug === post.slug)
+const prev = currentIndex > 0 ? chapters[currentIndex - 1] : undefined
+const next =
+	currentIndex >= 0 && currentIndex < chapters.length - 1 ? chapters[currentIndex + 1] : undefined
+
+const t = {
+	en: { series: 'In this series', prev: 'Previous', next: 'Next', readIn: 'Read in' },
+	es: { series: 'En esta serie', prev: 'Anterior', next: 'Siguiente', readIn: 'Leer en' }
+}[lang]
+---
+
+{
+	series && position === 'top' && (
+		<nav class='not-prose my-8 rounded-2xl border border-border bg-muted/40 p-4 text-sm'>
+			<div class='mb-3 flex items-center justify-between gap-x-3'>
+				<span class='font-semibold text-foreground'>{t.series}</span>
+				<div class='inline-flex overflow-hidden rounded-full border border-border'>
+					{lang === 'en' ? (
+						<>
+							<span class='bg-primary px-3 py-1 font-medium text-primary-foreground'>EN</span>
+							{altSlug ? (
+								<a class='px-3 py-1 hover:bg-muted' href={`/blog/${altSlug}`}>
+									ES
+								</a>
+							) : (
+								<span class='px-3 py-1 opacity-40'>ES</span>
+							)}
+						</>
+					) : (
+						<>
+							{altSlug ? (
+								<a class='px-3 py-1 hover:bg-muted' href={`/blog/${altSlug}`}>
+									EN
+								</a>
+							) : (
+								<span class='px-3 py-1 opacity-40'>EN</span>
+							)}
+							<span class='bg-primary px-3 py-1 font-medium text-primary-foreground'>ES</span>
+						</>
+					)}
+				</div>
+			</div>
+			<ol class='flex flex-col gap-y-1'>
+				{chapters.map((c, i) => (
+					<li>
+						{c.slug === post.slug ? (
+							<span class='font-medium text-foreground'>
+								{c.data.seriesLabel ?? `${i}. ${c.data.title}`}
+							</span>
+						) : (
+							<a
+								class='text-muted-foreground hover:text-foreground hover:underline'
+								href={`/blog/${c.slug}`}
+							>
+								{c.data.seriesLabel ?? `${i}. ${c.data.title}`}
+							</a>
+						)}
+					</li>
+				))}
+			</ol>
+		</nav>
+	)
+}
+
+{
+	series && position === 'bottom' && (prev || next) && (
+		<nav class='not-prose mt-12 flex flex-col gap-3 border-t border-border pt-6 sm:flex-row sm:justify-between'>
+			{prev ? (
+				<a
+					class='group flex flex-col rounded-xl border border-border px-4 py-3 hover:border-primary sm:max-w-[48%]'
+					href={`/blog/${prev.slug}`}
+				>
+					<span class='text-xs text-muted-foreground'>← {t.prev}</span>
+					<span class='text-sm font-medium text-foreground group-hover:text-primary'>
+						{prev.data.seriesLabel ?? prev.data.title}
+					</span>
+				</a>
+			) : (
+				<span />
+			)}
+			{next ? (
+				<a
+					class='group flex flex-col rounded-xl border border-border px-4 py-3 text-right hover:border-primary sm:max-w-[48%] sm:items-end'
+					href={`/blog/${next.slug}`}
+				>
+					<span class='text-xs text-muted-foreground'>{t.next} →</span>
+					<span class='text-sm font-medium text-foreground group-hover:text-primary'>
+						{next.data.seriesLabel ?? next.data.title}
+					</span>
+				</a>
+			) : (
+				<span />
+			)}
+		</nav>
+	)
+}
