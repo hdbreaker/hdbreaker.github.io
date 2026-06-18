@@ -12,6 +12,8 @@ seriesOrder: 0
 seriesLabel: "00 · The story and the idea"
 ---
 
+> 📦 All the code, blog and exploit for this research can be found on my GitHub: [hdbreaker/samsung-smarttv-tizen-9-chromium-120-v8-rce](https://github.com/hdbreaker/samsung-smarttv-tizen-9-chromium-120-v8-rce)
+
 It's been a while since I found the space to write. Life has thrown a few changes my way lately — personal, work-related, a new city. Only now, with everything more settled and on track, did I make the time to spend a few weekends on something new that sparked my curiosity.
 
 About a year ago I moved to a new city and, amid all the rearranging, I bought myself a new television. I've always loved living rooms: that place where you watch a movie, gather family and friends, give the home a bit of warmth. For me a good living room absolutely needs a great TV — so I ended up buying the **Samsung 65" QLED 2025**: model **QN65Q7FAAGXZS**, software **T-RSLFUABC-0090-1296.8**.
