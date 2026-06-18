@@ -11,7 +11,7 @@ const post = defineCollection({
 	type: 'content',
 	schema: ({ image }) =>
 		z.object({
-			title: z.string().max(80),
+			title: z.string().max(90),
 			description: z.string().min(50).max(160),
 			publishDate: z
 				.string()
