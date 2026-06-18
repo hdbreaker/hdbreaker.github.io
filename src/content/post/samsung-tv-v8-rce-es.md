@@ -1,5 +1,5 @@
 ---
-title: "Pwneando el browser de una Samsung TV — type confusion en Chrome V8 WASM"
+title: "Pwneando el browser de un Samsung Smart TV 2025 - type confusion en Chrome V8 WASM"
 publishDate: "2026-06-18"
 description: "De una sola página web a una reverse shell en una Samsung QLED (Tizen 9, Chromium 120, ARM32) — explotando una type confusion de V8 WebAssembly-GC."
 tags: ["samsung-tv", "tizen", "chromium", "v8", "wasm", "type-confusion", "arm32", "browser-exploitation", "rce"]
