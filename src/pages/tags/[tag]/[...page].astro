@@ -5,7 +5,7 @@ import type { GetStaticPaths, Page } from 'astro'
 import type { CollectionEntry } from 'astro:content'
 
 import Pagination from '@/components/Paginator.astro'
-import PostPreview from '@/components/blog/PostPreview.astro'
+import PostCard from '@/components/blog/PostCard.astro'
 import PageLayout from '@/layouts/BaseLayout.astro'
 import Breadcrumb from '@/components/Breadcrumb.astro'
 import { getListedPosts, getUniqueTags, sortMDByDate } from '@/utils'
@@ -68,9 +68,13 @@ const paginationProps = {
 		<p class='mb-6 text-muted-foreground'>
 			{page.total} {page.total === 1 ? 'post' : 'posts'} tagged <span class='font-mono'>{tag}</span>.
 		</p>
-		<section aria-label='Blog post list'>
-			<ul class='flex flex-col gap-y-3 text-start'>
-				{page.data.map((p) => <PostPreview as='h2' post={p} withDesc />)}
+		<section aria-label='Posts'>
+			<ul class='flex flex-col gap-4'>
+				{page.data.map((p) => (
+					<li>
+						<PostCard post={p} />
+					</li>
+				))}
 			</ul>
 			<Pagination {...paginationProps} />
 </section>

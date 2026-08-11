@@ -4,7 +4,6 @@ import Section from '../components/Section.astro'
 import Card from '../components/Card.astro'
 import ProjectCard from '../components/ProjectCard.astro'
 import Label from '../components/Label.astro'
-import SkillLayout from '../components/SkillLayout.astro'
 
 import { Image } from 'astro:assets'
 import { Icon } from 'astro-icon/components'
@@ -259,11 +258,26 @@ const offensive = ['Red Teaming', 'EDR Evasion', 'Direct Syscalls', 'C4 Framewor
 					<a href='/blog/cve-2018-16119-tp-link-router-rce' class='text-xs text-[#57FD6B] hover:underline mt-auto'>Read Blog Post →</a>
 				</div>
 
-			</div>
+				<!-- CVE-TBD-001 - Coming Soon -->
+				<div class='bg-[#1A1A1A]/30 border border-[#57FD6B]/10 rounded-xl p-4 hover:border-[#57FD6B]/20 transition-all opacity-75 flex flex-col h-full'>
+					<div class='flex items-center justify-between mb-2'>
+						<span class='text-sm font-mono text-[#57FD6B]/70'>CVE-XXXX-XXXX</span>
+					</div>
+					<h3 class='text-sm font-semibold text-[#F5F5F5]/70 mb-2'>Always searching for new ones.</h3>
+					<p class='text-xs text-[#A0A0A0]/70 mb-3 flex-grow'>Active vulnerability research in progress across multiple target platforms and applications.</p>
+					<span class='text-xs text-[#57FD6B]/70 mt-auto'>Coming soon...</span>
+				</div>
 
-			<p class='mt-4 text-sm text-[#A0A0A0]'>
-				Research is ongoing — new findings land here as they are disclosed.
-			</p>
+				<!-- CVE-TBD-002 - Coming Soon -->
+				<div class='bg-[#1A1A1A]/30 border border-[#57FD6B]/10 rounded-xl p-4 hover:border-[#57FD6B]/20 transition-all opacity-75 flex flex-col h-full'>
+					<div class='flex items-center justify-between mb-2'>
+						<span class='text-sm font-mono text-[#57FD6B]/70'>CVE-XXXX-XXXX</span>
+					</div>
+					<h3 class='text-sm font-semibold text-[#F5F5F5]/70 mb-2'>Always searching for new ones.</h3>
+					<p class='text-xs text-[#A0A0A0]/70 mb-3 flex-grow'>Active vulnerability research in progress across multiple target platforms and applications.</p>
+					<span class='text-xs text-[#57FD6B]/70 mt-auto'>Coming soon...</span>
+				</div>
+			</div>
 			
 			<!-- Bug Bounty Achievements -->
 			<div class='mt-8 bg-gradient-to-r from-[#57FD6B]/10 to-[#57FD6B]/5 border border-[#57FD6B]/20 rounded-2xl p-6'>
@@ -656,33 +670,4 @@ const offensive = ['Red Teaming', 'EDR Evasion', 'Direct Syscalls', 'C4 Framewor
 		</Section>
 	</div>
 	
-	<script is:inline>
-		function toggleProjectDetails(button) {
-			const card = button.closest('.project-card');
-			const details = card.querySelector('.project-details');
-			const icon = button.querySelector('svg');
-			
-			if (details.classList.contains('hidden')) {
-				details.classList.remove('hidden');
-				icon.classList.add('rotate-180');
-			} else {
-				details.classList.add('hidden');
-				icon.classList.remove('rotate-180');
-			}
-		}
-		
-		// Prevent event bubbling for buttons inside cards
-		document.addEventListener('DOMContentLoaded', function() {
-			const projectCards = document.querySelectorAll('.project-card');
-			projectCards.forEach(card => {
-				const button = card.querySelector('button');
-				if (button) {
-					button.addEventListener('click', function(e) {
-						e.preventDefault();
-						e.stopPropagation();
-					});
-				}
-			});
-		});
-	</script>
 </PageLayout>

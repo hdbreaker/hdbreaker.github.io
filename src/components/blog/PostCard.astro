@@ -1,0 +1,73 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import FormattedDate from '../FormattedDate.astro'
+
+interface Props {
+	post: CollectionEntry<'post'>
+	/** Chapter count when the post is the entry point of a series. */
+	seriesLength?: number
+}
+
+const { post, seriesLength } = Astro.props
+const { remarkPluginFrontmatter } = await post.render()
+
+const target = post.data.target
+	? [post.data.target.vendor, post.data.target.product].filter(Boolean).join(' ')
+	: undefined
+
+// The whole card is one link, so tags render as plain labels here. They stay
+// clickable on the post page itself — nesting links inside a link is not.
+const tags = post.data.tags.slice(0, 3)
+---
+
+<a
+	class='group flex w-full flex-col gap-3 rounded border border-border bg-[#1A1A1A]/40 p-5 transition-all hover:-translate-y-0.5 hover:border-primary/40'
+	data-astro-prefetch
+	href={`/blog/${post.slug}/`}
+>
+	<h3
+		class='text-balance text-[1.05rem] font-semibold leading-snug text-foreground transition-colors group-hover:text-primary'
+	>
+		{post.data.draft && <span class='text-red-500'>(Draft) </span>}
+		{post.data.title}
+	</h3>
+
+	{
+		(post.data.cve.length > 0 || seriesLength || target) && (
+			<div class='flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs'>
+				{post.data.cve.map((id) => (
+					<span class='rounded border border-primary/40 bg-primary/10 px-1.5 py-0.5 text-primary'>
+						{id}
+					</span>
+				))}
+				{seriesLength && (
+					<span class='rounded border border-primary/40 bg-primary/10 px-1.5 py-0.5 text-primary'>
+						{seriesLength}-part series
+					</span>
+				)}
+				{target && !seriesLength && <span class='text-muted-foreground'>{target}</span>}
+			</div>
+		)
+	}
+
+	<p class='line-clamp-2 text-sm leading-relaxed text-muted-foreground'>
+		{post.data.description}
+	</p>
+
+	<div
+		class='mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-1 font-mono text-xs text-muted-foreground'
+	>
+		<FormattedDate date={post.data.updatedDate ?? post.data.publishDate} />
+		<span aria-hidden='true' class='text-muted-foreground/40'>·</span>
+		<span>{remarkPluginFrontmatter.minutesRead}</span>
+		{
+			tags.length > 0 && (
+				<span class='ms-auto flex gap-x-2 text-muted-foreground/70'>
+					{tags.map((tag) => (
+						<span>{tag}</span>
+					))}
+				</span>
+			)
+		}
+	</div>
+</a>

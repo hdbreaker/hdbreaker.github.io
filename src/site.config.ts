@@ -30,9 +30,8 @@ export const siteConfig: SiteConfig = {
 }
 
 /**
- * Primary navigation — kept to five items so the header stays scannable.
- * Everything else lives in the footer (see `footerLinks`) rather than being
- * unreachable, which is what happened when this array went unused.
+ * Primary navigation. There is no footer, so every browsable section has to be
+ * reachable from here.
  */
 export const menuLinks: Array<{ title: string; path: string }> = [
 	{
@@ -42,6 +41,10 @@ export const menuLinks: Array<{ title: string; path: string }> = [
 	{
 		title: 'Tools',
 		path: '/tools/'
+	},
+	{
+		title: 'Topics',
+		path: '/tags/'
 	}
 ]
 
@@ -63,14 +66,6 @@ export const featuredResearch: string[] = [
 	'wix-premium-zone-bypass-vulnerability',
 	'shellshock-qmail-exploitation',
 	'license-plate-hacking-argentina'
-]
-
-/** Secondary navigation, rendered in the footer. */
-export const footerLinks: Array<{ title: string; path: string }> = [
-	{
-		title: 'Topics',
-		path: '/tags/'
-	}
 ]
 
 /**
@@ -116,7 +111,7 @@ export const tagGroups: Array<{ title: string; blurb: string; tags: string[] }> 
 	}
 ]
 
-/** External profiles, rendered in the footer. */
+/** External profiles. Used for the JSON-LD `sameAs` of the Person node. */
 export const socialLinks: Array<{ title: string; url: string }> = [
 	{ title: 'GitHub', url: 'https://github.com/hdbreaker' },
 	{ title: 'X', url: 'https://x.com/hdbreaker_' },
