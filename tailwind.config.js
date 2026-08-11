@@ -51,7 +51,11 @@ const config = {
 				card: {
 					DEFAULT: 'hsl(var(--card) / <alpha-value>)',
 					foreground: 'hsl(var(--card-foreground) / <alpha-value>)'
-				}
+				},
+				volt: '#57FD6B',
+				'volt-soft': 'rgba(87,253,107,0.15)',
+				'dark-primary': '#0F111A',
+				'dark-secondary': '#181B2A',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -61,7 +65,39 @@ const config = {
 			fontFamily: {
 				sans: [...fontFamily.sans],
 				satoshi: ['Satoshi', 'sans'],
-			}
+			},
+			boxShadow: {
+				'volt-glow': '0 0 40px rgba(87,253,107,0.6)',
+				'volt-soft': '0 0 20px rgba(87,253,107,0.3)',
+			},
+			dropShadow: {
+				volt: '0 0 8px rgba(87,253,107,0.5)',
+			},
+			animation: {
+				'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+				'fade-in': 'fadeIn 0.6s ease-out forwards',
+				'slide-up': 'slideUp 0.6s ease-out forwards',
+			},
+			keyframes: {
+				'pulse-glow': {
+					'0%, 100%': { 
+						boxShadow: '0 0 20px rgba(87,253,107,0.3)',
+						transform: 'scale(1)'
+					},
+					'50%': { 
+						boxShadow: '0 0 40px rgba(87,253,107,0.6)',
+						transform: 'scale(1.05)'
+					},
+				},
+				fadeIn: {
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' },
+				},
+				slideUp: {
+					'0%': { opacity: '0', transform: 'translateY(30px)' },
+					'100%': { opacity: '1', transform: 'translateY(0)' },
+				},
+			},
 		}
 	}
 }

@@ -5,28 +5,21 @@ import Card from '../components/Card.astro'
 import ProjectCard from '../components/ProjectCard.astro'
 import Label from '../components/Label.astro'
 import SkillLayout from '../components/SkillLayout.astro'
-import PostPreview from '@/components/blog/PostPreview.astro'
 
 import { Image } from 'astro:assets'
 import { Icon } from 'astro-icon/components'
 import wolfImage from '../assets/wolf.png'
-
-import { getAllPosts, sortMDByDate } from '@/utils'
 
 const languages = ['Nim', 'C#', 'Python', 'Go', 'Assembly', 'C/C++', 'Java', 'PHP']
 const frontend = ['HTML/CSS', 'JavaScript', 'React', 'Angular', 'Tailwind CSS']
 const backend = ['C#/.NET', 'Python', 'Go', 'Node.js', 'SQL', 'MongoDB', 'Django']
 const cloud = ['AWS', 'Google Cloud', 'Azure', 'Terraform', 'Pulumi', 'CI/CD']
 const offensive = ['Red Teaming', 'EDR Evasion', 'Direct Syscalls', 'C4 Frameworks', 'OPSEC', 'Social Engineering', 'OSINT']
-
-const MAX_POSTS = 10
-const allPosts = await getAllPosts()
-const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 ---
 
 <PageLayout meta={{ 
-	title: '',
-	description: '',
+	title: 'Alejandro Parodi',
+	description: 'Offensive Security Engineer, Red Teamer and Founder. Vulnerability research, CVE discovery, and offensive tooling development.',
 	ogImage: '/social-card.png'
 }}>
 	<!-- Hero Banner -->

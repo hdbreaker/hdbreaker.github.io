@@ -6,7 +6,6 @@ tags: ["pokemon", "gen1recomp", "lua", "love2d", "game-hacking", "network-protoc
 draft: false
 listed: true
 lang: "en"
-altSlug: "pokemon-gen1recomp-hate-cheat-es"
 ---
 
 # How to Troll Pokémon Players — Gen1recomp Edition

@@ -1,10 +1,9 @@
 <script is:inline>
 	const lightModePref = window.matchMedia('(prefers-color-scheme: light)')
 
-	// Get user preference from local storage or from browser preference
+	// dark-only por decisión de diseño (ver R2/R3 del plan)
 	function getUserPref() {
-		const storedTheme = localStorage.getItem('theme') ?? undefined
-		return storedTheme || (lightModePref.matches ? 'light' : 'dark')
+		return 'dark'
 	}
 
 	function setTheme(newTheme) {
@@ -15,15 +14,7 @@
 		localStorage.setItem('theme', newTheme)
 
 		const root = document.documentElement
-
-		// if current dark theme and new theme is dark, return
-		if (newTheme === 'dark' && root.classList.contains('dark')) {
-			return
-		} else if (newTheme === 'light' && !root.classList.contains('dark')) {
-			return
-		}
-
-		root.classList.toggle('dark')
+		root.classList.toggle('dark', newTheme === 'dark')
 	}
 
 	// Initial Setup
@@ -36,7 +27,4 @@
 	document.addEventListener('theme-change', (e) => {
 		setTheme(e.detail.theme)
 	})
-
-	// Listen for prefers-color-scheme change
-	lightModePref.addEventListener('change', (e) => setTheme(e.matches ? 'light' : 'dark'))
 </script>
