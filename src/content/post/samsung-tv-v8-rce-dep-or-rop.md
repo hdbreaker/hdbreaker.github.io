@@ -46,19 +46,12 @@ ARM32 doesn't have PKU, so the build uses the `mprotect`-based toggle (RW↔RX),
 
 ## The decision tree (resolved)
 
-```
-   RWX in the live process?
-        │
-   ┌────┴─────────────────────────────┐
-   │ static .so: strict W^X, NX        │
-   │ V8 ≥ W^X cutoff: code-space R-X    │
-   └────┬─────────────────────────────┘
-        │
-     RWX = NO  (determined, without measuring on the TV)
-        │
-   ROP: leak mprotect (GOT) → mprotect(buf, RWX) → jump → shellcode
-        │
-   ARM32 backconnect  → /bin/sh against 192.168.100.80  (validation / report)
+```mermaid
+flowchart TD
+    Q{"RWX in the live process?"} --> E["static .so: strict W^X, NX<br/>V8 ≥ W^X cutoff: code-space R-X"]
+    E --> N["RWX = NO<br/>determined without measuring on the TV"]
+    N --> R["ROP: leak mprotect (GOT) → mprotect(buf, RWX) → jump → shellcode"]
+    R --> S["ARM32 backconnect → /bin/sh against 192.168.100.80"]
 ```
 
 The chosen path is the classic ARM32 chain, and it does **not** depend on the stack being executable: leak `mprotect` from the GOT (already populated by `BIND_NOW`), pivot + ROP chain that builds `mprotect(page, len, RWX)` over a controlled buffer, and jump to the now-executable buffer with the shellcode. The fine detail of *how* I get the CPU to start executing my gadgets — the hijack — and the full exploitation chain go in [entry 06](/blog/samsung-tv-v8-rce-rop-reverse-shell), the finale.

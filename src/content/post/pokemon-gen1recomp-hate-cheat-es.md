@@ -69,26 +69,21 @@ El cable link original del Game Boy era un cablecito físico entre dos máquinas
 
 Para una partida en LAN, un jugador se convierte en el **HOST**, abre un socket ENet en el puerto UDP 7777, y el otro jugador se conecta directamente a esa dirección IP como **GUEST**.
 
-```
-┌─────────────┐                    ┌─────────────┐
-│  Player A   │                    │  Player B   │
-│  HOST       │   ENet UDP :7777   │  GUEST      │
-│  Net.lua    │ ◄────────────────► │  Net.lua    │
-│             │   reliable JSON    │             │
-└─────────────┘                    └─────────────┘
+```mermaid
+flowchart LR
+    A["Player A — HOST<br/>Net.lua"] <-->|"ENet UDP :7777<br/>reliable JSON"| B["Player B — GUEST<br/>Net.lua"]
 ```
 
 El juego online toma otro camino: ambos clientes hacen una conexión TCP saliente al relay público en `147.182.215.255:7778`, hosteado en DigitalOcean y operado por [@bryanthaboi](https://x.com/bryanthaboi). El **HOST** recibe un código de sala corto;
 
-![Gen1recomp code screenshot](/images/code.png)
+<img src="/images/code.png" alt="Gen1recomp room code screen" width="360" style="max-width:100%;height:auto;display:block;margin-inline:auto" />
 
 El **GUEST** lo ingresa; el relay los empareja y reenvía el tráfico entre las dos conexiones. Es un relay TCP crudo, no un proxy HTTP.
 
-```
-┌─────────────┐     TCP      ┌───────────┐     TCP      ┌─────────────┐
-│  Player A   │ ──────────►  │   relay   │ ◄─────────►  │  Player B   │
-│  HOST       │  JSON + \n   │   :7778   │  JSON + \n   │  GUEST      │
-└─────────────┘              └───────────┘              └─────────────┘
+```mermaid
+flowchart LR
+    A["Player A — HOST"] <-->|"TCP<br/>JSON + newline"| R["relay<br/>:7778"]
+    R <-->|"TCP<br/>JSON + newline"| B["Player B — GUEST"]
 ```
 
 El relay es puro transporte. No corre una batalla, no decide quién gana, ni entiende datos de Pokémon. Solo mueve mensajes. `Net.lua` es el módulo de networking del juego — la parte del cliente que gestiona el socket, delimita el tráfico, y convierte bytes crudos en tablas de Lua. Una vez que `Net.lua` decodificó uno de esos mensajes, al resto del cliente no le importa si vino directo de un peer en LAN o a través del relay online: es simplemente una tabla de Lua recibida del otro lado.
@@ -101,31 +96,32 @@ Todo el trabajo del relay es presentar a dos desconocidos y después quitarse de
 
 **Fase uno — el handshake.** El **HOST** le dice al relay que quiere abrir una sala, y el relay responde con un código corto. El **GUEST** ingresa ese código, el relay lo verifica, y le avisa a ambos lados que están emparejados:
 
-```text
-  HOST                    relay                    GUEST
-    │                        │                        │
-    │  { "type": "host" }    │                        │
-    │───────────────────────►│                        │
-    │                        │                        │
-    │◄───────────────────────│  { "type": "hosted",   │
-    │                        │    "code": "ABC123" }  │
-    │                        │                        │
-    │                        │◄───────────────────────│  { "type": "join",
-    │                        │                        │    "code": "ABC123" }
-    │                        │                        │
-    │◄───────────────────────│  { "type": "paired" }  │
-    │                        │───────────────────────►│  { "type": "paired" }
+```mermaid
+sequenceDiagram
+    participant H as HOST
+    participant R as relay
+    participant G as GUEST
+
+    H->>R: { "type": "host" }
+    R->>H: { "type": "hosted", "code": "ABC123" }
+    G->>R: { "type": "join", "code": "ABC123" }
+    R->>H: { "type": "paired" }
+    R->>G: { "type": "paired" }
 ```
 
 **Fase dos — reenvío.** Desde ese momento, el relay deja de pensar. Cada línea JSON completa que recibe de un lado se copia al otro tal cual. Nunca mira adentro:
 
-```text
-  HOST                    relay                    GUEST
-    │                        │                        │
-    │  { "type": "action" }  │                        │
-    │───────────────────────►│───────────────────────►│
-    │                        │                        │
-    │◄───────────────────────│◄───────────────────────│  { "type": "hash" }
+```mermaid
+sequenceDiagram
+    participant H as HOST
+    participant R as relay
+    participant G as GUEST
+
+    H->>R: { "type": "action" }
+    R->>G: { "type": "action" }
+    Note over R: nunca se inspecciona
+    G->>R: { "type": "hash" }
+    R->>H: { "type": "hash" }
 ```
 
 Ese es todo el relay: un buzón entre dos sockets. Sin lógica de batalla, sin validación, sin estado. Y por eso exactamente funciona el ataque de este post: el relay va a reenviar sin objeciones un mensaje que ningún cliente legítimo mandaría jamás.
@@ -210,28 +206,14 @@ Lua tira `bad argument #1 to 'floor' (number expected, got table)`. El game loop
 
 El patrón común es más fácil de ver como un flujo de taint:
 
-```
-attacker-controlled JSON field
-            │
-            ▼
-Net:poll() → Session:update()
-            │
-            │  validates only: type(msg.type) == "string"
-            │  does not validate msg.slot / msg.seed / msg.mons / ...
-            ▼
-link or trade handler
-            │
-            ▼
-math.floor(field) / table[field] / arithmetic
-            │
-            ▼
-Lua exception
-            │
-            ▼
-Game:step has no pcall
-            │
-            ▼
-client exits
+```mermaid
+flowchart TD
+    A["campo JSON controlado por el atacante"] --> B["Net:poll() → Session:update()"]
+    B -->|"solo valida type(msg.type) == string<br/>no valida slot / seed / mons / ..."| C["handler de link o intercambio"]
+    C --> D["math.floor(campo) / tabla[campo] / aritmética"]
+    D --> E["excepción de Lua"]
+    E --> F["Game:step no tiene pcall"]
+    F --> G["el cliente se cierra"]
 ```
 
 ---
@@ -494,7 +476,7 @@ F7 → CHEATS ONLINE: [OFF]  ← barrera normal
 F7 → CHEATS ONLINE: [ON]   ← cliente modeado se presenta como vanilla
 ```
 
-![CHEATS ONLINE toggle](/images/cheats-online.png)
+<img src="/images/cheats-online.png" alt="CHEATS ONLINE toggle in the F7 menu" width="360" style="max-width:100%;height:auto;display:block;margin-inline:auto" />
 
 ---
 
@@ -506,22 +488,32 @@ Con el bypass de anti-cheat fuera del camino, el siguiente paso era convertir lo
 
 Es deliberadamente pequeño. Lincoler no es un fuzzer genérico: es un menú que conoce el estado de la sesión online actual y expone solo los payloads que tienen sentido en ese estado.
 
+```mermaid
+flowchart TD
+    M(["WIRE ATTACK"])
+    M --> BATTLE
+    M --> TRADE
+
+    subgraph BATTLE["EN BATALLA"]
+        direction TB
+        B1["action slot={}"]
+        B2["action switch idx={}"]
+        B3["hash parts=123"]
+    end
+
+    subgraph TRADE["EN INTERCAMBIO"]
+        direction TB
+        T1["TRADE CRASH pick=0"]
+    end
+
+    classDef direct fill:#181B2A,stroke:#57FD6B,color:#F5F5F5
+    classDef spam fill:#181B2A,stroke:#F5A524,color:#F5F5F5
+    class B1,B2 direct
+    class B3,T1 spam
 ```
-┌─────────────────────────────────┐
-│ WIRE ATTACK                     │
-│                                 │
-│ ── IN BATTLE ──                 │
-│  > action slot={}        [D]    │
-│  > action switch idx={}  [D]    │
-│  > hash parts=123        [S]    │
-│                                 │
-│ ── IN TRADE ──                  │
-│  > TRADE CRASH pick=0    [S]    │
-│                                 │
-│ [D] direct, once                │
-│ [S] spam every three frames     │
-└─────────────────────────────────┘
-```
+
+`action slot={}` y `action switch idx={}` se disparan **una sola vez, directo**.
+`hash parts=123` y `TRADE CRASH pick=0` se **repiten cada tres frames**.
 
 El menú de batalla no es el único. La pantalla de intercambio tiene la misma debilidad, así que el menú también lleva un payload de intercambio.
 

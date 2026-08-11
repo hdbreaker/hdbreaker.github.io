@@ -22,10 +22,10 @@ The answer turned out to be something every web page has on hand: a **DOM wrappe
 
 In Blink, every JS object that wraps a DOM node (`document.body`, a `<div>`, whatever) is a V8 object with **embedder fields**: raw pointers into the native C++ machinery. It has two that matter to us: at `+0x10` it stores the `ScriptWrappable` —the live C++ object for the node, which we'll hijack only at the [very end](/blog/samsung-tv-v8-rce-rop-reverse-shell)—, and at `+0x0c` it stores a pointer to the **`WrapperTypeInfo`**: a **static** struct, part of `libchrome.so` itself, that describes the type of that wrapper. To *anchor* ourselves to the `.so`, the one that works is `+0x0c`, and for a beautiful reason: being static, it lives inside the binary (fixed offset), and its body is full of pointers to code (`.text`).
 
-```
-addrOf(document.body)            -> V8 wrapper object (V8 heap)
-   └─ +0x0c  embedder field      -> WrapperTypeInfo (static, INSIDE libchrome.so)
-         └─ body                 -> table of pointers into .text   ✅
+```mermaid
+flowchart TD
+    A["addrOf(document.body)<br/>V8 wrapper object, V8 heap"] --> B["+0x0c embedder field<br/>WrapperTypeInfo — static, INSIDE libchrome.so"]
+    B --> C["body → table of pointers into .text ✅"]
 ```
 
 ## How I found it (payload `anchor`)
@@ -34,12 +34,13 @@ The `anchor` payload does exactly one thing, and it does it without writing anyt
 
 The pattern jumped right out. Look only at the `+0x0c` column: the three wrappers, distinct objects with no relation to each other, all stored a pointer there that starts the same, `0xb4______`:
 
-```
-                          +0x0c         <- the column that matters
-document.body             0xb4cd9410    ┐
-document.documentElement  0xb4cda954    ├─ all 0xb4______ : same region
-new <div>                 0xb4cd9928    ┘
-```
+| Wrapper object | `+0x0c` |
+|---|---|
+| `document.body` | `0xb4cd9410` |
+| `document.documentElement` | `0xb4cda954` |
+| `new <div>` | `0xb4cd9928` |
+
+Every one of them starts with `0xb4` — the same region.
 
 (The dump also prints other fields —the `+0x10`, which gets its moment only at the [very end](/blog/samsung-tv-v8-rce-rop-reverse-shell), and so on— but for *anchoring* they're noise: what repeats, identical across all three, is the `+0x0c`.)
 

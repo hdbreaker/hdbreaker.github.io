@@ -90,13 +90,10 @@ Esa es la columna vertebral de esta serie: la exfiltración de memoria, la recon
 
 Nada exótico. La TV navega a una página que sirvo yo.
 
-```
-┌────────────┐     HTTP :80      ┌──────────────────────┐
-│  Samsung   │  ◄────────────►   │  researcher PC       │
-│  TV browser│                   │  server.py           │
-│  .76       │   POST /save ──►  │  index.html          │
-└────────────┘                   │  payloads/*.js       │
-                                 └──────────────────────┘
+```mermaid
+flowchart LR
+    TV["Samsung TV browser<br/>.76"] <-->|"HTTP :80"| PC["researcher PC<br/>server.py · index.html · payloads/*.js"]
+    TV -->|"POST /save"| PC
 ```
 
 Son dos archivos. `server.py` sirve `index.html` y los payloads `.js` — y acá conviene subrayar algo: como esto es una vuln de **V8**, **todo el método de validación y explotación es JavaScript**. No hay binario que compilar ni agente que instalar en la TV; cada etapa del kill chain es un payload `.js` que corre dentro del navegador. Además, mi server expone el endpoint `POST /save` para almacenar los resultados del JavaScript y mantener logs consistentes que permitan tracear qué sucede en cada ejecución del browser (un `tv_output_YYYYMMDD_HHMMSS.txt` nuevo por cada ejecución de JS). `index.html` es el *start point*, donde todo se une, y hace tres cosas que resultan esenciales:

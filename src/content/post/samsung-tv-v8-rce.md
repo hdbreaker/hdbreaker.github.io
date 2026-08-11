@@ -90,13 +90,10 @@ That's the backbone of this series: the memory exfiltration, the library reconst
 
 Nothing exotic. The TV browses to a page I serve myself.
 
-```
-┌────────────┐     HTTP :80      ┌──────────────────────┐
-│  Samsung   │  ◄────────────►   │  researcher PC       │
-│  TV browser│                   │  server.py           │
-│  .76       │   POST /save ──►  │  index.html          │
-└────────────┘                   │  payloads/*.js       │
-                                 └──────────────────────┘
+```mermaid
+flowchart LR
+    TV["Samsung TV browser<br/>.76"] <-->|"HTTP :80"| PC["researcher PC<br/>server.py · index.html · payloads/*.js"]
+    TV -->|"POST /save"| PC
 ```
 
 It's two files. `server.py` serves `index.html` and the `.js` payloads — and here it's worth underlining something: since this is a **V8** vuln, **the entire validation and exploitation method is JavaScript**. There's no binary to compile and no agent to install on the TV; every stage of the kill chain is a `.js` payload that runs inside the browser. On top of that, my server exposes the `POST /save` endpoint to store the JavaScript's results and keep consistent logs that let me trace what happens on each browser run (a new `tv_output_YYYYMMDD_HHMMSS.txt` for each JS run). `index.html` is the *start point*, where everything comes together, and it does three things that turn out to be essential:

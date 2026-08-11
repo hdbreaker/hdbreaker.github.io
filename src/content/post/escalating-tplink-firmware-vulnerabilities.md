@@ -23,17 +23,13 @@ This research tool automates the discovery of vulnerability patterns across mult
 
 ## Architecture
 
-```
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   Firmware      │───▶│  httpd_extractor │───▶│ HTTPD_Binaries  │
-│   Collection    │    │      .py         │    │   Folder        │
-└─────────────────┘    └──────────────────┘    └─────────────────┘
-                                                         │
-                                                         ▼
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│ Analysis_Results│◀───│   analyzer.py    │◀───│ Ghidra Scripts  │
-│   (PDF Reports) │    │                  │    │   & Patterns    │
-└─────────────────┘    └──────────────────┘    └─────────────────┘
+```mermaid
+flowchart LR
+    A["Firmware<br/>collection"] --> B["httpd_extractor.py"]
+    B --> C["HTTPD_Binaries<br/>folder"]
+    C --> D["Ghidra scripts<br/>and patterns"]
+    D --> E["analyzer.py"]
+    E --> F["Analysis_Results<br/>PDF reports"]
 ```
 
 ## Quick Start

@@ -22,10 +22,10 @@ La respuesta resultó ser algo que cualquier página web tiene a mano: un **DOM 
 
 En Blink, cada objeto JS que envuelve un nodo del DOM (`document.body`, un `<div>`, lo que sea) es un objeto V8 con **embedder fields**: punteros crudos a la maquinaria C++ nativa. Tiene dos que nos importan: en `+0x10` guarda el `ScriptWrappable` —el objeto C++ vivo del nodo, que vamos a secuestrar recién en el [final](/blog/samsung-tv-v8-rce-rop-es)—, y en `+0x0c` guarda un puntero al **`WrapperTypeInfo`**: una estructura **estática**, parte de la propia `libchrome.so`, que describe el tipo de ese wrapper. Para *anclarnos* al `.so` el que sirve es el `+0x0c`, y por una razón hermosa: al ser estático vive dentro del binario (offset fijo), y su cuerpo está lleno de punteros a código (`.text`).
 
-```
-addrOf(document.body)            -> objeto V8 wrapper (heap de V8)
-   └─ +0x0c  embedder field      -> WrapperTypeInfo (estático, DENTRO de libchrome.so)
-         └─ cuerpo               -> tabla de punteros a .text   ✅
+```mermaid
+flowchart TD
+    A["addrOf(document.body)<br/>objeto V8 wrapper, heap de V8"] --> B["+0x0c embedder field<br/>WrapperTypeInfo — estático, DENTRO de libchrome.so"]
+    B --> C["cuerpo → tabla de punteros a .text ✅"]
 ```
 
 ## Cómo lo encontré (payload `anchor`)
@@ -34,12 +34,13 @@ El payload `anchor` hace una sola cosa, y la hace sin escribir nada: agarra unos
 
 El patrón saltó a la vista. Fijate sólo en la columna del `+0x0c`: los tres wrappers, objetos distintos y sin relación entre sí, guardaban ahí un puntero que empieza igual, `0xb4______`:
 
-```
-                          +0x0c         <- la columna que importa
-document.body             0xb4cd9410    ┐
-document.documentElement  0xb4cda954    ├─ todos 0xb4______ : misma región
-nuevo <div>               0xb4cd9928    ┘
-```
+| Objeto wrapper | `+0x0c` |
+|---|---|
+| `document.body` | `0xb4cd9410` |
+| `document.documentElement` | `0xb4cda954` |
+| `nuevo <div>` | `0xb4cd9928` |
+
+Todas empiezan con `0xb4`: la misma región.
 
 (El dump también imprime otros campos —el `+0x10`, que va a tener su protagonismo recién en el [final](/blog/samsung-tv-v8-rce-rop-es), y demás— pero para *anclar* son ruido: lo que se repite, idéntico en los tres, es el `+0x0c`.)
 
