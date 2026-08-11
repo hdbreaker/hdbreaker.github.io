@@ -2,6 +2,7 @@
 import PageLayout from '@/layouts/BaseLayout.astro'
 import Section from '@/components/Section.astro'
 import Card from '@/components/Card.astro'
+import Breadcrumb from '@/components/Breadcrumb.astro'
 import Button from '@/components/Button.astro'
 
 const title = "Volt AI - Alejandro Parodi";
@@ -10,21 +11,7 @@ const description = "Securing the next wave of AI-powered technologies";
 
 <PageLayout meta={{ title: 'Volt AI' }}>
 	<div class='w-full'>
-		<Button title='Back' href='/' style='button' class='bg-[#57FD6B]/10 border-[#57FD6B]/30 text-[#57FD6B] hover:bg-[#57FD6B]/20'>
-			<svg
-				xmlns='http://www.w3.org/2000/svg'
-				width='14'
-				height='14'
-				viewBox='0 0 24 24'
-				slot='icon-before'
-			>
-				<path
-					fill='currentColor'
-					d='m6.921 12.5l5.792 5.792L12 19l-7-7l7-7l.713.708L6.921 11.5H19v1z'
-				>
-				</path>
-			</svg>
-		</Button>
+		<Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Volt AI' }]} />
 
 		<div class='mt-8 flex w-full flex-col gap-y-12'>
 			<!-- Hero Section -->

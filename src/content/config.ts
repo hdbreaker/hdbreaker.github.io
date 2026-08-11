@@ -28,7 +28,20 @@ const post = defineCollection({
 				})
 				.optional(),
 			draft: z.boolean().default(false),
+			// Controlled vocabulary: technique and vulnerability class only. Product
+			// names and CVE IDs belong in `target` / `cve`, not here — using them as
+			// tags produced ~95 tags for 33 posts, most of them one-offs.
 			tags: z.array(z.string()).default([]).transform(removeDupsAndLowerCase),
+			/** CVE identifiers. Rendered as badges; these do not generate tag pages. */
+			cve: z.array(z.string()).default([]),
+			/** What was attacked. Replaces product-name tags. */
+			target: z
+				.object({
+					vendor: z.string(),
+					product: z.string().optional()
+				})
+				.optional(),
+			platform: z.enum(['web', 'mobile', 'embedded', 'desktop', 'browser', 'game', 'ai']).optional(),
 			ogImage: z.string().optional(),
 			// --- Multi-part series + i18n support ---
 			// When false, the post still gets its own /blog/<slug> route but is

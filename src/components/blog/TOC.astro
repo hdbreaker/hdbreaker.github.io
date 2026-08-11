@@ -13,9 +13,35 @@ const { headings } = Astro.props
 const toc = generateToc(headings)
 ---
 
-<aside class='sticky top-20 order-2 -me-28 hidden basis-60 lg:flex lg:flex-col'>
-	<h2 class='font-semibold'>TABLE OF CONTENTS</h2>
+<aside
+	aria-labelledby='toc-heading'
+	class='toc-scroll sticky top-20 order-2 -me-28 hidden max-h-[calc(100dvh-7rem)] basis-60 flex-col overflow-y-auto overscroll-contain pe-3 lg:flex'
+>
+	<h2
+		id='toc-heading'
+		class='mb-2 font-mono text-xs uppercase tracking-widest text-muted-foreground'
+	>
+		On this page
+	</h2>
 	<ul class='text-card-foreground'>
 		{toc.map((heading) => <TOCHeading heading={heading} />)}
 	</ul>
 </aside>
+
+<style>
+	/* Subtle scrollbar: only visible when the TOC actually overflows. */
+	.toc-scroll {
+		scrollbar-width: thin;
+		scrollbar-color: hsl(var(--border)) transparent;
+	}
+	.toc-scroll::-webkit-scrollbar {
+		width: 6px;
+	}
+	.toc-scroll::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	.toc-scroll::-webkit-scrollbar-thumb {
+		background: hsl(var(--border));
+		border-radius: 3px;
+	}
+</style>

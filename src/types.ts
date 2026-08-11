@@ -21,4 +21,8 @@ export type SiteMeta = {
 	description?: string
 	ogImage?: string | undefined
 	articleDate?: string | undefined
+	/** Content language of this page. Defaults to the site language. */
+	lang?: 'en' | 'es'
+	/** Slug of the translated version, used to emit reciprocal hreflang links. */
+	altSlug?: string | undefined
 }

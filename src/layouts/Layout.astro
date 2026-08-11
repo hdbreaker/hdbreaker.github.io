@@ -4,7 +4,14 @@ export interface Props {
   description?: string;
 }
 
-const { title, description = "Alejandro Parodi - Offensive Security Specialist | Red Team | CVE Research | Offensive Tooling" } = Astro.props;
+// Markdown pages pass their frontmatter under `Astro.props.frontmatter`, not as top-level
+// props. Without this fallback, /rss-feed/ renders an empty <title>.
+const { frontmatter } = Astro.props;
+const title = Astro.props.title ?? frontmatter?.title ?? "Alejandro Parodi";
+const description =
+  Astro.props.description ??
+  frontmatter?.description ??
+  "Alejandro Parodi - Offensive Security Specialist | Red Team | CVE Research | Offensive Tooling";
 ---
 
 <!DOCTYPE html>

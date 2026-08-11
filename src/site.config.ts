@@ -23,39 +23,72 @@ export const siteConfig: SiteConfig = {
 	}
 }
 
+/**
+ * Primary navigation — kept to five items so the header stays scannable.
+ * Everything else lives in the footer (see `footerLinks`) rather than being
+ * unreachable, which is what happened when this array went unused.
+ */
 export const menuLinks: Array<{ title: string; path: string }> = [
 	{
-		title: 'Home',
-		path: '/'
+		title: 'Blog',
+		path: '/blog/'
 	},
 	{
-		title: 'About',
-		path: '/about/'
+		title: 'Tools',
+		path: '/tools/'
+	}
+]
+
+/**
+ * Hand-picked "best of" list for the home page, in the order it should appear.
+ * This is an editorial ranking, not a feed — nothing here is derived from dates
+ * or tags. Add, remove and reorder slugs by hand; titles and descriptions are
+ * read from each post so the copy never drifts out of sync.
+ */
+export const featuredResearch: string[] = [
+	'samsung-tv-v8-rce',
+	'cve-2018-16119-tp-link-router-rce',
+	'escalating-tplink-firmware-vulnerabilities',
+	'mercury-browser-intent-hijacking-android',
+	'vlc-vob-stack-overflow-vulnerability',
+	'audacious-stack-overflow-vulnerability',
+	'qqplayer-heap-overflow-vulnerability',
+	'limesurvey-rce-tcpdf-serialization',
+	'wix-premium-zone-bypass-vulnerability',
+	'shellshock-qmail-exploitation',
+	'license-plate-hacking-argentina'
+]
+
+/** Secondary navigation, rendered in the footer. */
+export const footerLinks: Array<{ title: string; path: string }> = [
+	{
+		title: 'CVEs',
+		path: '/cves/'
+	},
+	{
+		title: 'Projects',
+		path: '/projects/'
 	},
 	{
 		title: 'Volt AI',
 		path: '/volt-ai/'
 	},
 	{
-		title: 'Tools',
-		path: '/tools/'
+		title: 'Topics',
+		path: '/tags/'
 	},
 	{
-		title: 'Research',
-		path: '/research/'
-	},
-	{
-		title: 'CVEs',
-		path: '/cves/'
-	},
-	{
-		title: 'Blog',
-		path: '/blog/'
-	},
-	{
-		title: 'RSS Feed',
+		title: 'Subscribe',
 		path: '/rss-feed/'
 	}
+]
+
+/** External profiles, rendered in the footer. */
+export const socialLinks: Array<{ title: string; url: string }> = [
+	{ title: 'GitHub', url: 'https://github.com/hdbreaker' },
+	{ title: 'X', url: 'https://x.com/hdbreaker_' },
+	{ title: 'LinkedIn', url: 'https://www.linkedin.com/in/alejandroparodi/' },
+	{ title: 'RSS', url: '/rss.xml' }
 ]
 
 // https://expressive-code.com/reference/configuration/

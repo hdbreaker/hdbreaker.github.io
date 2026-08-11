@@ -10,6 +10,21 @@ import { Image } from 'astro:assets'
 import { Icon } from 'astro-icon/components'
 import wolfImage from '../assets/wolf.png'
 
+import { getAllPosts } from '@/utils'
+import { featuredResearch } from '@/site-config'
+
+// The order comes from `featuredResearch` in site.config.ts — an editorial ranking,
+// deliberately not sorted by date. A slug that no longer exists is skipped rather
+// than rendering a dead link.
+const allPosts = await getAllPosts()
+const featuredPosts = featuredResearch
+	.map((slug) => allPosts.find((post) => post.slug === slug))
+	.filter((post): post is NonNullable<typeof post> => !!post)
+
+// Chapter count per series, used to label multi-part entries.
+const seriesLength = (series: string) =>
+	allPosts.filter((post) => post.data.series === series && post.data.lang !== 'es').length
+
 const languages = ['Nim', 'C#', 'Python', 'Go', 'Assembly', 'C/C++', 'Java', 'PHP']
 const frontend = ['HTML/CSS', 'JavaScript', 'React', 'Angular', 'Tailwind CSS']
 const backend = ['C#/.NET', 'Python', 'Go', 'Node.js', 'SQL', 'MongoDB', 'Django']
@@ -111,7 +126,7 @@ const offensive = ['Red Teaming', 'EDR Evasion', 'Direct Syscalls', 'C4 Framewor
 				I'm currently building Volt AI, a platform that merges offensive security with autonomous AI agents simulating real-world attacks, exploiting vulnerabilities, and delivering code-level fixes at scale.
 			</p>
 			<p class='text-[#A0A0A0] text-sm leading-relaxed mt-4 italic'>
-				All content published on this site is my own intellectual property. No company I have worked for — past, present, or future — holds any rights over the research, writing, code, or opinions expressed here.
+				All content published here is my own intellectual property. No company I have worked for — past, present or future — holds any rights over the research, writing, code or opinions on this site.
 			</p>
 		</Section>
 
@@ -168,107 +183,32 @@ const offensive = ['Red Teaming', 'EDR Evasion', 'Direct Syscalls', 'C4 Framewor
 		</Section>
 
 		<Section title='My TOP Research' class='mb-8'>
-			<ul class='flex flex-col gap-y-4'>
-				<li class='flex flex-col gap-x-2 sm:flex-row'>
-					<div class='flex flex-col gap-y-1.5'>
-						<a href='/blog/samsung-tv-v8-rce' class='text-[#F5F5F5] hover:text-[#57FD6B] transition-colors'>
-							<span class='text-lg font-medium'>Pwning Samsung TV Browser — Chrome V8 WASM Type Confusion</span>
-						</a>
-						<p class='text-sm text-[#A0A0A0]'>From a single web page to a reverse shell on a Samsung QLED (Tizen 9, Chromium 120, ARM32) — exploiting a V8 WebAssembly-GC type confusion. A 7-part series.</p>
-					</div>
-				</li>
-				<li class='flex flex-col gap-x-2 sm:flex-row'>
-					<div class='flex flex-col gap-y-1.5'>
-						<a href='/blog/cve-2018-16119-tp-link-router-rce' class='text-[#F5F5F5] hover:text-[#57FD6B] transition-colors'>
-							<span class='text-lg font-medium'>CVE-2018-16119: TP-Link Router Remote Code Execution</span>
-						</a>
-						<p class='text-sm text-[#A0A0A0]'>Remote Code Execution vulnerability in MIPS-based TP-LINK router firmware with advanced ROP exploitation.</p>
-					</div>
-				</li>
-				<li class='flex flex-col gap-x-2 sm:flex-row'>
-					<div class='flex flex-col gap-y-1.5'>
-						<a href='/blog/escalating-tplink-firmware-vulnerabilities' class='text-[#F5F5F5] hover:text-[#57FD6B] transition-colors'>
-							<span class='text-lg font-medium'>TP-Link Firmware Vulnerabilities: Automated Analysis</span>
-						</a>
-						<p class='text-sm text-[#A0A0A0]'>Advanced firmware vulnerability research using Ghidra scripting and automated binary analysis.</p>
-					</div>
-				</li>
-				<li class='flex flex-col gap-x-2 sm:flex-row'>
-					<div class='flex flex-col gap-y-1.5'>
-						<a href='/blog/mercury-browser-intent-hijacking-android' class='text-[#F5F5F5] hover:text-[#57FD6B] transition-colors'>
-							<span class='text-lg font-medium'>Mercury Browser Intent Hijacking: Android File Manager Exploit</span>
-						</a>
-						<p class='text-sm text-[#A0A0A0]'>Critical intent hijacking vulnerability in Mercury Browser for Android enabling arbitrary file upload and code execution through file manager abuse.</p>
-					</div>
-				</li>
-				<li class='flex flex-col gap-x-2 sm:flex-row'>
-					<div class='flex flex-col gap-y-1.5'>
-						<a href='/blog/vlc-vob-stack-overflow-vulnerability' class='text-[#F5F5F5] hover:text-[#57FD6B] transition-colors'>
-							<span class='text-lg font-medium'>VLC 2.2.6 Stack Overflow: ActiveX Plugin Exploitation</span>
-						</a>
-						<p class='text-sm text-[#A0A0A0]'>Stack overflow vulnerability in VLC Media Player exploitable via Internet Explorer ActiveX plugin with heap spraying.</p>
-					</div>
-				</li>
-				<li class='flex flex-col gap-x-2 sm:flex-row'>
-					<div class='flex flex-col gap-y-1.5'>
-						<a href='/blog/audacious-stack-overflow-vulnerability' class='text-[#F5F5F5] hover:text-[#57FD6B] transition-colors'>
-							<span class='text-lg font-medium'>Audacious 3.8/3.9 Stack Overflow: Deep Dive Analysis</span>
-						</a>
-						<p class='text-sm text-[#A0A0A0]'>Critical stack overflow vulnerability in Audacious Player discovered through advanced fuzzing and exploitation techniques.</p>
-					</div>
-				</li>
-				<li class='flex flex-col gap-x-2 sm:flex-row'>
-					<div class='flex flex-col gap-y-1.5'>
-						<a href='/blog/qqplayer-heap-overflow-vulnerability' class='text-[#F5F5F5] hover:text-[#57FD6B] transition-colors'>
-							<span class='text-lg font-medium'>QQPlayer 3.9 Heap Overflow: Matroska Exploitation</span>
-						</a>
-						<p class='text-sm text-[#A0A0A0]'>Heap overflow vulnerability in QQPlayer discovered through WinAFL fuzzing with Matroska container exploitation.</p>
-					</div>
-				</li>
-				<li class='flex flex-col gap-x-2 sm:flex-row'>
-					<div class='flex flex-col gap-y-1.5'>
-						<a href='/blog/limesurvey-rce-tcpdf-serialization' class='text-[#F5F5F5] hover:text-[#57FD6B] transition-colors'>
-							<span class='text-lg font-medium'>LimeSurvey RCE via TCPDF PHP Object Injection</span>
-						</a>
-						<p class='text-sm text-[#A0A0A0]'>Remote Code Execution through TCPDF PHAR deserialization attacks demonstrating advanced PHP object injection techniques.</p>
-					</div>
-				</li>
-				<li class='flex flex-col gap-x-2 sm:flex-row'>
-					<div class='flex flex-col gap-y-1.5'>
-						<a href='/blog/wix-premium-zone-bypass-vulnerability' class='text-[#F5F5F5] hover:text-[#57FD6B] transition-colors'>
-							<span class='text-lg font-medium'>Sealed</span>
-						</a>
-						<p class='text-sm text-[#A0A0A0]'>An encrypted post.</p>
-					</div>
-				</li>
-				<li class='flex flex-col gap-x-2 sm:flex-row'>
-					<div class='flex flex-col gap-y-1.5'>
-						<a href='/blog/shellshock-qmail-exploitation' class='text-[#F5F5F5] hover:text-[#57FD6B] transition-colors'>
-							<span class='text-lg font-medium'>Shellshock QMAIL Exploitation: SMTP Injection Attack</span>
-						</a>
-						<p class='text-sm text-[#A0A0A0]'>Advanced exploitation of CVE-2014-6271 (Shellshock) through QMAIL SMTP servers via header injection techniques.</p>
-					</div>
-				</li>
-				<li class='flex flex-col gap-x-2 sm:flex-row'>
-					<div class='flex flex-col gap-y-1.5'>
-						<a href='/blog/license-plate-hacking-argentina' class='text-[#F5F5F5] hover:text-[#57FD6B] transition-colors'>
-							<span class='text-lg font-medium'>License Plate OSINT: Argentina Vehicle Registry</span>
-						</a>
-						<p class='text-sm text-[#A0A0A0]'>Reverse-engineering Argentina's license plate system to track hit-and-run drivers using client-side JavaScript vulnerabilities.</p>
-					</div>
-				</li>
+			<ul class='flex flex-col gap-y-5'>
+				{
+					featuredPosts.map((post) => (
+						<li class='flex flex-col gap-y-1.5'>
+							<a
+								class='text-lg font-medium text-[#F5F5F5] transition-colors hover:text-[#57FD6B]'
+								href={`/blog/${post.slug}/`}
+							>
+								{post.data.title}
+							</a>
+							<p class='text-sm text-[#A0A0A0]'>{post.data.description}</p>
+							<div class='flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-[#A0A0A0]/70'>
+								{post.data.cve?.map((id) => <span class='text-[#57FD6B]'>{id}</span>)}
+								{post.data.series && <span>{seriesLength(post.data.series)}-part series</span>}
+							</div>
+						</li>
+					))
+				}
 			</ul>
-			
-			<!-- Check My Blog Button - Centered -->
+
 			<div class='flex justify-center pt-6'>
 				<a
 					href='/blog'
-					class='inline-flex items-center gap-x-4 rounded-xl border border-[#57FD6B]/30 bg-[#57FD6B]/10 px-8 py-4 text-lg font-medium text-[#57FD6B] shadow-sm transition-all hover:shadow-volt-glow hover:bg-[#57FD6B]/20 hover:scale-105'
+					class='inline-flex items-center gap-x-4 rounded-xl border border-[#57FD6B]/30 bg-[#57FD6B]/10 px-8 py-4 text-lg font-medium text-[#57FD6B] shadow-sm transition-all hover:bg-[#57FD6B]/20'
 				>
-					<svg class='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-						<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'/>
-					</svg>
-					Check My Blog
+					Read all posts
 				</a>
 			</div>
 		</Section>
@@ -639,21 +579,28 @@ const offensive = ['Red Teaming', 'EDR Evasion', 'Direct Syscalls', 'C4 Framewor
 			</div>
 		</Section>
 
-		<Section title='Want to know what I am reading? ' class='mb-8'>
-			<div class='bg-[#1A1A1A] rounded-lg p-6 border border-[#57FD6B]/20'>
-				<div class='mb-4'>
-					<h3 class='text-lg font-semibold text-[#F5F5F5] mb-2'>X Posts</h3>
-					<p class='text-[#A0A0A0] text-sm'>Latest insights on offensive security, cybersecurity research, and my way to see the world</p>
-				</div>
-				
-				<!-- RSS.app Widget -->
-				<rssapp-list id="9w5ndFrgFmYTGYEi"></rssapp-list>
-				<script src="https://widget.rss.app/v1/list.js" type="text/javascript" async></script>
-				
-				<div class='mt-4 text-center'>
-					<p class='text-[#A0A0A0] text-xs'>
-						Follow me on <a href="https://x.com/hdbreaker_" target="_blank" class="text-[#57FD6B] hover:underline">Twitter @hdbreaker_</a> for real-time updates
-					</p>
+		<Section title="Want to know what I'm reading?" class='mb-8'>
+			<div class='bg-[#1A1A1A]/50 border border-[#57FD6B]/20 rounded-2xl p-6 hover:border-[#57FD6B]/40 transition-all'>
+				<div class='flex items-start gap-6'>
+					<div class='w-12 h-12 bg-[#57FD6B]/20 rounded-lg flex items-center justify-center flex-shrink-0'>
+						<svg class='w-5 h-5 text-[#57FD6B]' fill='currentColor' viewBox='0 0 24 24' aria-hidden='true'>
+							<path d='M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z'/>
+						</svg>
+					</div>
+					<div class='flex-1'>
+						<h3 class='text-lg font-semibold text-[#F5F5F5] mb-2'>X Posts</h3>
+						<p class='text-[#A0A0A0] text-sm'>
+							Latest insights on offensive security, cybersecurity research, and my way to see the world
+						</p>
+						<a
+							href='https://x.com/hdbreaker_'
+							target='_blank'
+							rel='noopener noreferrer'
+							class='mt-4 inline-flex items-center gap-x-3 rounded-xl border border-[#57FD6B]/30 bg-[#57FD6B]/10 px-6 py-3 text-sm font-medium text-[#57FD6B] shadow-sm transition-all hover:bg-[#57FD6B]/20 w-fit'
+						>
+							<span>Follow me on X @hdbreaker_</span>
+						</a>
+					</div>
 				</div>
 			</div>
 		</Section>

@@ -1,0 +1,18 @@
+---
+interface Props {
+	/** CVE identifier, e.g. "CVE-2018-16119". */
+	id: string
+}
+
+const { id } = Astro.props
+---
+
+<a
+	aria-label={`${id} on the NVD`}
+	class='inline-flex items-center whitespace-nowrap rounded border border-primary/40 bg-primary/10 px-2 py-1 font-mono text-xs font-medium text-primary transition-colors hover:bg-primary/20'
+	href={`https://nvd.nist.gov/vuln/detail/${id}`}
+	rel='noopener noreferrer'
+	target='_blank'
+>
+	{id}
+</a>

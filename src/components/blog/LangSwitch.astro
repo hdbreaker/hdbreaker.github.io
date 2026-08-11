@@ -1,0 +1,53 @@
+---
+import { getAllPosts } from '@/utils'
+
+interface Props {
+	/** Language of the post currently being rendered. */
+	lang: 'en' | 'es'
+	/** Slug of the translated version, from the post's frontmatter. */
+	altSlug?: string
+}
+
+const { lang, altSlug } = Astro.props
+
+// Resolve the translation against the collection instead of trusting the slug. A stale
+// `altSlug` then renders nothing rather than a link to a 404.
+const alt = altSlug ? (await getAllPosts()).find((post) => post.slug === altSlug) : undefined
+const altLang = alt?.data.lang ?? 'en'
+
+// Only show the switch when there really are two different languages to move between.
+const show = !!alt && altLang !== lang
+
+// EN always sits on the left, ES on the right, so the control never reorders itself.
+const options = (['en', 'es'] as const).map((code) => ({
+	code,
+	isCurrent: code === lang,
+	href: code === lang ? undefined : `/blog/${alt?.slug}/`
+}))
+---
+
+{
+	show && (
+		<div
+			aria-label='Language'
+			class='inline-flex overflow-hidden rounded-full border border-border font-mono text-xs'
+			role='group'
+		>
+			{options.map(({ code, isCurrent, href }) =>
+				isCurrent ? (
+					<span aria-current='true' class='bg-primary px-2.5 py-1 font-medium text-primary-foreground'>
+						{code.toUpperCase()}
+					</span>
+				) : (
+					<a
+						aria-label={`Read this post in ${code === 'es' ? 'Spanish' : 'English'}`}
+						class='px-2.5 py-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground'
+						href={href}
+					>
+						{code.toUpperCase()}
+					</a>
+				)
+			)}
+		</div>
+	)
+}

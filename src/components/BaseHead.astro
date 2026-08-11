@@ -8,7 +8,7 @@ import { siteConfig } from '@/site-config'
 
 type Props = SiteMeta
 
-const { articleDate, description, ogImage, title } = Astro.props
+const { altSlug, articleDate, description, lang, ogImage, title } = Astro.props
 
 const titleSeparator = '•'
 const siteTitle = `${title} ${titleSeparator} ${siteConfig.title}`
@@ -33,6 +33,20 @@ const socialImageURL = new URL(ogImage ? ogImage : '/social-card.png', Astro.url
 
 {/* Canonical URL */}
 <link rel='canonical' href={canonicalURL} />
+
+{/* Reciprocal hreflang between translated posts */}
+{
+	altSlug && (
+		<>
+			<link
+				href={new URL(`/blog/${altSlug}/`, Astro.site)}
+				hreflang={lang === 'es' ? 'en' : 'es'}
+				rel='alternate'
+			/>
+			<link href={canonicalURL} hreflang={lang === 'es' ? 'es' : 'en'} rel='alternate' />
+		</>
+	)
+}
 
 {/* Primary Meta Tags */}
 <meta content={siteTitle} name='title' />

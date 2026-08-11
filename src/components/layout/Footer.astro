@@ -1,0 +1,41 @@
+---
+import { footerLinks, siteConfig, socialLinks } from '@/site-config'
+
+const year = new Date().getFullYear()
+---
+
+<footer class='mt-24 w-full border-t border-border pt-8 text-sm text-muted-foreground'>
+	<div class='flex flex-col gap-8 sm:flex-row sm:justify-between'>
+		<nav aria-label='More pages' class='flex flex-col gap-2'>
+			<h2 class='font-mono text-xs uppercase tracking-widest text-foreground/60'>More</h2>
+			{
+				footerLinks.map((link) => (
+					<a class='transition-colors hover:text-foreground' href={link.path}>
+						{link.title}
+					</a>
+				))
+			}
+		</nav>
+
+		<nav aria-label='Elsewhere' class='flex flex-col gap-2'>
+			<h2 class='font-mono text-xs uppercase tracking-widest text-foreground/60'>Elsewhere</h2>
+			{
+				socialLinks.map((link) => (
+					<a
+						class='transition-colors hover:text-foreground'
+						href={link.url}
+						rel={link.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+						target={link.url.startsWith('http') ? '_blank' : undefined}
+					>
+						{link.title}
+					</a>
+				))
+			}
+		</nav>
+
+	</div>
+
+	<p class='mt-8 font-mono text-xs text-foreground/50'>
+		&copy; {year} {siteConfig.author}
+	</p>
+</footer>

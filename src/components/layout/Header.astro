@@ -1,27 +1,41 @@
 ---
+import { menuLinks } from '@/site-config'
 
+// Trailing-slash-insensitive match so /blog and /blog/ both light up, and any
+// post under /blog/... keeps its section marked as current.
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/'
+const isCurrent = (href: string) => {
+	const target = href.replace(/\/+$/, '') || '/'
+	return path === target || path.startsWith(`${target}/`)
+}
 ---
 
 <header class='mb-12 flex w-full flex-wrap pb-3 text-sm sm:flex-nowrap sm:justify-start'>
 	<nav
-		class='relative mx-auto flex w-full items-center justify-between sm:flex sm:items-center'
-		aria-label='global'
+		class='relative mx-auto flex w-full flex-wrap items-center justify-between gap-y-3 sm:flex sm:items-center'
+		aria-label='Main'
 	>
-		<a class='flex-none text-xl font-semibold' href='/' aria-label='Brand'></a>
+		<a class='flex-none text-lg font-semibold tracking-tight hover:text-primary' href='/'>
+			hdbreaker
+		</a>
 
-		<div class='flex flex-row items-center justify-center gap-x-5 sm:gap-x-7'>
-			<a
-				href='/blog'
-				class='flex-none text-[1.05rem] font-medium hover:text-foreground/75'
-				aria-label='Nav Menu Item'
-				>Blog
-			</a>
-			<a
-				href='/tools'
-				class='flex-none text-[1.05rem] font-medium hover:text-foreground/75'
-				aria-label='Nav Menu Item'
-				>Tools
-			</a>
+		<div class='flex flex-row flex-wrap items-center justify-center gap-x-5 gap-y-2 sm:gap-x-7'>
+			{
+				menuLinks.map((link) => (
+					<a
+						aria-current={isCurrent(link.path) ? 'page' : undefined}
+						class:list={[
+							'flex-none text-[1.05rem] transition-colors',
+							isCurrent(link.path)
+								? 'font-semibold text-foreground'
+								: 'font-medium text-foreground/70 hover:text-foreground'
+						]}
+						href={link.path}
+					>
+						{link.title}
+					</a>
+				))
+			}
 
 			<button
 				id='toggleDarkMode'

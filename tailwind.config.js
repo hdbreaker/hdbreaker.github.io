@@ -66,29 +66,16 @@ const config = {
 				sans: [...fontFamily.sans],
 				satoshi: ['Satoshi', 'sans'],
 			},
-			boxShadow: {
-				'volt-glow': '0 0 40px rgba(87,253,107,0.6)',
-				'volt-soft': '0 0 20px rgba(87,253,107,0.3)',
-			},
-			dropShadow: {
-				volt: '0 0 8px rgba(87,253,107,0.5)',
-			},
+			// NOTE: `shadow-volt-*`, `drop-shadow-volt` and `animate-pulse-glow` are
+			// deliberately NOT defined here. Those class names are sprinkled across the
+			// markup but never rendered in production, and defining them changes the
+			// look of every hero on the site. Left undefined so the design matches what
+			// is deployed. Remove the classes from the markup before reintroducing them.
 			animation: {
-				'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
 				'fade-in': 'fadeIn 0.6s ease-out forwards',
 				'slide-up': 'slideUp 0.6s ease-out forwards',
 			},
 			keyframes: {
-				'pulse-glow': {
-					'0%, 100%': { 
-						boxShadow: '0 0 20px rgba(87,253,107,0.3)',
-						transform: 'scale(1)'
-					},
-					'50%': { 
-						boxShadow: '0 0 40px rgba(87,253,107,0.6)',
-						transform: 'scale(1.05)'
-					},
-				},
 				fadeIn: {
 					'0%': { opacity: '0' },
 					'100%': { opacity: '1' },

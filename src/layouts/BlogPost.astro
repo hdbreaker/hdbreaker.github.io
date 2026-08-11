@@ -4,7 +4,7 @@ import type { CollectionEntry } from 'astro:content'
 import BlogHero from '@/components/blog/Hero.astro'
 import TOC from '@/components/blog/TOC.astro'
 import SeriesNav from '@/components/blog/SeriesNav.astro'
-import Button from '@/components/Button.astro'
+import Breadcrumb from '@/components/Breadcrumb.astro'
 
 import PageLayout from './BaseLayout.astro'
 
@@ -14,42 +14,61 @@ interface Props {
 
 const { post } = Astro.props
 const {
-	data: { description, ogImage, publishDate, title, updatedDate }
+	data: { altSlug, description, lang, ogImage, publishDate, seriesLabel, title, updatedDate }
 } = post
 
 const socialImage = ogImage ?? '/social-card.png'
 const articleDate = updatedDate?.toISOString() ?? publishDate.toISOString()
 const { headings } = await post.render()
+
+// A chapter shows its short series label; a standalone post shows its title.
+const crumbs = [{ label: 'Blog', href: '/blog' }, { label: seriesLabel ?? title }]
 ---
 
-<PageLayout meta={{ articleDate, description, ogImage: socialImage, title }}>
+<PageLayout meta={{ altSlug, articleDate, description, lang, ogImage: socialImage, title }}>
+	<div
+		aria-hidden='true'
+		class='fixed inset-x-0 top-0 z-50 h-0.5 origin-left scale-x-0 bg-primary'
+		id='reading-progress'
+	>
+	</div>
 	<div class='w-full'>
-		<Button title='Back' href='/blog' style='button'>
-			<svg
-				xmlns='http://www.w3.org/2000/svg'
-				width='14'
-				height='14'
-				viewBox='0 0 24 24'
-				slot='icon-before'
-			>
-				<path
-					fill='currentColor'
-					d='m6.921 12.5l5.792 5.792L12 19l-7-7l7-7l.713.708L6.921 11.5H19v1z'
-				>
-				</path>
-			</svg>
-		</Button>
+		<Breadcrumb items={crumbs} />
 		<div class='mt-8 gap-x-10 lg:flex lg:items-start'>
 			{!!headings.length && <TOC headings={headings} />}
 			<article class='flex-grow break-words' data-pagefind-body>
 				<div id='blog-hero'><BlogHero content={post} /></div>
 				<SeriesNav post={post} position='top' />
 				<div
-					class='prose prose-base prose-zinc mt-12 text-muted-foreground dark:prose-invert prose-headings:font-medium prose-headings:text-foreground prose-headings:before:absolute prose-headings:before:-ms-4 prose-th:before:content-none'
+					class='prose prose-zinc mt-12 max-w-[68ch] text-foreground dark:prose-invert prose-headings:font-semibold prose-headings:text-foreground prose-headings:before:absolute prose-headings:before:-ms-4 prose-p:text-foreground/90 prose-li:text-foreground/90 prose-a:text-primary prose-th:before:content-none'
 				>
 					<slot />
 				</div>
 				<SeriesNav post={post} position='bottom' />
+				<style is:global>
+					/* Lede: the first paragraph orients the reader before the detail starts. */
+					.prose > p:first-of-type {
+						font-size: 1.2rem;
+						line-height: 1.6;
+						color: hsl(var(--foreground));
+					}
+					/* Heading anchors — technical posts get cited by section. */
+					.prose :is(h2, h3) {
+						position: relative;
+					}
+					.prose :is(h2, h3) > a.heading-anchor {
+						position: absolute;
+						inset-inline-start: -1.1em;
+						opacity: 0;
+						text-decoration: none;
+						color: hsl(var(--muted-foreground));
+						transition: opacity 0.15s ease-out;
+					}
+					.prose :is(h2, h3):hover > a.heading-anchor,
+					.prose a.heading-anchor:focus-visible {
+						opacity: 1;
+					}
+				</style>
 			</article>
 		</div>
 		<button
@@ -90,4 +109,58 @@ const { headings } = await post.render()
 
 	const observer = new IntersectionObserver(callback)
 	observer.observe(targetHeader)
+
+	// --- Reading progress bar -------------------------------------------------
+	const progress = document.getElementById('reading-progress')
+	const article = document.querySelector('article')
+
+	function updateProgress() {
+		if (!progress || !article) return
+		const start = article.offsetTop
+		const total = article.scrollHeight - window.innerHeight
+		const read = window.scrollY - start
+		const ratio = total > 0 ? Math.min(1, Math.max(0, read / total)) : 0
+		progress.style.transform = `scaleX(${ratio})`
+	}
+
+	updateProgress()
+	document.addEventListener('scroll', updateProgress, { passive: true })
+	window.addEventListener('resize', updateProgress)
+
+	// --- Heading anchors ------------------------------------------------------
+	document.querySelectorAll<HTMLHeadingElement>('.prose h2[id], .prose h3[id]').forEach((h) => {
+		const anchor = document.createElement('a')
+		anchor.className = 'heading-anchor'
+		anchor.href = `#${h.id}`
+		anchor.textContent = '#'
+		anchor.setAttribute('aria-label', `Link to section: ${h.textContent ?? ''}`)
+		h.prepend(anchor)
+	})
+
+	// --- Active TOC section --------------------------------------------------
+	const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('#toc-heading ~ ul a'))
+
+	if (tocLinks.length) {
+		const headings = tocLinks
+			.map((link) => document.getElementById(decodeURIComponent(link.hash.slice(1))))
+			.filter((el): el is HTMLElement => !!el)
+
+		const setActive = (id: string) => {
+			tocLinks.forEach((link) => {
+				const isActive = decodeURIComponent(link.hash.slice(1)) === id
+				link.classList.toggle('text-foreground', isActive)
+				link.classList.toggle('font-medium', isActive)
+			})
+		}
+
+		const tocObserver = new IntersectionObserver(
+			(entries) => {
+				const visible = entries.filter((e) => e.isIntersecting)
+				if (visible.length) setActive(visible[0].target.id)
+			},
+			{ rootMargin: '-80px 0px -70% 0px' }
+		)
+
+		headings.forEach((h) => tocObserver.observe(h))
+	}
 </script>

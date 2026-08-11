@@ -9,24 +9,27 @@ const meta = {
 ---
 
 <PageLayout meta={meta}>
-	<a
-		href='https://github.com/srleom/astro-theme-resume.git'
-		class='flex flex-row items-center gap-x-3 rounded-3xl border border-input px-4 py-2 text-sm shadow-sm transition-all hover:shadow-md'
-	>
-		<span class='relative flex items-center justify-center'>
-			<span
-				class='absolute inline-flex h-2 w-2 animate-ping rounded-full border border-green-400 bg-green-400 opacity-75'
-			></span>
-			<span class='relative inline-flex h-2 w-2 rounded-full bg-green-400'></span>
-		</span>
-
-		<p class='font-medium'>Get free template</p>
-	</a>
 	<div class='px-4 py-10 text-center sm:px-6 lg:px-8'>
-		<h1 class='block text-7xl font-bold sm:text-9xl'>404</h1>
-		<p class='mt-3 text-muted-foreground'>Oops, something went wrong.</p>
-		<p class=''>Sorry, we couldn't find your page.</p>
-		<Button title='Back to home' href='/' style='button' class='mt-5'>
+		<h1 class='block font-mono text-7xl font-bold sm:text-9xl'>404</h1>
+		<p class='mt-3 text-lg'>This page doesn't exist.</p>
+		<p class='mt-1 text-muted-foreground'>
+			The link may be broken, or the page moved. Try one of these instead:
+		</p>
+		<nav class='mt-6 flex flex-wrap items-center justify-center gap-3' aria-label='Useful links'>
+			<a
+				class='rounded-lg border border-border px-4 py-2 text-sm transition-colors hover:border-primary/40'
+				href='/blog'>Research &amp; writeups</a
+			>
+			<a
+				class='rounded-lg border border-border px-4 py-2 text-sm transition-colors hover:border-primary/40'
+				href='/tools'>Tools</a
+			>
+			<a
+				class='rounded-lg border border-border px-4 py-2 text-sm transition-colors hover:border-primary/40'
+				href='/tags'>Browse by topic</a
+			>
+		</nav>
+		<Button title='Back to home' href='/' style='button' class='mt-8'>
 			<svg
 				xmlns='http://www.w3.org/2000/svg'
 				width='14'

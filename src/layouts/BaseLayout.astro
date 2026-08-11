@@ -13,19 +13,29 @@ interface Props {
 }
 
 const {
-	meta: { articleDate, description = siteConfig.description, ogImage, title }
+	meta: { altSlug, articleDate, description = siteConfig.description, lang, ogImage, title }
 } = Astro.props
+
+// Spanish posts must not be served as English: it hurts SEO and screen readers.
+const htmlLang = lang === 'es' ? 'es' : siteConfig.lang
 ---
 
-<html lang={siteConfig.lang} class='dark'>
+<html lang={htmlLang} class='dark'>
 	<head>
-		<BaseHead articleDate={articleDate} description={description} ogImage={ogImage} title={title} />
+		<BaseHead
+			altSlug={altSlug}
+			articleDate={articleDate}
+			description={description}
+			lang={lang}
+			ogImage={ogImage}
+			title={title}
+		/>
 	</head>
 
 	<body class='flex justify-center bg-[#0A0A0A] text-[#F5F5F5]'>
 		<ThemeProvider />
 		<main
-			class='flex min-h-screen w-screen max-w-[70rem] flex-col items-center px-8 pb-16 pt-8 font-satoshi text-[0.92rem] leading-relaxed sm:px-12 lg:px-16'
+			class='flex min-h-screen w-screen max-w-[70rem] flex-col items-center px-8 pb-16 pt-8 font-satoshi text-[1.0625rem] leading-relaxed sm:px-12 lg:px-16'
 		>
 			<Header />
 			<slot />

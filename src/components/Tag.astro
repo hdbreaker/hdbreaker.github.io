@@ -1,0 +1,17 @@
+---
+interface Props {
+	/** Tag slug, already lowercased by the content collection schema. */
+	name: string
+}
+
+const { name } = Astro.props
+---
+
+<a
+	aria-label={`View posts tagged ${name}`}
+	class='inline-flex items-center whitespace-nowrap rounded border border-border px-2 py-1 font-mono text-xs text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground'
+	data-pagefind-filter='tag'
+	href={`/tags/${name}/`}
+>
+	{name}
+</a>
