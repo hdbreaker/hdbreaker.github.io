@@ -4,6 +4,8 @@ publishDate: "2025-01-13"
 description: "C4-style relay multi-agent architecture, cross-platform agents, and upcoming self-contained TCP mesh networking."
 tags: ["red-team"]
 draft: false
+lang: "en"
+listed: true
 ---
 
 ## Nimhawk v2.0 Development Update

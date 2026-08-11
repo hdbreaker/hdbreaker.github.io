@@ -6,6 +6,8 @@ tags: ["rce", "mobile", "vulnerability-research"]
 target: { vendor: "Mercury Browser" }
 platform: "mobile"
 draft: false
+lang: "en"
+listed: true
 ---
 
 ## Introduction

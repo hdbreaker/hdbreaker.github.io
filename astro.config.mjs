@@ -13,6 +13,11 @@ import mermaid from 'astro-mermaid'
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://hdbreaker.github.io',
+	// The D-Link post was the only file left in UPPER_SNAKE_CASE, which produced a
+	// slug outside the site's convention. Keep the published URL working.
+	redirects: {
+		'/blog/DLINK_DIR600_Research_Post': '/blog/dlink-dir600-rce-exploit-chain'
+	},
 	integrations: [
 		// Must come BEFORE expressiveCode, which would otherwise claim the
 		// ```mermaid fences and render them as plain code blocks.

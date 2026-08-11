@@ -7,6 +7,8 @@ cve: ["CVE-2019-14670"]
 target: { vendor: "LimeSurvey" }
 platform: "web"
 draft: false
+lang: "en"
+listed: true
 ---
 
 

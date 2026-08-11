@@ -4,6 +4,8 @@ publishDate: "2024-11-15"
 description: "A powerful, modular, lightweight and efficient command & control framework written in Nim for red team operations."
 tags: ["red-team"]
 draft: false
+lang: "en"
+listed: true
 ---
 
 ## Introducing Nimhawk C2

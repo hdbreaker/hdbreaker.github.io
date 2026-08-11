@@ -5,6 +5,8 @@ description: "How I reverse-engineered Argentina's license plate system to track
 tags: ["osint", "web-security", "reverse-engineering"]
 platform: "web"
 draft: false
+lang: "en"
+listed: true
 ---
 
 ![Static CAPTCHA Testing](/assets/blog/license-plate/test.png)

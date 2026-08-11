@@ -7,6 +7,8 @@ cve: ["CVE-2018-16119"]
 target: { vendor: "TP-Link" }
 platform: "embedded"
 draft: false
+lang: "en"
+listed: true
 ---
 
 ## Overview
