@@ -2,7 +2,8 @@
 title: "License Plate OSINT: Argentina Vehicle Registry"
 publishDate: "2015-02-19"
 description: "How I reverse-engineered Argentina's license plate system to track down a hit-and-run driver using client-side JavaScript vulnerabilities."
-tags: ["osint", "javascript", "reverse-engineering", "argentina", "vehicle-registry", "client-side-security"]
+tags: ["osint", "web-security", "reverse-engineering"]
+platform: "web"
 draft: false
 ---
 

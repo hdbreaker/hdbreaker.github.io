@@ -2,7 +2,9 @@
 title: "RCE en V8 de una Samsung TV #3 — La cadena de oro al .text"
 publishDate: "2026-06-18"
 description: "¿Qué objeto alcanzable desde JS contiene un puntero que caiga, sí o sí, dentro del mapeo de libchrome.so? La respuesta es un DOM wrapper."
-tags: ["samsung-tv", "tizen", "chromium", "v8", "wasm", "type-confusion", "arm32", "browser-exploitation", "rce"]
+tags: ["browser-exploitation", "type-confusion", "memory-corruption", "rce", "rop"]
+target: { vendor: "Samsung", product: "Tizen Smart TV" }
+platform: "browser"
 draft: false
 listed: false
 lang: "es"

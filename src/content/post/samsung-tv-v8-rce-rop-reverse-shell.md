@@ -2,7 +2,9 @@
 title: "Samsung TV V8 RCE #6 — ROP, mprotect & reverse shell"
 publishDate: "2026-06-18"
 description: "The finale: hijack a DOM wrapper with a fake vtable, pivot the stack, ROP into mprotect, and land an ARM32 reverse shell on the TV."
-tags: ["samsung-tv", "tizen", "chromium", "v8", "wasm", "type-confusion", "arm32", "browser-exploitation", "rce"]
+tags: ["browser-exploitation", "type-confusion", "memory-corruption", "rce", "rop"]
+target: { vendor: "Samsung", product: "Tizen Smart TV" }
+platform: "browser"
 draft: false
 listed: false
 lang: "en"

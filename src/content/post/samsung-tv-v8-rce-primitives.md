@@ -2,7 +2,9 @@
 title: "Samsung TV V8 RCE #1 — Three primitives, no cage"
 publishDate: "2026-06-18"
 description: "A WasmGC type confusion turned into addrOf, read32 and write32 — full 32-bit process R/W with no V8 cage to escape."
-tags: ["samsung-tv", "tizen", "chromium", "v8", "wasm", "type-confusion", "arm32", "browser-exploitation", "rce"]
+tags: ["browser-exploitation", "type-confusion", "memory-corruption", "rce", "rop"]
+target: { vendor: "Samsung", product: "Tizen Smart TV" }
+platform: "browser"
 draft: false
 listed: false
 lang: "en"

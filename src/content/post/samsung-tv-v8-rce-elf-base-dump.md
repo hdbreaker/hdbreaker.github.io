@@ -2,7 +2,9 @@
 title: "Samsung TV V8 RCE #4 — ELF base & dumping the .so"
 publishDate: "2026-06-18"
 description: "With the golden chain, soscan found the library base on the TV and recovered the constant anchor offset that survives any reboot."
-tags: ["samsung-tv", "tizen", "chromium", "v8", "wasm", "type-confusion", "arm32", "browser-exploitation", "rce"]
+tags: ["browser-exploitation", "type-confusion", "memory-corruption", "rce", "rop"]
+target: { vendor: "Samsung", product: "Tizen Smart TV" }
+platform: "browser"
 draft: false
 listed: false
 lang: "en"

@@ -2,7 +2,9 @@
 title: "RCE en V8 de una Samsung TV #4 — ELF base y dump del .so"
 publishDate: "2026-06-18"
 description: "Con la cadena de oro, soscan corrió contra la TV y encontró la base de la librería junto al offset de ancla constante que sobrevive cualquier reboot."
-tags: ["samsung-tv", "tizen", "chromium", "v8", "wasm", "type-confusion", "arm32", "browser-exploitation", "rce"]
+tags: ["browser-exploitation", "type-confusion", "memory-corruption", "rce", "rop"]
+target: { vendor: "Samsung", product: "Tizen Smart TV" }
+platform: "browser"
 draft: false
 listed: false
 lang: "es"

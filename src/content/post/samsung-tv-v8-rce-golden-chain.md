@@ -2,7 +2,9 @@
 title: "Samsung TV V8 RCE #3 — The golden chain to .text"
 publishDate: "2026-06-18"
 description: "What object reachable from JS holds a pointer that lands, for sure, inside the libchrome.so mapping? The answer is a DOM wrapper."
-tags: ["samsung-tv", "tizen", "chromium", "v8", "wasm", "type-confusion", "arm32", "browser-exploitation", "rce"]
+tags: ["browser-exploitation", "type-confusion", "memory-corruption", "rce", "rop"]
+target: { vendor: "Samsung", product: "Tizen Smart TV" }
+platform: "browser"
 draft: false
 listed: false
 lang: "en"

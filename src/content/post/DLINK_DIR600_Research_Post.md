@@ -2,7 +2,9 @@
 title: "D-Link DIR600 Remote Code Execution Exploit Chain"
 publishDate: "2019-08-15"
 description: "Complete exploit chain for D-Link DIR600 routers using CSRF, authentication bypass, and RCE to achieve persistent backdoor access via single HTTP link."
-tags: ["d-link", "iot", "router-hacking", "csrf", "rce", "exploit-chain", "mips", "backdoor"]
+tags: ["rce", "csrf", "firmware", "iot", "exploit-development"]
+target: { vendor: "D-Link", product: "DIR-600" }
+platform: "embedded"
 draft: false
 ---
 

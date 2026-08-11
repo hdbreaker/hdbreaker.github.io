@@ -2,7 +2,7 @@
 title: "Nimhawk v2.0: Development Update"
 publishDate: "2025-01-13"
 description: "C4-style relay multi-agent architecture, cross-platform agents, and upcoming self-contained TCP mesh networking."
-tags: ["nimhawk", "c2", "relay", "mesh-network", "multi-platform", "red-team"]
+tags: ["red-team"]
 draft: false
 ---
 

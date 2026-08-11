@@ -2,7 +2,9 @@
 title: "RCE en V8 de una Samsung TV #1 — Tres primitivas, sin jaula"
 publishDate: "2026-06-18"
 description: "Una type confusion de WasmGC convertida en addrOf, read32 y write32 — R/W total del proceso de 32 bits sin jaula de V8 que escapar."
-tags: ["samsung-tv", "tizen", "chromium", "v8", "wasm", "type-confusion", "arm32", "browser-exploitation", "rce"]
+tags: ["browser-exploitation", "type-confusion", "memory-corruption", "rce", "rop"]
+target: { vendor: "Samsung", product: "Tizen Smart TV" }
+platform: "browser"
 draft: false
 listed: false
 lang: "es"

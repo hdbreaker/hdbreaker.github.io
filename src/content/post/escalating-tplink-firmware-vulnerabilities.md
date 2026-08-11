@@ -2,7 +2,10 @@
 title: "Escalating TP-Link Firmware Vulnerabilities"
 publishDate: "2018-12-01"
 description: "Automated vulnerability pattern detection across multiple TP-Link firmware versions using Ghidra scripting and Binwalk to discover CVE-2018-16119."
-tags: ["firmware", "iot", "ghidra", "cve-2018-16119", "tp-link", "buffer-overflow", "vulnerability-research", "automation"]
+tags: ["firmware", "iot", "reverse-engineering", "vulnerability-research", "memory-corruption"]
+cve: ["CVE-2018-16119"]
+target: { vendor: "TP-Link" }
+platform: "embedded"
 draft: false
 ---
 

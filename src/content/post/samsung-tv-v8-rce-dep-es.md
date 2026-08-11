@@ -2,7 +2,9 @@
 title: "RCE en V8 de una Samsung TV #5 — ¿DEP o shellcode? ROP"
 publishDate: "2026-06-18"
 description: "Antes de construir la etapa de ejecución, una pregunta decide toda la estrategia: ¿el proceso del navegador tiene alguna región RWX?"
-tags: ["samsung-tv", "tizen", "chromium", "v8", "wasm", "type-confusion", "arm32", "browser-exploitation", "rce"]
+tags: ["browser-exploitation", "type-confusion", "memory-corruption", "rce", "rop"]
+target: { vendor: "Samsung", product: "Tizen Smart TV" }
+platform: "browser"
 draft: false
 listed: false
 lang: "es"

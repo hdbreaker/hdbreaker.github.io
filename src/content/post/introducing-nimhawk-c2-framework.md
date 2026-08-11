@@ -2,7 +2,7 @@
 title: "Introducing Nimhawk C2"
 publishDate: "2024-11-15"
 description: "A powerful, modular, lightweight and efficient command & control framework written in Nim for red team operations."
-tags: ["nimhawk", "c2", "red-team", "nim", "edr-evasion"]
+tags: ["red-team"]
 draft: false
 ---
 

@@ -2,18 +2,20 @@
 title: "How to Troll Pokémon Players — Gen1recomp Edition"
 publishDate: "2026-08-11"
 description: "Mapping the Gen1recomp network protocol, finding the trust boundary nobody checked, and turning Lua type confusion into a one-packet client crash."
-tags: ["pokemon", "gen1recomp", "lua", "love2d", "game-hacking", "network-protocol", "dos", "vulnerability-research", "reverse-engineering", "type-confusion", "json"]
+tags: ["type-confusion", "reverse-engineering", "vulnerability-research"]
+target: { vendor: "Gen1recomp" }
+platform: "game"
 draft: false
 listed: true
 lang: "en"
+altSlug: "pokemon-gen1recomp-hate-cheat-es"
 ---
 
-# How to Troll Pokémon Players — Gen1recomp Edition
 > *I was losing. I sent one packet. Their game ends. I won.*
 
 ![Gen1recomp title screen](/images/main.png)
 
----
+***
 
 ## It started with a tweet
 
@@ -38,7 +40,8 @@ Gen1recomp had all of that in one small, readable place: LAN and online transpor
 And eventually I asked myself the devil's questions. **Could I crash a remote game? Could malformed link data give me control over memory? Was there an RCE hiding in the protocol's deserialization path? Could the protocol be wormable and used to infect thousands of players?**
 
 The project was getting attention on X, people were starting to play it online, and that made the question more interesting. A new protocol, real users, a public relay, and a fresh Lua implementation built around an old ROM? That sounded like a fun place to start digging.
----
+
+***
 
 ## I contributed before I broke it
 
