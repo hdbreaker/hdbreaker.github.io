@@ -73,6 +73,49 @@ export const footerLinks: Array<{ title: string; path: string }> = [
 	}
 ]
 
+/**
+ * The controlled tag vocabulary, grouped by axis. This is the same closed set the
+ * posts were migrated onto: a tag names a technique or a vulnerability class, never
+ * a product or a CVE — those live in each post's `target` and `cve` fields.
+ *
+ * Anything tagged outside this list still renders on /tags/, under "Other", so a
+ * stray tag surfaces instead of disappearing.
+ */
+export const tagGroups: Array<{ title: string; blurb: string; tags: string[] }> = [
+	{
+		title: 'Vulnerability class',
+		blurb: 'What the bug actually is.',
+		tags: [
+			'rce',
+			'memory-corruption',
+			'type-confusion',
+			'ssrf',
+			'path-traversal',
+			'csrf',
+			'idor',
+			'auth-bypass'
+		]
+	},
+	{
+		title: 'Technique',
+		blurb: 'How it was found or driven to impact.',
+		tags: ['rop', 'fuzzing', 'reverse-engineering', 'exploit-development', 'osint']
+	},
+	{
+		title: 'Domain',
+		blurb: 'Where it lives.',
+		tags: [
+			'browser-exploitation',
+			'firmware',
+			'iot',
+			'mobile',
+			'web-security',
+			'red-team',
+			'vulnerability-research'
+		]
+	}
+]
+
 /** External profiles, rendered in the footer. */
 export const socialLinks: Array<{ title: string; url: string }> = [
 	{ title: 'GitHub', url: 'https://github.com/hdbreaker' },
