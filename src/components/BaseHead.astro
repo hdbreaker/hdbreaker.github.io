@@ -4,16 +4,73 @@
 import '../styles/app.css'
 
 import type { SiteMeta } from '@/types'
-import { siteConfig } from '@/site-config'
+import { siteConfig, socialLinks } from '@/site-config'
 
 type Props = SiteMeta
 
-const { altSlug, articleDate, description, lang, ogImage, title } = Astro.props
+const { altSlug, articleDate, description, keywords, lang, ogImage, publishDate, title, updatedDate } =
+	Astro.props
 
 const titleSeparator = '•'
-const siteTitle = `${title} ${titleSeparator} ${siteConfig.title}`
+// Skip the brand suffix when the page title already is the brand, so the home
+// page does not render "Alejandro Parodi • Alejandro Parodi".
+const siteTitle = !title
+	? siteConfig.title
+	: title === siteConfig.shortTitle
+		? `${title} ${titleSeparator} Offensive Security Engineer`
+		: `${title} ${titleSeparator} ${siteConfig.shortTitle}`
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 const socialImageURL = new URL(ogImage ? ogImage : '/social-card.png', Astro.url).href
+
+// --- Structured data -------------------------------------------------------
+// The author is the same entity everywhere, so it is defined once and referenced
+// by @id from the article node rather than duplicated.
+const personId = new URL('/#person', Astro.site).href
+
+const person = {
+	'@type': 'Person',
+	'@id': personId,
+	name: siteConfig.author,
+	url: new URL('/', Astro.site).href,
+	jobTitle: 'Offensive Security Engineer',
+	description: siteConfig.description,
+	sameAs: socialLinks.filter((l) => l.url.startsWith('http')).map((l) => l.url)
+}
+
+const isArticle = !!publishDate
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@graph': [
+		person,
+		isArticle
+			? {
+					// TechArticle rather than BlogPosting: these are technical writeups.
+					'@type': 'TechArticle',
+					'@id': `${canonicalURL.href}#article`,
+					headline: title,
+					description,
+					url: canonicalURL.href,
+					datePublished: publishDate,
+					dateModified: updatedDate ?? publishDate,
+					inLanguage: lang === 'es' ? 'es' : 'en',
+					image: socialImageURL,
+					author: { '@id': personId },
+					publisher: { '@id': personId },
+					mainEntityOfPage: canonicalURL.href,
+					...(keywords?.length ? { keywords: keywords.join(', ') } : {})
+				}
+			: {
+					'@type': 'WebSite',
+					'@id': new URL('/#website', Astro.site).href,
+					url: new URL('/', Astro.site).href,
+					name: siteConfig.title,
+					description: siteConfig.description,
+					inLanguage: 'en',
+					publisher: { '@id': personId }
+				}
+	]
+}
 ---
 
 <meta charset='utf-8' />
@@ -34,7 +91,10 @@ const socialImageURL = new URL(ogImage ? ogImage : '/social-card.png', Astro.url
 {/* Canonical URL */}
 <link rel='canonical' href={canonicalURL} />
 
-{/* Reciprocal hreflang between translated posts */}
+{/*
+  Reciprocal hreflang between translated posts. x-default points at the English
+  version, so search engines serve it when the reader's language matches neither.
+*/}
 {
 	altSlug && (
 		<>
@@ -44,6 +104,11 @@ const socialImageURL = new URL(ogImage ? ogImage : '/social-card.png', Astro.url
 				rel='alternate'
 			/>
 			<link href={canonicalURL} hreflang={lang === 'es' ? 'es' : 'en'} rel='alternate' />
+			<link
+				href={lang === 'es' ? new URL(`/blog/${altSlug}/`, Astro.site) : canonicalURL}
+				hreflang='x-default'
+				rel='alternate'
+			/>
 		</>
 	)
 }
@@ -70,7 +135,6 @@ const socialImageURL = new URL(ogImage ? ogImage : '/social-card.png', Astro.url
 <meta content='es_ES' property='og:locale:alternate' />
 
 {/* Instagram specific */}
-<meta content='@alejandroparodi' property='instagram:creator' />
 
 {
 	articleDate && (
@@ -96,29 +160,21 @@ const socialImageURL = new URL(ogImage ? ogImage : '/social-card.png', Astro.url
 <meta content={`${title} - ${siteConfig.title}`} name='twitter:image:alt' />
 <meta content='@hdbreaker_' name='twitter:creator' />
 <meta content='@hdbreaker_' name='twitter:site' />
-<meta content='x.com' name='twitter:domain' />
-<meta content='alejandroparodi.dev' name='twitter:app:name:iphone' />
-<meta content='alejandroparodi.dev' name='twitter:app:name:ipad' />
-<meta content='alejandroparodi.dev' name='twitter:app:name:googleplay' />
-
-{/* LinkedIn specific */}
-<meta content='' property='profile:first_name' />
-<meta content='' property='profile:last_name' />
-<meta content='alejandroparodi' property='profile:username' />
-<meta content='' property='profile:title' />
-<meta content='' property='article:summary' />
-<meta content='' property='article:section' />
-<meta content='alejandroparodi.dev' property='linkedin:owner' />
-
-{/* WhatsApp specific (uses Open Graph but these enhance the experience) */}
-<meta content={socialImageURL} property='whatsapp:image' />
-<meta content='' property='whatsapp:title' />
-<meta content='' property='whatsapp:description' />
+{/*
+  Removed on purpose, do not add back:
+  - twitter:app:name:* declared mobile apps that do not exist
+  - twitter:domain, linkedin:owner and article:summary are not real properties
+  - profile:* only applies when og:type is "profile"
+  - whatsapp:* does not exist; WhatsApp reads Open Graph
+  Several of them also shipped empty on every page.
+*/}
 
 {/* Additional SEO enhancements */}
 <meta content='index, follow' name='robots' />
 <meta content='Alejandro Parodi' name='copyright' />
-<meta content='en' name='language' />
+
+{/* Structured data */}
+<script is:inline type='application/ld+json' set:html={JSON.stringify(jsonLd)} />
 
 {/* Sitemap */}
 <link href='/sitemap-index.xml' rel='sitemap' />

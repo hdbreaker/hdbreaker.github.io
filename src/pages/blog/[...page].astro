@@ -25,9 +25,14 @@ interface Props {
 
 const { page, uniqueTags } = Astro.props
 
+// Paginated pages need distinct titles and descriptions, otherwise /blog/ and
+// /blog/2 ship identical metadata and compete with each other in search results.
 const meta = {
-	description: 'Posts',
-	title: 'Blog'
+	description:
+		page.currentPage > 1
+			? `Vulnerability research and exploit writeups — page ${page.currentPage}.`
+			: 'Vulnerability research, exploit development and offensive security writeups.',
+	title: page.currentPage > 1 ? `Research & writeups — page ${page.currentPage}` : 'Research & writeups'
 }
 
 const paginationProps = {

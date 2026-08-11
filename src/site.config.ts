@@ -4,8 +4,14 @@ import type { AstroExpressiveCodeOptions } from 'astro-expressive-code'
 export const siteConfig: SiteConfig = {
 	// Used as both a meta property (src/components/BaseHead.astro L:31 + L:49) & the generated satori png (src/pages/og-image/[slug].png.ts)
 	author: 'Alejandro Parodi',
-	// Meta property used to construct the meta title property, found in src/components/BaseHead.astro L:11
+	// Full site title. Used for og:site_name and as the fallback page title.
 	title: 'Alejandro Parodi - Offensive Security Engineer & Founder',
+	/**
+	 * Short brand appended to every <title>. The full title above is 56 characters,
+	 * which on its own exceeds what search results display, so page titles were
+	 * being truncated to nothing but the suffix.
+	 */
+	shortTitle: 'Alejandro Parodi',
 	// Meta property used as the default description meta property
 	description: 'Offensive Security Engineer, Red Teamer, and Founder with 10+ years experience in cybersecurity. Currently building Volt AI. CVE researcher and Nimhawk C2 framework developer.',
 	// HTML lang property, found in src/layouts/Base.astro L:18
@@ -62,24 +68,8 @@ export const featuredResearch: string[] = [
 /** Secondary navigation, rendered in the footer. */
 export const footerLinks: Array<{ title: string; path: string }> = [
 	{
-		title: 'CVEs',
-		path: '/cves/'
-	},
-	{
-		title: 'Projects',
-		path: '/projects/'
-	},
-	{
-		title: 'Volt AI',
-		path: '/volt-ai/'
-	},
-	{
 		title: 'Topics',
 		path: '/tags/'
-	},
-	{
-		title: 'Subscribe',
-		path: '/rss-feed/'
 	}
 ]
 

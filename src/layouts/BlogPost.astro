@@ -14,7 +14,7 @@ interface Props {
 
 const { post } = Astro.props
 const {
-	data: { altSlug, description, lang, ogImage, publishDate, seriesLabel, title, updatedDate }
+	data: { altSlug, description, lang, ogImage, publishDate, seriesLabel, tags, title, updatedDate }
 } = post
 
 const socialImage = ogImage ?? '/social-card.png'
@@ -25,7 +25,19 @@ const { headings } = await post.render()
 const crumbs = [{ label: 'Blog', href: '/blog' }, { label: seriesLabel ?? title }]
 ---
 
-<PageLayout meta={{ altSlug, articleDate, description, lang, ogImage: socialImage, title }}>
+<PageLayout
+	meta={{
+		altSlug,
+		articleDate,
+		description,
+		keywords: tags,
+		lang,
+		ogImage: socialImage,
+		publishDate: publishDate.toISOString(),
+		title,
+		updatedDate: updatedDate?.toISOString()
+	}}
+>
 	<div
 		aria-hidden='true'
 		class='fixed inset-x-0 top-0 z-50 h-0.5 origin-left scale-x-0 bg-primary'
@@ -67,6 +79,15 @@ const crumbs = [{ label: 'Blog', href: '/blog' }, { label: seriesLabel ?? title 
 					.prose :is(h2, h3):hover > a.heading-anchor,
 					.prose a.heading-anchor:focus-visible {
 						opacity: 1;
+					}
+
+					/* Active section in the table of contents. Colour alone was too subtle,
+					   so the current entry also gets an accent bar and a tinted ground. */
+					.toc-link.is-active {
+						border-inline-start-color: hsl(var(--primary));
+						background: hsl(var(--primary) / 0.08);
+						color: hsl(var(--foreground));
+						font-weight: 600;
 					}
 				</style>
 			</article>
@@ -147,9 +168,7 @@ const crumbs = [{ label: 'Blog', href: '/blog' }, { label: seriesLabel ?? title 
 
 		const setActive = (id: string) => {
 			tocLinks.forEach((link) => {
-				const isActive = decodeURIComponent(link.hash.slice(1)) === id
-				link.classList.toggle('text-foreground', isActive)
-				link.classList.toggle('font-medium', isActive)
+				link.classList.toggle('is-active', decodeURIComponent(link.hash.slice(1)) === id)
 			})
 		}
 
