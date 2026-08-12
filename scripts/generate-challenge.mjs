@@ -61,6 +61,13 @@ function seal(plain, secret) {
  *
  * Letters shift, everything else passes through — so the braces and underscores of
  * the flag stay visible, which quietly signals that there is a flag in there.
+ *
+ * The payload no longer names the cipher, and here that finally works. XOR and RC4
+ * output is indistinguishable from random bytes, so withholding the name only ever
+ * meant guessing from a short list. Vigenere leaves its fingerprints in plain
+ * sight: the ciphertext is still text, still the same length, and still carries the
+ * flag's braces and underscores untouched. Anyone who has seen a classical cipher
+ * recognises it, which makes identifying it a real step instead of a coin flip.
  */
 function vigenere(text, key) {
 	let k = 0
@@ -88,7 +95,7 @@ const layer2 = vigenere(flag, cipherKey)
 // the moment the newlines are stripped or the text is copied.
 const layer1Plain = `Find the key:
 
-Here is the Vigenere encrypted code:
+Here is the encrypted code:
 
 ${layer2}
 
