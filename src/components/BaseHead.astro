@@ -8,8 +8,18 @@ import { siteConfig, socialLinks } from '@/site-config'
 
 type Props = SiteMeta
 
-const { altSlug, articleDate, description, keywords, lang, ogImage, publishDate, title, updatedDate } =
-	Astro.props
+const {
+	altSlug,
+	articleDate,
+	description,
+	keywords,
+	lang,
+	noindex,
+	ogImage,
+	publishDate,
+	title,
+	updatedDate
+} = Astro.props
 
 const titleSeparator = '•'
 // Skip the brand suffix when the page title already is the brand, so the home
@@ -170,7 +180,7 @@ const jsonLd = {
 */}
 
 {/* Additional SEO enhancements */}
-<meta content='index, follow' name='robots' />
+<meta content={noindex ? 'noindex, nofollow' : 'index, follow'} name='robots' />
 <meta content='Alejandro Parodi' name='copyright' />
 
 {/* Structured data */}

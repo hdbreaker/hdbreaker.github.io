@@ -50,6 +50,12 @@ const post = defineCollection({
 			// hidden from the blog listing, RSS and tag pages. Used so only the
 			// series entry point surfaces, while inner chapters live behind it.
 			listed: z.boolean().default(true),
+			// Stronger than `listed: false`. A hidden post keeps its route but is
+			// kept out of the listing, RSS, tag pages, the sitemap, the search index
+			// and search engines. `listed: false` alone leaves a post discoverable
+			// through all four of those, which is right for series chapters and
+			// translations but not for something meant to be found by hand.
+			hidden: z.boolean().default(false),
 			// Language of this post. The EN/ES tab pairs posts via `altSlug`.
 			lang: z.enum(['en', 'es']).default('en'),
 			altSlug: z.string().optional(),

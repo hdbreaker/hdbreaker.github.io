@@ -16,7 +16,7 @@ export async function getAllPosts() {
  */
 export async function getListedPosts() {
 	const posts = await getAllPosts()
-	return posts.filter((post) => post.data.listed !== false)
+	return posts.filter((post) => post.data.listed !== false && post.data.hidden !== true)
 }
 
 /** Chapters of a given series, in the given language, sorted by chapter order. */

@@ -32,4 +32,6 @@ export type SiteMeta = {
 	lang?: 'en' | 'es'
 	/** Slug of the translated version, used to emit reciprocal hreflang links. */
 	altSlug?: string | undefined
+	/** Keeps the page out of search engines. Set for posts flagged `hidden`. */
+	noindex?: boolean
 }

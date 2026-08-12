@@ -19,6 +19,7 @@ const {
 		description = siteConfig.description,
 		keywords,
 		lang,
+		noindex,
 		ogImage,
 		publishDate,
 		title,
@@ -38,6 +39,7 @@ const htmlLang = lang === 'es' ? 'es' : siteConfig.lang
 			description={description}
 			keywords={keywords}
 			lang={lang}
+			noindex={noindex}
 			ogImage={ogImage}
 			publishDate={publishDate}
 			title={title}

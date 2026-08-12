@@ -9,6 +9,16 @@ import expressiveCode from 'astro-expressive-code'
 import { expressiveCodeOptions } from './src/site.config'
 import icon from 'astro-icon'
 import mermaid from 'astro-mermaid'
+import { readdirSync, readFileSync } from 'node:fs'
+
+// Posts flagged `hidden: true` are kept out of the sitemap. Read from the
+// frontmatter rather than repeated as a list here, so the post file stays the
+// single source of truth and the two cannot drift apart.
+const POSTS = 'src/content/post'
+const hiddenSlugs = readdirSync(POSTS)
+	.filter((file) => file.endsWith('.md'))
+	.filter((file) => /^hidden:\s*true\s*$/m.test(readFileSync(`${POSTS}/${file}`, 'utf8')))
+	.map((file) => file.replace(/\.md$/, ''))
 
 // https://astro.build/config
 export default defineConfig({
@@ -62,7 +72,9 @@ export default defineConfig({
 		tailwind({
 			applyBaseStyles: false
 		}),
-		sitemap(),
+		sitemap({
+			filter: (page) => !hiddenSlugs.some((slug) => page.includes(`/blog/${slug}/`))
+		}),
 		mdx(),
 		icon()
 	],
