@@ -57,6 +57,12 @@ function seal(plain, secret) {
  * from random bytes, so no wording could have made it deducible from the
  * ciphertext. The hunt worth having is for the key, a word buried in the
  * published research, so that is the part left unsaid.
+ *
+ * The payload says "in hex" because leaving it out cost real people real time.
+ * Paste this string into a naive XOR tool and it silently XORs the 70 ASCII
+ * characters instead of the 35 bytes they spell, and the output is garbage that
+ * looks like a wrong key rather than a wrong input format. The encoding was never
+ * the puzzle, so stating it removes difficulty that was only ever accidental.
  */
 const xorHex = (plain, key) =>
 	[...Buffer.from(plain, 'utf8')]
@@ -77,7 +83,7 @@ const layer2 = xorHex(flag, xorKey)
 // the moment the newlines are stripped or the text is copied.
 const layer1Plain = `Find the key:
 
-Here is the XOR encrypted code:
+Here is the XOR encrypted code, in hex:
 
 ${layer2}
 
