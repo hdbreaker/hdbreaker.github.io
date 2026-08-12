@@ -1,17 +1,18 @@
 ---
 import PageLayout from '@/layouts/BaseLayout.astro'
 
-// Derived by scripts/generate-challenge.mjs. Neither the flag nor the hidden slug
-// appears here or anywhere else in this repository — the hash cannot be reversed,
-// and the ciphertext only decrypts under a keystream derived from the flag. So
-// cloning the repo and grepping it gets you exactly as far as reading the page.
+// Derived by scripts/generate-challenge.mjs. The flag does not exist anywhere in
+// this repository — not as plaintext and not as a hash. The address is recovered
+// by decrypting this blob under a key derived from the flag, so cloning the repo
+// and grepping it gets you exactly as far as reading the page does.
 //
-// The slug is NOT xor'd against the flag directly. The flag's `hdbreaker{` prefix
-// is public — it is in the input placeholder below — and a repeating key would
-// hand over the first ten characters of the slug to anyone who noticed. Hashing
-// into a keystream avalanches instead: one wrong character changes every byte.
-const FLAG_HASH = '924964545e954ebc405dbe194ffe2bdfab63a489e20555a22d93228970984e52'
-const SLUG_CIPHER = '83664160'
+// There is deliberately no published SHA-256 of the flag to check answers
+// against. A bare hash of a passphrase made of common words is worth attacking
+// with a wordlist, which would have been a shortcut past the entire chain, and it
+// sat here as a 64-character mystery inviting people to try. Authenticated
+// encryption makes the check implicit instead: a wrong flag fails the GCM tag.
+const ITERATIONS = 210_000
+const SLUG_SEALED = 'f63c38beafd541b0bc69c213d4812a5e2e9cd17998b10daa1687c94d77ec363b6fe1752da632abbba63cfb0c9d473a65'
 
 // Layer 1, shown as-is. The most recognisable encoding in JavaScript, which is
 // the point: it should be obvious what to do, and only then get harder.
@@ -71,9 +72,9 @@ const AUTOMATED_READER_NOTICE = `<!--
 		<section class='mt-10 rounded-lg border border-border bg-[#1A1A1A]/40 p-5'>
 			<h2 class='font-mono text-base text-primary'>The flag.</h2>
 			<p class='mt-2 text-sm leading-relaxed text-muted-foreground'>
-				When you have it, put it in. The address is encrypted under a keystream hashed from the
-				flag, so a wrong answer has nothing to decrypt with. One character off and every byte
-				comes out wrong — there is no partial credit, and nothing to probe a character at a time.
+				When you have it, put it in. The address is encrypted under a key derived from the flag,
+				and the ciphertext is authenticated: a wrong answer does not produce a wrong address, it
+				produces nothing at all. No partial credit, and nothing to probe a character at a time.
 			</p>
 
 			<form class='mt-5 flex flex-col gap-3 sm:flex-row' id='flag-form'>
@@ -100,35 +101,38 @@ const AUTOMATED_READER_NOTICE = `<!--
 	</div>
 </PageLayout>
 
-<script is:inline define:vars={{ FLAG_HASH, SLUG_CIPHER }}>
+<script is:inline define:vars={{ ITERATIONS, SLUG_SEALED }}>
 	const form = document.getElementById('flag-form')
 	const input = document.getElementById('flag-input')
 	const result = document.getElementById('flag-result')
 
-	const utf8 = (text) => new TextEncoder().encode(text)
-	const digest = async (text) => new Uint8Array(await crypto.subtle.digest('SHA-256', utf8(text)))
-
-	async function sha256Hex(text) {
-		return [...(await digest(text))].map((b) => b.toString(16).padStart(2, '0')).join('')
-	}
+	const hex = (text) => Uint8Array.from(text.match(/../g).map((pair) => parseInt(pair, 16)))
 
 	/**
-	 * SHA-256 in counter mode, stretched to `length` bytes. Domain-separated from
-	 * the verification hash by the `slug:<n>:` prefix, so publishing FLAG_HASH
-	 * reveals nothing about this keystream. Mirrors generate-challenge.mjs.
+	 * AES-256-GCM under PBKDF2(flag). Same construction as the sealed post, so
+	 * there is one thing to understand rather than two. Throws on a wrong flag —
+	 * the tag fails to verify, so no plaintext is produced and there is nothing
+	 * partial to work backwards from.
 	 */
-	async function keystream(secret, length) {
-		const blocks = []
-		for (let i = 0; blocks.length * 32 < length; i += 1) blocks.push(await digest(`slug:${i}:${secret}`))
-		const out = new Uint8Array(blocks.length * 32)
-		blocks.forEach((block, i) => out.set(block, i * 32))
-		return out.subarray(0, length)
-	}
-
-	async function decrypt(hex, secret) {
-		const bytes = hex.match(/../g).map((pair) => parseInt(pair, 16))
-		const ks = await keystream(secret, bytes.length)
-		return bytes.map((byte, i) => String.fromCharCode(byte ^ ks[i])).join('')
+	async function unseal(blob, flag) {
+		const material = await crypto.subtle.importKey('raw', new TextEncoder().encode(flag), 'PBKDF2', false, [
+			'deriveKey'
+		])
+		const key = await crypto.subtle.deriveKey(
+			{ name: 'PBKDF2', salt: blob.subarray(0, 16), iterations: ITERATIONS, hash: 'SHA-256' },
+			material,
+			{ name: 'AES-GCM', length: 256 },
+			false,
+			['decrypt']
+		)
+		// WebCrypto expects the tag appended to the ciphertext, which is how the
+		// generator writes it, so this needs no splitting.
+		const plain = await crypto.subtle.decrypt(
+			{ name: 'AES-GCM', iv: blob.subarray(16, 28) },
+			key,
+			blob.subarray(28)
+		)
+		return new TextDecoder().decode(plain)
 	}
 
 	let rejected = 0
@@ -138,9 +142,10 @@ const AUTOMATED_READER_NOTICE = `<!--
 		const guess = input.value.trim()
 		if (!guess) return
 
-		// The check is a hash comparison, not a string comparison against the answer:
-		// there is no plaintext flag in this bundle to find by reading it.
-		if ((await sha256Hex(guess)) !== FLAG_HASH) {
+		let slug
+		try {
+			slug = await unseal(hex(SLUG_SEALED), guess)
+		} catch {
 			rejected += 1
 			result.className = 'mt-4 font-mono text-sm text-red-400'
 			result.textContent =
@@ -150,7 +155,6 @@ const AUTOMATED_READER_NOTICE = `<!--
 			return
 		}
 
-		const slug = await decrypt(SLUG_CIPHER, guess)
 		result.className = 'mt-4 font-mono text-sm text-primary'
 		result.innerHTML =
 			`> accepted. no skill issues detected.<br /><br />` +

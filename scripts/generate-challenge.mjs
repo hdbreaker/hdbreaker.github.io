@@ -4,23 +4,19 @@
  *
  * The flag and the hidden slug must not be greppable. This repository is public,
  * so keeping them out of the built bundle is not enough — they must not be in the
- * source either. Nothing here is committed except the output: one hash and two
- * ciphertexts, none of which can be reversed without solving the chain.
+ * source either. Nothing here is committed except one opaque blob.
  *
- * Two properties matter, and the obvious construction gets the second one wrong:
+ * There is no separate hash of the flag to check answers against. An earlier
+ * version published SHA-256(flag) as a verifier, which was two mistakes at once:
+ * a bare SHA-256 of a passphrase built from common words is worth attacking with
+ * a wordlist, so it offered a shortcut past the whole chain — and it sat on the
+ * page as a 64-character mystery inviting people to waste time on exactly that.
  *
- *  1. Verification is a hash comparison, so no plaintext flag exists to be read.
- *
- *  2. The slug is encrypted under a keystream DERIVED from the flag by hashing,
- *     not under the flag itself. Encrypting directly against a repeating key
- *     leaks plaintext to anyone who knows part of it — and the flag's `hdbreaker{`
- *     prefix is public, since it is printed in the page's input placeholder. That
- *     alone decrypted the first ten characters of the slug, which is more than
- *     enough to guess the rest. Hashing avalanches: one wrong character in the
- *     flag changes every byte of the keystream.
- *
- * The keystream is domain-separated from the verification hash (`slug:<n>:` vs
- * the bare flag), so publishing FLAG_HASH gives nothing away about the keystream.
+ * Authenticated encryption removes the need for it. A wrong flag fails the GCM
+ * tag, so verification is implicit in the decryption: no plaintext is produced,
+ * nothing partial leaks, and there is nothing extra on the page to stare at.
+ * PBKDF2 at 210k iterations also makes guessing expensive rather than free, and
+ * matches how seal-post.mjs protects the post itself.
  *
  * Usage:
  *   node scripts/generate-challenge.mjs '<flag>' '<xor-key>' '<hidden-slug>'
@@ -28,7 +24,7 @@
  * Paste the printed constants into src/pages/0x00.astro. Do not commit the
  * arguments, and clear them from your shell history.
  */
-import { createHash } from 'node:crypto'
+import { pbkdf2Sync, randomBytes, createCipheriv } from 'node:crypto'
 
 const [flag, xorKey, slug] = process.argv.slice(2)
 
@@ -37,19 +33,15 @@ if (!flag || !xorKey || !slug) {
 	process.exit(1)
 }
 
-const sha256 = (input) => createHash('sha256').update(input, 'utf8').digest()
+const ITERATIONS = 210_000
 
-/** SHA-256 in counter mode, stretched to `length` bytes. Mirrored in 0x00.astro. */
-function keystream(secret, length) {
-	const blocks = []
-	for (let i = 0; blocks.length * 32 < length; i += 1) blocks.push(sha256(`slug:${i}:${secret}`))
-	return Buffer.concat(blocks).subarray(0, length)
-}
-
-const xorKeystream = (plain, secret) => {
-	const bytes = Buffer.from(plain, 'utf8')
-	const ks = keystream(secret, bytes.length)
-	return [...bytes].map((byte, i) => (byte ^ ks[i]).toString(16).padStart(2, '0')).join('')
+/** AES-256-GCM under PBKDF2(flag). Mirrors seal-post.mjs and 0x00.astro. */
+function seal(plain, secret) {
+	const salt = randomBytes(16)
+	const iv = randomBytes(12)
+	const key = pbkdf2Sync(secret, salt, ITERATIONS, 32, 'sha256')
+	const cipher = createCipheriv('aes-256-gcm', key, iv)
+	return Buffer.concat([salt, iv, cipher.update(plain, 'utf8'), cipher.final(), cipher.getAuthTag()])
 }
 
 /**
@@ -83,16 +75,6 @@ One post on this blog has a call graph as its cover image. Three nodes: two are 
 ${layer2}`
 
 console.log('\n--- paste into src/pages/0x00.astro ---\n')
-console.log(`const FLAG_HASH = '${sha256(flag).toString('hex')}'`)
-console.log(`const SLUG_CIPHER = '${xorKeystream(slug, flag)}'`)
+console.log(`const SLUG_SEALED = '${seal(slug, flag).toString('hex')}'`)
 console.log(`const LAYER1 =\n\t'${[...Buffer.from(layer1Plain, 'utf8')].join(',')}'`)
-
-// --- self-check -------------------------------------------------------------
-// Confirms the prefix leak is actually gone: encrypting under a flag that shares
-// the real one's public prefix must not reproduce any of the slug.
-const withKnownPrefix = xorKeystream(slug, `${flag.slice(0, 10)}xxxxxxxxxxxxxxxxxxxxxxxxx`)
-const cipher = xorKeystream(slug, flag)
-let shared = 0
-while (shared < cipher.length && cipher[shared] === withKnownPrefix[shared]) shared += 1
-console.log(`\n--- self-check ---`)
-console.log(`bytes leaked to a known 10-char prefix: ${Math.floor(shared / 2)} (must be 0)`)
+console.log(`\n  ${ITERATIONS.toLocaleString('en-US')} iteraciones, aes-256-gcm. sin hash publicado.`)

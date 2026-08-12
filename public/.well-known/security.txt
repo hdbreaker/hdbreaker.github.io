@@ -5,6 +5,3 @@ Expires: 2027-01-01T00:00:00.000Z
 
 # This is a personal site. There is no bounty and no scope — but if you find
 # something that actually matters, I would genuinely like to hear about it.
-
-# Since you are already reading files nobody links to: keep going.
-# 2f30783030
