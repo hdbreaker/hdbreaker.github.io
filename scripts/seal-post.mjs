@@ -183,14 +183,14 @@ writeFileSync(
 	join('src/content/post', `${slug}.md`),
 	[
 		'---',
-		'title: "Sealed"',
-		'description: "An encrypted post. The key opens it in the browser; nothing here opens without it."',
+		'title: "Locked"',
+		'description: "A locked post. Look around maybe you can find the key."',
 		'tags: []',
 		kept,
 		`sealed: "${id}"`,
 		'---',
 		'',
-		'This post is sealed. Its title, text and screenshots are encrypted in a single',
+		'This post is locked. Its title, text and screenshots are encrypted in a single',
 		'blob and are not present in this repository in readable form.',
 		''
 	].join('\n')
