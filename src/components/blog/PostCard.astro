@@ -18,56 +18,112 @@ const target = post.data.target
 // The whole card is one link, so tags render as plain labels here. They stay
 // clickable on the post page itself — nesting links inside a link is not.
 const tags = post.data.tags.slice(0, 3)
+
+// A post can name its own cover in frontmatter; otherwise it falls back to the
+// generated board art, which scripts/generate-covers.mjs produces for every slug.
+// So adding a real cover is two lines of frontmatter, and removing them reverts.
+const cover = post.data.coverImage ?? {
+	src: `/assets/blog/covers/${post.slug}.svg`,
+	alt: `Abstract circuit artwork for ${post.data.title}`
+}
+
+// Generated covers are already on-palette. Photographs and screenshots are not, and
+// dropped in raw they read as pasted on top of the design, so they get an overlay
+// that pulls them toward the site's ground and accent.
+const needsTint = !cover.src.startsWith('/assets/blog/covers/')
 ---
 
+<!--
+  Fixed height on sm+ so every row in the listing is identical, whether or not
+  the post has a cover, badges, or a two-line title. The clamps below keep the
+  content inside that box.
+-->
 <a
-	class='group flex w-full flex-col gap-3 rounded border border-border bg-[#1A1A1A]/40 p-5 transition-all hover:-translate-y-0.5 hover:border-primary/40'
+	class='group flex w-full flex-col gap-4 rounded-lg border border-border bg-[#1A1A1A]/40 p-4 transition-all hover:-translate-y-0.5 hover:border-primary/40 sm:h-52 sm:flex-row'
 	data-astro-prefetch
 	href={`/blog/${post.slug}/`}
 >
-	<h3
-		class='text-balance text-[1.05rem] font-semibold leading-snug text-foreground transition-colors group-hover:text-primary'
-	>
-		{post.data.draft && <span class='text-red-500'>(Draft) </span>}
-		{post.data.title}
-	</h3>
-
-	{
-		(post.data.cve.length > 0 || seriesLength || target) && (
-			<div class='flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs'>
-				{post.data.cve.map((id) => (
-					<span class='rounded border border-primary/40 bg-primary/10 px-1.5 py-0.5 text-primary'>
-						{id}
-					</span>
-				))}
-				{seriesLength && (
-					<span class='rounded border border-primary/40 bg-primary/10 px-1.5 py-0.5 text-primary'>
-						{seriesLength}-part series
-					</span>
-				)}
-				{target && !seriesLength && <span class='text-muted-foreground'>{target}</span>}
-			</div>
-		)
-	}
-
-	<p class='line-clamp-2 text-sm leading-relaxed text-muted-foreground'>
-		{post.data.description}
-	</p>
-
 	<div
-		class='mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-1 font-mono text-xs text-muted-foreground'
+		class:list={[
+			'relative h-44 w-full shrink-0 overflow-hidden rounded-md border border-border sm:h-full sm:w-[300px]',
+			needsTint && 'cover-tint'
+		]}
 	>
-		<FormattedDate date={post.data.updatedDate ?? post.data.publishDate} />
-		<span aria-hidden='true' class='text-muted-foreground/40'>·</span>
-		<span>{remarkPluginFrontmatter.minutesRead}</span>
+		<img
+			alt={cover.alt}
+			class='h-full w-full object-cover'
+			loading='lazy'
+			src={cover.src}
+		/>
+	</div>
+
+	<div class='flex min-w-0 flex-1 flex-col gap-3 overflow-hidden py-1'>
+		<h3
+			class='line-clamp-2 text-balance text-[1.05rem] font-semibold leading-snug text-foreground transition-colors group-hover:text-primary'
+		>
+			{post.data.draft && <span class='text-red-500'>(Draft) </span>}
+			{post.data.title}
+		</h3>
+
 		{
-			tags.length > 0 && (
-				<span class='ms-auto flex gap-x-2 text-muted-foreground/70'>
-					{tags.map((tag) => (
-						<span>{tag}</span>
+			(post.data.cve.length > 0 || seriesLength || target) && (
+				<div class='flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs'>
+					{post.data.cve.map((id) => (
+						<span class='rounded border border-primary/40 bg-primary/10 px-1.5 py-0.5 text-primary'>
+							{id}
+						</span>
 					))}
-				</span>
+					{seriesLength && (
+						<span class='rounded border border-primary/40 bg-primary/10 px-1.5 py-0.5 text-primary'>
+							{seriesLength}-part series
+						</span>
+					)}
+					{target && !seriesLength && <span class='text-muted-foreground'>{target}</span>}
+				</div>
 			)
 		}
+
+		<p class='line-clamp-2 text-sm leading-relaxed text-muted-foreground'>
+			{post.data.description}
+		</p>
+
+		<div
+			class='mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-1 font-mono text-xs text-muted-foreground'
+		>
+			<FormattedDate date={post.data.updatedDate ?? post.data.publishDate} />
+			<span aria-hidden='true' class='text-muted-foreground/40'>·</span>
+			<span>{remarkPluginFrontmatter.minutesRead}</span>
+			{
+				tags.length > 0 && (
+					<span class='ms-auto flex gap-x-2 text-muted-foreground/70'>
+						{tags.map((tag) => (
+							<span>{tag}</span>
+						))}
+					</span>
+				)
+			}
+		</div>
 	</div>
 </a>
+
+<style>
+	/* Pulls a photograph toward the site palette so it belongs to the card rather
+	   than sitting on top of it. Generated covers skip this — they are already
+	   drawn in these colours.
+
+	   Kept deliberately light: an earlier pass ran the overlay from 0.8 down to
+	   0.4 opacity, which did not integrate the photo so much as grey it out. The
+	   small saturation and contrast nudge does more for palette harmony than
+	   darkening does, and costs no detail. */
+	.cover-tint img {
+		filter: saturate(0.92) contrast(1.05);
+	}
+	.cover-tint::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background:
+			linear-gradient(120deg, rgb(15 17 26 / 0.26), rgb(15 17 26 / 0.04)),
+			radial-gradient(circle at 32% 62%, rgb(87 253 107 / 0.09), transparent 68%);
+	}
+</style>

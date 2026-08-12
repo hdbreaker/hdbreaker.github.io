@@ -3,6 +3,9 @@ title: "Cómo trolear jugadores de Pokémon — Edición Gen1recomp"
 publishDate: "2026-08-11"
 description: "Mapeando el protocolo de red de Gen1recomp, el trust boundary que nadie revisó, y una type confusion de Lua convertida en un crash de un solo paquete."
 tags: ["type-confusion", "reverse-engineering", "vulnerability-research"]
+coverImage:
+  src: "/images/main.png"
+  alt: "Gen1recomp title screen"
 target: { vendor: "Gen1recomp" }
 platform: "game"
 draft: false

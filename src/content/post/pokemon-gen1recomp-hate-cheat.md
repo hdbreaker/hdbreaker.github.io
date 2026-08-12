@@ -3,6 +3,9 @@ title: "How to Troll Pokémon Players — Gen1recomp Edition"
 publishDate: "2026-08-11"
 description: "Mapping the Gen1recomp network protocol, finding the trust boundary nobody checked, and turning Lua type confusion into a one-packet client crash."
 tags: ["type-confusion", "reverse-engineering", "vulnerability-research"]
+coverImage:
+  src: "/images/main.png"
+  alt: "Gen1recomp title screen"
 target: { vendor: "Gen1recomp" }
 platform: "game"
 draft: false

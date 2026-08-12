@@ -9,7 +9,7 @@ function removeDupsAndLowerCase(array: string[]) {
 
 const post = defineCollection({
 	type: 'content',
-	schema: ({ image }) =>
+	schema: () =>
 		z.object({
 			title: z.string().max(90),
 			description: z.string().min(50).max(160),
@@ -21,9 +21,11 @@ const post = defineCollection({
 				.string()
 				.optional()
 				.transform((str) => (str ? new Date(str) : undefined)),
+			// A plain path rather than image(): the post images live in public/, which
+			// the bundler cannot import. Consistent with how the bodies reference them.
 			coverImage: z
 				.object({
-					src: image(),
+					src: z.string(),
 					alt: z.string()
 				})
 				.optional(),

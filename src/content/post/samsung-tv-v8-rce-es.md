@@ -3,6 +3,9 @@ title: "Pwneando el browser de un Samsung Smart TV 2025 - type confusion en Chro
 publishDate: "2026-06-18"
 description: "De una sola página web a una reverse shell en una Samsung QLED (Tizen 9, Chromium 120, ARM32) — explotando una type confusion de V8 WebAssembly-GC."
 tags: ["browser-exploitation", "type-confusion", "memory-corruption", "rce", "rop"]
+coverImage:
+  src: "/assets/blog/photos/tv-dark.jpg"
+  alt: "Un televisor encendido en un cuarto oscuro"
 target: { vendor: "Samsung", product: "Tizen Smart TV" }
 platform: "browser"
 draft: false

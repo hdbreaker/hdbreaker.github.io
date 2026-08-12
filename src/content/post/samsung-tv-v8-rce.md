@@ -3,6 +3,9 @@ title: "Pwning Samsung TV Browser - Chrome V8 WASM Type Confusion bug"
 publishDate: "2026-06-18"
 description: "From a single web page to a reverse shell on a Samsung QLED (Tizen 9, Chromium 120, ARM32) — exploiting a V8 WebAssembly-GC type confusion."
 tags: ["browser-exploitation", "type-confusion", "memory-corruption", "rce", "rop"]
+coverImage:
+  src: "/assets/blog/photos/tv-dark.jpg"
+  alt: "A flat-screen TV glowing in a dark room"
 target: { vendor: "Samsung", product: "Tizen Smart TV" }
 platform: "browser"
 draft: false

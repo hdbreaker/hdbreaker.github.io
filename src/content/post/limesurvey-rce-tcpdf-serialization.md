@@ -3,6 +3,9 @@ title: "CVE-2019-14670 - LimeSurvey TCPDF RCE via PHAR File"
 publishDate: "2019-03-25"
 description: "Remote code execution in LimeSurvey < 3.17 through TCPDF PHAR deserialization attack, exploiting queXML PDF export functionality."
 tags: ["rce", "web-security", "exploit-development"]
+coverImage:
+  src: "/assets/blog/photos/papers.jpg"
+  alt: "A messy stack of papers and files"
 cve: ["CVE-2019-14670"]
 target: { vendor: "LimeSurvey" }
 platform: "web"
