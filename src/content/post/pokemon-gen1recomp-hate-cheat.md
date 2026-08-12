@@ -16,8 +16,6 @@ altSlug: "pokemon-gen1recomp-hate-cheat-es"
 
 > *I was losing. I sent one packet. Their game ends. I won.*
 
-![Gen1recomp title screen](/images/main.png)
-
 ***
 
 ## It started with a tweet

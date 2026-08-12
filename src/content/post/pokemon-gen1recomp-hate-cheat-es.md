@@ -16,8 +16,6 @@ altSlug: "pokemon-gen1recomp-hate-cheat"
 
 > *Estaba perdiendo. Mandé un paquete. Su juego se cierra. Gané.*
 
-![Gen1recomp title screen](/images/main.png)
-
 ***
 
 ## Empezó con un tweet
