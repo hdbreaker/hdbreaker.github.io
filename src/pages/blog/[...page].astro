@@ -52,6 +52,20 @@ const paginationProps = {
 
 const lengthOf = (post: CollectionEntry<'post'>) =>
 	post.data.series ? seriesLengths[post.data.series] : undefined
+// The way in to /0x00, and the only place it appears. It sits on the post index
+// because that is where someone counting posts would notice one missing, so the
+// source of this page is where they would look next.
+//
+// Deliberately almost nothing: one word so it reads as a tell rather than noise,
+// and the path in hex so it has to be decoded instead of clicked. Do not expand
+// it into an explanation, and do not move it into the layout — on every page it
+// stops being something you find.
+//
+// It has to go through `set:html` as an expression. A literal HTML comment is
+// stripped when it is slotted into a component, and passing the same string as a
+// static `set:html` attribute escapes it to &lt;!-- and renders it as visible
+// text on the page. Both were tried; this is the form that survives.
+const BREADCRUMB = '<!-- unlisted: 2f30783030 -->'
 ---
 
 <PageLayout meta={meta}>
@@ -86,4 +100,6 @@ const lengthOf = (post: CollectionEntry<'post'>) =>
 			)
 		}
 	</div>
+
+	<Fragment set:html={BREADCRUMB} />
 </PageLayout>
