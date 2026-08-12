@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from 'astro:content'
-import { Image } from 'astro:assets'
 import FormattedDate from '../FormattedDate.astro'
 import Tag from '../Tag.astro'
 import CveBadge from '../CveBadge.astro'
@@ -27,19 +26,6 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 }
 ---
 
-{
-	data.coverImage && (
-		<div class='aspect-h-9 aspect-w-16 mb-6'>
-			<Image
-				alt={data.coverImage.alt}
-				class='rounded-2xl object-cover'
-				fetchpriority='high'
-				loading='eager'
-				src={data.coverImage.src}
-			/>
-		</div>
-	)
-}
 {data.draft ? <span class='text-red-500'>(Draft)</span> : null}
 <div class='flex flex-wrap items-center gap-x-3 gap-y-2'>
 	<p class='text-xs'>

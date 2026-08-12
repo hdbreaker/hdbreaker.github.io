@@ -24,11 +24,6 @@ const featuredPosts = featuredResearch
 const seriesLength = (series: string) =>
 	allPosts.filter((post) => post.data.series === series && post.data.lang !== 'es').length
 
-const languages = ['Nim', 'C#', 'Python', 'Go', 'Assembly', 'C/C++', 'Java', 'PHP']
-const frontend = ['HTML/CSS', 'JavaScript', 'React', 'Angular', 'Tailwind CSS']
-const backend = ['C#/.NET', 'Python', 'Go', 'Node.js', 'SQL', 'MongoDB', 'Django']
-const cloud = ['AWS', 'Google Cloud', 'Azure', 'Terraform', 'Pulumi', 'CI/CD']
-const offensive = ['Red Teaming', 'EDR Evasion', 'Direct Syscalls', 'C4 Frameworks', 'OPSEC', 'Social Engineering', 'OSINT']
 ---
 
 <PageLayout meta={{ 
