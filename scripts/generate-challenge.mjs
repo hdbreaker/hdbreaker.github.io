@@ -76,7 +76,7 @@ const layer2 = xorHex(flag, xorKey)
 //
 // The last line asks rather than answers: the image has exactly one node that is
 // not blue, so naming the colour would be spelling out a one-step deduction.
-const layer1Plain = `== LAYER 2 / repeating-key XOR ==
+const layer1Plain = `Find the key:
 
 Below is hex. XOR it against a key and you get the flag.
 
