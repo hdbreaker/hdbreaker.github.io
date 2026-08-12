@@ -19,17 +19,17 @@
  * matches how seal-post.mjs protects the post itself.
  *
  * Usage:
- *   node scripts/generate-challenge.mjs '<flag>' '<xor-key>' '<hidden-slug>'
+ *   node scripts/generate-challenge.mjs '<flag>' '<key>' '<hidden-slug>'
  *
  * Paste the printed constants into src/pages/0x00.astro. Do not commit the
  * arguments, and clear them from your shell history.
  */
 import { pbkdf2Sync, randomBytes, createCipheriv } from 'node:crypto'
 
-const [flag, xorKey, slug] = process.argv.slice(2)
+const [flag, cipherKey, slug] = process.argv.slice(2)
 
-if (!flag || !xorKey || !slug) {
-	console.error("usage: node scripts/generate-challenge.mjs '<flag>' '<xor-key>' '<slug>'")
+if (!flag || !cipherKey || !slug) {
+	console.error("usage: node scripts/generate-challenge.mjs '<flag>' '<key>' '<slug>'")
 	process.exit(1)
 }
 
@@ -45,31 +45,36 @@ function seal(plain, secret) {
 }
 
 /**
- * Layer 2 is repeating-key XOR, and the payload names it.
+ * Layer 2 is Vigenere, keyed on a word the solver has to go and find.
  *
- * RC4 was tried here and reverted: it made the step harder without making it more
- * interesting, since the solver still just pastes a blob and a key into a tool.
- * XOR is the recognisable classroom construction, it is trivial to do by hand or
- * in CyberChef, and the plaintext is the flag rather than anything that needs
- * protecting — the post itself is behind AES.
+ * It was XOR first, and XOR is the better teaching example, but it cannot be
+ * handed to somebody as a string. XOR of text against text lands on unprintable
+ * bytes, so the ciphertext has to travel as hex — and then every generic online
+ * tool decides for itself whether that field is hex or literal characters. Two
+ * separate attempts here failed with the correct key: one XOR'd the 70 characters
+ * of the hex instead of the 35 bytes they spell, the other did the same to the key
+ * and folded its spaces in. Both produced garbage that reads like a wrong key.
  *
- * Naming the cipher costs nothing either way: XOR output is indistinguishable
- * from random bytes, so no wording could have made it deducible from the
- * ciphertext. The hunt worth having is for the key, a word buried in the
- * published research, so that is the part left unsaid.
+ * Vigenere is text in, text out. The ciphertext pastes as-is into any tool with no
+ * format to get wrong, which is the whole point: the puzzle is finding the key,
+ * not guessing how a form field parses its input.
  *
- * The payload says "in hex" because leaving it out cost real people real time.
- * Paste this string into a naive XOR tool and it silently XORs the 70 ASCII
- * characters instead of the 35 bytes they spell, and the output is garbage that
- * looks like a wrong key rather than a wrong input format. The encoding was never
- * the puzzle, so stating it removes difficulty that was only ever accidental.
+ * Letters shift, everything else passes through — so the braces and underscores of
+ * the flag stay visible, which quietly signals that there is a flag in there.
  */
-const xorHex = (plain, key) =>
-	[...Buffer.from(plain, 'utf8')]
-		.map((byte, i) => (byte ^ key.charCodeAt(i % key.length)).toString(16).padStart(2, '0'))
+function vigenere(text, key) {
+	let k = 0
+	return [...text]
+		.map((ch) => {
+			if (!/[a-z]/i.test(ch)) return ch
+			const base = ch === ch.toLowerCase() ? 97 : 65
+			const shift = key.toLowerCase().charCodeAt(k++ % key.length) - 97
+			return String.fromCharCode(((ch.charCodeAt(0) - base + shift) % 26) + base)
+		})
 		.join('')
+}
 
-const layer2 = xorHex(flag, xorKey)
+const layer2 = vigenere(flag, cipherKey)
 
 // Layer 1: what the page displays. A char-code array — the most recognisable
 // encoding in JavaScript, so it is obvious what to do and only then gets harder.
@@ -83,7 +88,7 @@ const layer2 = xorHex(flag, xorKey)
 // the moment the newlines are stripped or the text is copied.
 const layer1Plain = `Find the key:
 
-Here is the XOR encrypted code, in hex:
+Here is the Vigenere encrypted code:
 
 ${layer2}
 
