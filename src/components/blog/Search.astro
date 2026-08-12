@@ -1,0 +1,147 @@
+---
+/**
+ * Full-text search over the posts, backed by Pagefind.
+ *
+ * The index is generated after `astro build` (see the build script) and lives in
+ * `dist/pagefind/`. It therefore does not exist under `astro dev`: the input
+ * disables itself and says so rather than silently failing.
+ *
+ * Pagefind builds one index per `<html lang>`, so a search started from an
+ * English page only returns English posts, and the Spanish translations do not
+ * show up as near-duplicates.
+ */
+---
+
+<div class='mb-8' data-pagefind-ignore>
+	<label class='relative block'>
+		<span class='sr-only'>Search writeups</span>
+		<svg
+			aria-hidden='true'
+			class='pointer-events-none absolute inset-y-0 start-3 my-auto h-4 w-4 text-muted-foreground'
+			fill='none'
+			stroke='currentColor'
+			stroke-width='2'
+			viewBox='0 0 24 24'
+		>
+			<circle cx='11' cy='11' r='7'></circle>
+			<path d='m20 20-3.5-3.5' stroke-linecap='round'></path>
+		</svg>
+		<input
+			autocomplete='off'
+			class='w-full rounded border border-border bg-[#1A1A1A]/40 py-2.5 pe-3 ps-10 text-sm text-foreground placeholder:text-muted-foreground focus-visible:border-primary/40 disabled:cursor-not-allowed disabled:opacity-60'
+			id='search-input'
+			placeholder='Search writeups…'
+			type='search'
+		/>
+	</label>
+
+	<p
+		class='mt-2 hidden font-mono text-xs text-muted-foreground'
+		id='search-status'
+		role='status'
+		aria-live='polite'
+	>
+	</p>
+</div>
+
+<div class='hidden' id='search-results'></div>
+
+<script>
+	const input = document.getElementById('search-input') as HTMLInputElement | null
+	const status = document.getElementById('search-status') as HTMLElement | null
+	const results = document.getElementById('search-results') as HTMLElement | null
+	// The card list that search replaces while a query is active.
+	const listing = document.querySelector<HTMLElement>('[data-post-listing]')
+
+	if (input && status && results) {
+		// Re-bound as non-nullable, so the closures below type-check.
+		const inputEl = input
+		const statusEl = status
+		const resultsEl = results
+
+		let pagefind: any = null
+		let loading: Promise<any> | null = null
+
+		const say = (msg: string) => {
+			statusEl.textContent = msg
+			statusEl.classList.toggle('hidden', !msg)
+		}
+
+		async function load() {
+			if (pagefind) return pagefind
+			if (!loading) {
+				loading = import(/* @vite-ignore */ `${import.meta.env.BASE_URL}pagefind/pagefind.js`)
+					.then(async (mod: any) => {
+						await mod.init()
+						pagefind = mod
+						return mod
+					})
+					.catch(() => null)
+			}
+			return loading
+		}
+
+		const escape = (s: string) =>
+			s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`)
+
+		function render(items: any[], query: string) {
+			if (!items.length) {
+				resultsEl.innerHTML = ''
+				say(`No writeups match “${query}”.`)
+				return
+			}
+			say(`${items.length} ${items.length === 1 ? 'result' : 'results'} for “${query}”.`)
+			resultsEl.innerHTML = `<ul class="flex flex-col gap-4">${items
+				.map(
+					(item) => `
+				<li>
+					<a class="group flex w-full flex-col gap-2 rounded border border-border bg-[#1A1A1A]/40 p-5 transition-all hover:-translate-y-0.5 hover:border-primary/40" href="${item.url}">
+						<h3 class="text-[1.05rem] font-semibold leading-snug text-foreground transition-colors group-hover:text-primary">${escape(item.meta?.title ?? item.url)}</h3>
+						<p class="text-sm leading-relaxed text-muted-foreground [&_mark]:bg-transparent [&_mark]:font-semibold [&_mark]:text-primary">${item.excerpt}</p>
+					</a>
+				</li>`
+				)
+				.join('')}</ul>`
+		}
+
+		function setSearching(active: boolean) {
+			resultsEl.classList.toggle('hidden', !active)
+			listing?.classList.toggle('hidden', active)
+		}
+
+		let seq = 0
+		async function run(query: string) {
+			const mine = ++seq
+			if (!query.trim()) {
+				setSearching(false)
+				say('')
+				return
+			}
+
+			const mod = await load()
+			if (mine !== seq) return
+			if (!mod) {
+				inputEl.disabled = true
+				say('Search index unavailable — it is generated at build time.')
+				return
+			}
+
+			const search = await mod.search(query)
+			if (mine !== seq) return
+			const items = await Promise.all(search.results.slice(0, 20).map((r: any) => r.data()))
+			if (mine !== seq) return
+
+			setSearching(true)
+			render(items, query)
+		}
+
+		let timer: number | undefined
+		inputEl.addEventListener('input', () => {
+			window.clearTimeout(timer)
+			timer = window.setTimeout(() => run(inputEl.value), 160)
+		})
+
+		// Warm the index up as soon as the reader shows intent.
+		inputEl.addEventListener('focus', () => void load(), { once: true })
+	}
+</script>

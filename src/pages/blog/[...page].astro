@@ -7,6 +7,7 @@ import type { CollectionEntry } from 'astro:content'
 import Breadcrumb from '@/components/Breadcrumb.astro'
 import Pagination from '@/components/Paginator.astro'
 import PostCard from '@/components/blog/PostCard.astro'
+import Search from '@/components/blog/Search.astro'
 import PageLayout from '@/layouts/BaseLayout.astro'
 import { getAllPosts, getListedPosts, sortMDByDate } from '@/utils'
 
@@ -58,17 +59,20 @@ const lengthOf = (post: CollectionEntry<'post'>) =>
 		<Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Blog' }]} />
 
 		<h1 class='mb-2 mt-5 text-2xl font-bold'>Research &amp; writeups</h1>
-		<p class='mb-8 max-w-[60ch] text-muted-foreground'>
+		<p class='mb-6 max-w-[60ch] text-muted-foreground'>
 			Vulnerability research, exploit development and the occasional side quest.
-			<a class='text-primary underline underline-offset-4' href='/tags/'>Browse by topic</a> if you
-			are after something specific.
+		</p>
+
+		<Search />
+		<p class='-mt-6 mb-8 text-end text-sm'>
+			<a class='text-primary underline underline-offset-4' href='/tags/'>Or browse by topic →</a>
 		</p>
 
 		{page.data.length === 0 && <p class='text-muted-foreground'>No posts yet.</p>}
 
 		{
 			page.data.length > 0 && (
-				<section aria-label='Posts'>
+				<section aria-label='Posts' data-post-listing>
 					<ul class='flex flex-col gap-4'>
 						{page.data.map((post) => (
 							<li>
