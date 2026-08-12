@@ -1,0 +1,30 @@
+---
+import type { CollectionEntry } from 'astro:content'
+
+interface Props {
+	post: CollectionEntry<'post'>
+}
+
+const { post } = Astro.props
+
+// Only real artwork. Posts without a coverImage fall back to generated board art
+// on the listing, which works as a thumbnail but says nothing at this size — as a
+// lead image it would read as filler.
+const cover = post.data.coverImage
+---
+
+{
+	cover && (
+		<figure class='not-prose mt-8 max-w-[68ch]'>
+			{/* Capped height with object-cover so a tall source does not push the
+			    opening paragraph off the screen. The padded logo covers absorb this
+			    crop in their own margin, so nothing of the subject is lost. */}
+			<img
+				alt={cover.alt}
+				class='max-h-[400px] w-full rounded-lg border border-border object-cover'
+				loading='eager'
+				src={cover.src}
+			/>
+		</figure>
+	)
+}

@@ -3,6 +3,7 @@ import type { CollectionEntry } from 'astro:content'
 
 import BlogHero from '@/components/blog/Hero.astro'
 import TOC from '@/components/blog/TOC.astro'
+import PostCover from '@/components/blog/PostCover.astro'
 import SeriesNav from '@/components/blog/SeriesNav.astro'
 import Breadcrumb from '@/components/Breadcrumb.astro'
 
@@ -51,6 +52,7 @@ const crumbs = [{ label: 'Blog', href: '/blog' }, { label: seriesLabel ?? title 
 			<article class='flex-grow break-words' data-pagefind-body>
 				<div id='blog-hero'><BlogHero content={post} /></div>
 				<SeriesNav post={post} position='top' />
+				<PostCover post={post} />
 				<div
 					class='prose prose-zinc mt-12 max-w-[68ch] text-foreground dark:prose-invert prose-headings:font-semibold prose-headings:text-foreground prose-headings:before:absolute prose-headings:before:-ms-4 prose-p:text-foreground/90 prose-li:text-foreground/90 prose-a:text-primary prose-th:before:content-none'
 				>
