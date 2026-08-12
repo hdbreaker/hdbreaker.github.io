@@ -18,6 +18,13 @@
  * Raw bytes, not base64: data URIs would inflate 1.4 MB of screenshots by a third
  * for nothing, since the browser can build blob: URLs from the bytes directly.
  *
+ * Code blocks are highlighted here with Shiki on the dracula theme, the same one
+ * the rest of the site uses. They cannot go through astro-expressive-code: that
+ * runs at build time over content Astro can see, and this content only exists
+ * after someone types the key. Shiki writes its colours as inline styles, so the
+ * injected HTML paints itself with no stylesheet to ship alongside it — which
+ * plain marked output does not, leaving bare <pre> blocks that read as body text.
+ *
  * Layout of the blob:
  *
  *   [16] salt        PBKDF2 salt
@@ -44,6 +51,7 @@ import { createHash, pbkdf2Sync, randomBytes, createCipheriv } from 'node:crypto
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { basename, extname, join } from 'node:path'
 import { marked } from 'marked'
+import { codeToHtml } from 'shiki'
 
 const PRIVATE = 'content-private'
 const VAULT = 'public/vault'
@@ -85,6 +93,30 @@ if (!match) {
 const [, frontmatter, body] = match
 
 let html = marked.parse(body, { async: false, gfm: true })
+
+// Swap marked's bare <pre><code> for Shiki's highlighted markup. Done after
+// marked rather than through a custom renderer so the fence language survives.
+const fences = [...html.matchAll(/<pre><code(?: class="language-([^"]+)")?>([\s\S]*?)<\/code><\/pre>/g)]
+
+for (const [tag, language, escaped] of fences) {
+	const code = escaped
+		.replace(/&lt;/g, '<')
+		.replace(/&gt;/g, '>')
+		.replace(/&quot;/g, '"')
+		.replace(/&#39;/g, "'")
+		.replace(/&amp;/g, '&')
+		.replace(/\n$/, '')
+
+	// An unknown or missing language must not fail the seal — fall back to plain
+	// text, which still gets the frame and the background.
+	let highlighted
+	try {
+		highlighted = await codeToHtml(code, { lang: language ?? 'text', theme: 'dracula' })
+	} catch {
+		highlighted = await codeToHtml(code, { lang: 'text', theme: 'dracula' })
+	}
+	html = html.replace(tag, highlighted)
+}
 
 // Point every image at its bundled copy instead of a path under public/. The
 // browser fills these in from blob: URLs after decrypting.
