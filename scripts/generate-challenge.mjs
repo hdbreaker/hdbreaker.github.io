@@ -69,16 +69,20 @@ const layer2 = xorHex(flag, xorKey)
 // Written to be read once and understood. An earlier version stacked the
 // mechanism, the key and the clue into one sentence with an ambiguous "it", and
 // nobody could tell what they were supposed to do with it.
+//
+// One paragraph per line, wrapped by whatever displays it. Hard-wrapping inside a
+// sentence looks fine in a console and turns into "coverimage" and "namesabove"
+// the moment the newlines are stripped or the text is copied.
+//
+// The last line asks rather than answers: the image has exactly one node that is
+// not blue, so naming the colour would be spelling out a one-step deduction.
 const layer1Plain = `== LAYER 2 / repeating-key XOR ==
 
-What you have below is hex. XOR it against a key and you get the flag.
+Below is hex. XOR it against a key and you get the flag.
 
-The key is a single lowercase word: the name of the function that both
-chkAbsPath and _fini call into.
+The key is one lowercase word: the function that both chkAbsPath and _fini call into.
 
-Where to find that word: one post on this blog has a call graph as its cover
-image. Three nodes. Two are blue, one is red. The blue ones are the two names
-above. The key is the red one.
+One post on this blog has a call graph as its cover image. Three nodes: two are blue, and the other one?
 
 ${layer2}`
 
