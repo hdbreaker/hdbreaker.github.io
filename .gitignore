@@ -25,3 +25,6 @@ pnpm-debug.log*
 REDESIGN_PLAN.md
 
 .vercel
+
+# sealed post sources — plaintext and original assets, never committed
+content-private/

@@ -1,0 +1,149 @@
+---
+interface Props {
+	/** Id of the blob under public/vault/, from the post's `sealed` frontmatter. */
+	sealed: string
+}
+
+const { sealed } = Astro.props
+
+// Must match scripts/seal-post.mjs.
+const ITERATIONS = 210_000
+---
+
+<section class='mt-12 max-w-[68ch]'>
+	<div class='rounded-lg border border-border bg-[#1A1A1A]/40 p-5' id='seal-gate'>
+		<h2 class='font-mono text-base text-primary'>This post is sealed.</h2>
+		<p class='mt-2 text-sm leading-relaxed text-muted-foreground'>
+			The text and every screenshot are encrypted into a single blob. They are not in this page,
+			and they are not in the repository in readable form — the address you used to get here is
+			public, and only the content is not.
+		</p>
+		<p class='mt-2 text-sm leading-relaxed text-muted-foreground'>
+			If you have the key, it opens here. If you do not, there is nothing on this page to attack.
+		</p>
+
+		<form class='mt-5 flex flex-col gap-3 sm:flex-row' id='seal-form'>
+			<label class='sr-only' for='seal-input'>Key</label>
+			<input
+				autocomplete='off'
+				class='min-w-0 flex-1 rounded-md border border-border bg-[#0B0D14] px-3 py-2 font-mono text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary'
+				id='seal-input'
+				placeholder='hdbreaker{...}'
+				spellcheck='false'
+				type='text'
+			/>
+			<button
+				class='shrink-0 rounded-md border border-primary/50 bg-primary/10 px-4 py-2 font-mono text-sm text-primary transition-colors hover:bg-primary/20 focus:outline-none focus:ring-1 focus:ring-primary disabled:opacity-50'
+				id='seal-submit'
+				type='submit'
+			>
+				unseal
+			</button>
+		</form>
+
+		<p aria-live='polite' class='mt-4 font-mono text-sm' id='seal-status'></p>
+	</div>
+
+	<div
+		class='prose prose-zinc hidden max-w-[68ch] text-foreground dark:prose-invert prose-headings:font-semibold prose-headings:text-foreground prose-p:text-foreground/90 prose-li:text-foreground/90 prose-a:text-primary prose-th:before:content-none'
+		id='seal-body'
+	>
+	</div>
+</section>
+
+<script is:inline define:vars={{ ITERATIONS, sealed }}>
+	const form = document.getElementById('seal-form')
+	const input = document.getElementById('seal-input')
+	const submit = document.getElementById('seal-submit')
+	const status = document.getElementById('seal-status')
+	const gate = document.getElementById('seal-gate')
+	const body = document.getElementById('seal-body')
+
+	const say = (text, tone) => {
+		status.className = `mt-4 font-mono text-sm ${tone === 'bad' ? 'text-red-400' : 'text-muted-foreground'}`
+		status.textContent = text
+	}
+
+	// The blob is fetched once and kept, so a second attempt after a wrong key does
+	// not pull 1.4 MB again.
+	let blob = null
+
+	async function load() {
+		if (blob) return blob
+		const response = await fetch(`/vault/${sealed}.bin`)
+		if (!response.ok) throw new Error(`vault ${response.status}`)
+		blob = new Uint8Array(await response.arrayBuffer())
+		return blob
+	}
+
+	async function open(bytes, key) {
+		const salt = bytes.subarray(0, 16)
+		const iv = bytes.subarray(16, 28)
+		// AES-GCM in WebCrypto expects the tag appended to the ciphertext, which is
+		// how seal-post.mjs writes it, so this needs no splitting.
+		const ciphertext = bytes.subarray(28)
+
+		const material = await crypto.subtle.importKey('raw', new TextEncoder().encode(key), 'PBKDF2', false, [
+			'deriveKey'
+		])
+		const derived = await crypto.subtle.deriveKey(
+			{ name: 'PBKDF2', salt, iterations: ITERATIONS, hash: 'SHA-256' },
+			material,
+			{ name: 'AES-GCM', length: 256 },
+			false,
+			['decrypt']
+		)
+
+		// Throws on a wrong key: the tag fails to verify. No plaintext is produced,
+		// so there is no partial output to work backwards from.
+		return new Uint8Array(await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, derived, ciphertext))
+	}
+
+	function unpack(container) {
+		const view = new DataView(container.buffer, container.byteOffset, container.byteLength)
+		const headerLength = view.getUint32(0)
+		const header = JSON.parse(new TextDecoder().decode(container.subarray(4, 4 + headerLength)))
+		const base = 4 + headerLength
+		const slice = ({ off, len }) => container.subarray(base + off, base + off + len)
+
+		return {
+			html: new TextDecoder().decode(slice(header.html)),
+			assets: new Map(
+				header.assets.map((asset) => [asset.name, URL.createObjectURL(new Blob([slice(asset)], { type: asset.type }))])
+			)
+		}
+	}
+
+	form.addEventListener('submit', async (event) => {
+		event.preventDefault()
+		const key = input.value.trim()
+		if (!key) return
+
+		submit.disabled = true
+		say('> deriving key…')
+
+		try {
+			const container = await open(await load(), key)
+			const { html, assets } = unpack(container)
+
+			body.innerHTML = html
+			// Images travel inside the blob, so they are wired up from object URLs
+			// rather than fetched from a path that would have given the game away.
+			body.querySelectorAll('img[data-asset]').forEach((img) => {
+				const url = assets.get(img.dataset.asset)
+				if (url) img.src = url
+			})
+
+			gate.remove()
+			body.classList.remove('hidden')
+		} catch (error) {
+			submit.disabled = false
+			say(
+				String(error.message).startsWith('vault')
+					? '> the vault did not load. that is a bug on my side, not a wrong key.'
+					: '> rejected. the key is exact — case, braces and underscores included.',
+				'bad'
+			)
+		}
+	})
+</script>

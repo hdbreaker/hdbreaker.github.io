@@ -4,6 +4,7 @@ import type { CollectionEntry } from 'astro:content'
 import BlogHero from '@/components/blog/Hero.astro'
 import TOC from '@/components/blog/TOC.astro'
 import PostCover from '@/components/blog/PostCover.astro'
+import SealedBody from '@/components/blog/SealedBody.astro'
 import SeriesNav from '@/components/blog/SeriesNav.astro'
 import Breadcrumb from '@/components/Breadcrumb.astro'
 
@@ -19,6 +20,7 @@ const {
 		altSlug,
 		description,
 		hidden,
+		sealed,
 		lang,
 		ogImage,
 		publishDate,
@@ -93,11 +95,18 @@ const crumbs = [{ label: 'Blog', href: '/blog' }, { label: seriesLabel ?? title 
 				<div id='blog-hero'><BlogHero content={post} /></div>
 				<SeriesNav post={post} position='top' />
 				<PostCover post={post} />
-				<div
-					class='prose prose-zinc mt-12 max-w-[68ch] text-foreground dark:prose-invert prose-headings:font-semibold prose-headings:text-foreground prose-headings:before:absolute prose-headings:before:-ms-4 prose-p:text-foreground/90 prose-li:text-foreground/90 prose-a:text-primary prose-th:before:content-none'
-				>
-					<slot />
-				</div>
+				{
+					sealed ? (
+						/* The markdown body of a sealed post is a placeholder note; the real
+						   content lives encrypted in public/vault and is injected here once
+						   the reader supplies the key. */
+						<SealedBody sealed={sealed} />
+					) : (
+						<div class='prose prose-zinc mt-12 max-w-[68ch] text-foreground dark:prose-invert prose-headings:font-semibold prose-headings:text-foreground prose-headings:before:absolute prose-headings:before:-ms-4 prose-p:text-foreground/90 prose-li:text-foreground/90 prose-a:text-primary prose-th:before:content-none'>
+							<slot />
+						</div>
+					)
+				}
 				<SeriesNav post={post} position='bottom' />
 				<style is:global>
 					/* Lede: the first paragraph orients the reader before the detail starts. */

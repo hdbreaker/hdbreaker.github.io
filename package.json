@@ -37,6 +37,7 @@
 		"@types/node": "^20.10.5",
 		"eslint": "^8.56.0",
 		"eslint-plugin-astro": "^0.31.4",
+		"marked": "^16.4.2",
 		"pagefind": "^1.5.2",
 		"prettier": "^3.1.1",
 		"prettier-plugin-astro": "^0.13.0",

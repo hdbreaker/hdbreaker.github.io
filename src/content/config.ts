@@ -56,6 +56,11 @@ const post = defineCollection({
 			// through all four of those, which is right for series chapters and
 			// translations but not for something meant to be found by hand.
 			hidden: z.boolean().default(false),
+			// Id of the encrypted blob under public/vault/ holding this post's real
+			// body and images. Set by scripts/seal-post.mjs. A sealed post keeps its
+			// frontmatter and route — only the content is behind the key, which is
+			// what lets the path stay as public as the rest of a public repo.
+			sealed: z.string().optional(),
 			// Language of this post. The EN/ES tab pairs posts via `altSlug`.
 			lang: z.enum(['en', 'es']).default('en'),
 			altSlug: z.string().optional(),
