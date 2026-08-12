@@ -73,7 +73,11 @@ export default defineConfig({
 			applyBaseStyles: false
 		}),
 		sitemap({
-			filter: (page) => !hiddenSlugs.some((slug) => page.includes(`/blog/${slug}/`))
+			// Hidden posts, and the challenge that leads to them, are meant to be
+			// found by hand. Both also send `noindex`, so listing them here would be
+			// contradictory signalling.
+			filter: (page) =>
+				!page.includes('/0x00') && !hiddenSlugs.some((slug) => page.includes(`/blog/${slug}/`))
 		}),
 		mdx(),
 		icon()

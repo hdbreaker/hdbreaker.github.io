@@ -56,5 +56,17 @@ const htmlLang = lang === 'es' ? 'es' : siteConfig.lang
 			<slot />
 			<Footer />
 		</main>
+
+		{/* The one console.log that is a feature rather than a leftover: opening
+		    devtools on a security blog is a reasonable thing to do, and this is
+		    the reward for it. Deliberate — do not strip it as debug output. */}
+		<script>
+			console.log(
+				'%c hdbreaker %c one post is not in the index. it is not a bug.\n%c   /.well-known/security.txt',
+				'background:#57FD6B;color:#0A0A0A;font-weight:700;padding:2px 6px;border-radius:3px',
+				'color:#A0A0A0',
+				'color:#57FD6B'
+			)
+		</script>
 	</body>
 </html>

@@ -63,7 +63,6 @@ export const featuredResearch: string[] = [
 	'audacious-stack-overflow-vulnerability',
 	'qqplayer-heap-overflow-vulnerability',
 	'limesurvey-rce-tcpdf-serialization',
-	'wix-premium-zone-bypass-vulnerability',
 	'shellshock-qmail-exploitation',
 	'license-plate-hacking-argentina'
 ]

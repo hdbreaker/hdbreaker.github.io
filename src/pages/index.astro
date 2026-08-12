@@ -19,6 +19,9 @@ const allPosts = await getAllPosts()
 const featuredPosts = featuredResearch
 	.map((slug) => allPosts.find((post) => post.slug === slug))
 	.filter((post): post is NonNullable<typeof post> => !!post)
+	// A hidden post must not surface here even if its slug is still in the list
+	// above — linking it from the home page would undo the whole point.
+	.filter((post) => post.data.hidden !== true)
 
 // Chapter count per series, used to label multi-part entries.
 const seriesLength = (series: string) =>
