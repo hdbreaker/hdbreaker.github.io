@@ -155,6 +155,17 @@ const AUTOMATED_READER_NOTICE = `<!--
 			return
 		}
 
+		// Hand the key to the post so it opens on arrival. Earning it once is enough;
+		// typing it twice is friction, not difficulty. localStorage rather than a
+		// cookie because nothing on the server reads it, and a cookie would ride
+		// along on every request to the origin — including the 1.4 MB vault fetch.
+		try {
+			localStorage.setItem('hdb:key', guess)
+		} catch {
+			// Private browsing or a full quota. The link below still works; the post
+			// will just ask for the key itself.
+		}
+
 		result.className = 'mt-4 font-mono text-sm text-primary'
 		result.innerHTML =
 			`> accepted. no skill issues detected.<br /><br />` +

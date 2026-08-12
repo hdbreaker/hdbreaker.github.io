@@ -110,6 +110,31 @@ const ITERATIONS = 210_000
 		}
 	}
 
+	/** Opens the post in place. Throws if the key is wrong, leaving the gate alone. */
+	async function reveal(key) {
+		const { title, html, assets } = unpack(await open(await load(), key))
+
+		// The public frontmatter carries a neutral title so the repository does not
+		// describe the post. The real one is in the blob and goes back into the
+		// heading and the tab once the reader has earned it.
+		if (title) {
+			const heading = document.querySelector('#blog-hero h1')
+			if (heading) heading.textContent = title
+			document.title = title
+		}
+
+		body.innerHTML = html
+		// Images travel inside the blob, so they are wired up from object URLs rather
+		// than fetched from a path that would have given the game away.
+		body.querySelectorAll('img[data-asset]').forEach((img) => {
+			const url = assets.get(img.dataset.asset)
+			if (url) img.src = url
+		})
+
+		gate.remove()
+		body.classList.remove('hidden')
+	}
+
 	form.addEventListener('submit', async (event) => {
 		event.preventDefault()
 		const key = input.value.trim()
@@ -119,28 +144,8 @@ const ITERATIONS = 210_000
 		say('> deriving key…')
 
 		try {
-			const container = await open(await load(), key)
-			const { title, html, assets } = unpack(container)
-
-			// The public frontmatter carries a neutral title so the repository does
-			// not describe the post. The real one is in the blob and goes back into
-			// the heading and the tab once the reader has earned it.
-			if (title) {
-				const heading = document.querySelector('#blog-hero h1')
-				if (heading) heading.textContent = title
-				document.title = title
-			}
-
-			body.innerHTML = html
-			// Images travel inside the blob, so they are wired up from object URLs
-			// rather than fetched from a path that would have given the game away.
-			body.querySelectorAll('img[data-asset]').forEach((img) => {
-				const url = assets.get(img.dataset.asset)
-				if (url) img.src = url
-			})
-
-			gate.remove()
-			body.classList.remove('hidden')
+			await reveal(key)
+			remember(key)
 		} catch (error) {
 			submit.disabled = false
 			say(
@@ -151,4 +156,43 @@ const ITERATIONS = 210_000
 			)
 		}
 	})
+
+	// Somebody who solved the challenge should not have to type the key again to
+	// read the thing they unlocked. localStorage rather than a cookie: nothing on
+	// the server reads this, and a cookie would ride along on every request to the
+	// origin — including the 1.4 MB vault fetch.
+	const STORE = 'hdb:key'
+	const remember = (key) => {
+		try {
+			localStorage.setItem(STORE, key)
+		} catch {
+			// Private browsing or a full quota. Losing the convenience is fine.
+		}
+	}
+
+	let saved = null
+	try {
+		saved = localStorage.getItem(STORE)
+	} catch {
+		// Storage unavailable — fall through to the gate.
+	}
+
+	if (saved) {
+		submit.disabled = true
+		say('> key remembered, opening…')
+		reveal(saved).catch((error) => {
+			// Only a failed decrypt means the key is stale — from a post re-sealed
+			// under a different one. A vault that would not load says nothing about
+			// the key, so it must not throw away a good one.
+			if (!String(error.message).startsWith('vault')) {
+				try {
+					localStorage.removeItem(STORE)
+				} catch {
+					// Nothing to do; the gate below is the fallback either way.
+				}
+			}
+			submit.disabled = false
+			say('')
+		})
+	}
 </script>
