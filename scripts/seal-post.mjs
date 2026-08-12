@@ -171,7 +171,7 @@ writeFileSync(join(VAULT, `${id}.bin`), sealed)
 
 // Everything that describes the subject is dropped from the public file: the
 // title and description are replaced with neutral ones, and tags, target and
-// platform go entirely. the target field alone gave it away.
+// platform go entirely — the target field alone gave the subject away.
 const DESCRIBES_SUBJECT = /^(title|description|tags|target|platform|sealed):/
 
 const kept = frontmatter
