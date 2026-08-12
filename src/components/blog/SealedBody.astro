@@ -107,6 +107,7 @@ const ITERATIONS = 210_000
 		const slice = ({ off, len }) => container.subarray(base + off, base + off + len)
 
 		return {
+			title: header.title,
 			html: new TextDecoder().decode(slice(header.html)),
 			assets: new Map(
 				header.assets.map((asset) => [asset.name, URL.createObjectURL(new Blob([slice(asset)], { type: asset.type }))])
@@ -124,7 +125,16 @@ const ITERATIONS = 210_000
 
 		try {
 			const container = await open(await load(), key)
-			const { html, assets } = unpack(container)
+			const { title, html, assets } = unpack(container)
+
+			// The public frontmatter carries a neutral title so the repository does
+			// not describe the post. The real one is in the blob and goes back into
+			// the heading and the tab once the reader has earned it.
+			if (title) {
+				const heading = document.querySelector('#blog-hero h1')
+				if (heading) heading.textContent = title
+				document.title = title
+			}
 
 			body.innerHTML = html
 			// Images travel inside the blob, so they are wired up from object URLs

@@ -132,8 +132,18 @@ for (const name of referenced) {
 	})
 }
 
+// The real title and description travel inside the blob too. Left in the public
+// frontmatter they describe the vulnerability to anyone reading the repo, which
+// undoes most of the point of encrypting the body.
+const field = (name) => frontmatter.match(new RegExp(`^${name}:\\s*"(.*)"\\s*$`, 'm'))?.[1]
+
 const header = Buffer.from(
-	JSON.stringify({ html: { off: htmlAt, len: htmlBytes.length }, assets }),
+	JSON.stringify({
+		title: field('title'),
+		description: field('description'),
+		html: { off: htmlAt, len: htmlBytes.length },
+		assets
+	}),
 	'utf8'
 )
 const headerLength = Buffer.alloc(4)
@@ -159,14 +169,31 @@ writeFileSync(join(VAULT, `${id}.bin`), sealed)
 
 /* ------------------------------------------------- post file, body removed --- */
 
+// Everything that describes the subject is dropped from the public file: the
+// title and description are replaced with neutral ones, and tags, target and
+// platform go entirely. the target field alone gave it away.
+const DESCRIBES_SUBJECT = /^(title|description|tags|target|platform|sealed):/
+
 const kept = frontmatter
 	.split('\n')
-	.filter((line) => !/^sealed:/.test(line))
+	.filter((line) => !DESCRIBES_SUBJECT.test(line))
 	.join('\n')
 
 writeFileSync(
 	join('src/content/post', `${slug}.md`),
-	`---\n${kept}\nsealed: "${id}"\n---\n\nThis post is sealed. Its text and screenshots are encrypted in a single blob and\nare not present in this repository in readable form.\n`
+	[
+		'---',
+		'title: "Sealed"',
+		'description: "An encrypted post. The key opens it in the browser; nothing here opens without it."',
+		'tags: []',
+		kept,
+		`sealed: "${id}"`,
+		'---',
+		'',
+		'This post is sealed. Its title, text and screenshots are encrypted in a single',
+		'blob and are not present in this repository in readable form.',
+		''
+	].join('\n')
 )
 
 /* ------------------------------------------------------------------ report --- */
