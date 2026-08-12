@@ -66,21 +66,15 @@ const layer2 = xorHex(flag, xorKey)
 
 // Layer 1: what the page displays. A char-code array — the most recognisable
 // encoding in JavaScript, so it is obvious what to do and only then gets harder.
-// Written to be read once and understood. An earlier version stacked the
-// mechanism, the key and the clue into one sentence with an ambiguous "it", and
-// nobody could tell what they were supposed to do with it.
+// One clue, and the operation is not named. An earlier version said to XOR the hex
+// against a key and then named the function the key was — both halves of the
+// answer, which is a tutorial rather than a puzzle. A keyword and a hex blob make
+// repeating-key XOR the obvious first thing to try, so saying so added nothing.
 //
 // One paragraph per line, wrapped by whatever displays it. Hard-wrapping inside a
 // sentence looks fine in a console and turns into "coverimage" and "namesabove"
 // the moment the newlines are stripped or the text is copied.
-//
-// The last line asks rather than answers: the image has exactly one node that is
-// not blue, so naming the colour would be spelling out a one-step deduction.
 const layer1Plain = `Find the key:
-
-Below is hex. XOR it against a key and you get the flag.
-
-The key is one lowercase word: the function that both chkAbsPath and _fini call into.
 
 One post on this blog has a call graph as its cover image. Three nodes: two are blue, and the other one?
 
