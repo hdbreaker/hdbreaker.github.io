@@ -3,7 +3,5 @@ Allow: /
 
 Sitemap: https://hdbreaker.github.io/sitemap-index.xml
 
-# Everything worth reading is in the sitemap.
 # Everything in the sitemap is worth reading.
-# Those are not the same claim, and one post is not in either.
-# See /.well-known/security.txt
+# That is not the same as saying everything worth reading is in the sitemap.

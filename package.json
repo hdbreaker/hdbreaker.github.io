@@ -5,7 +5,7 @@
 	"scripts": {
 		"dev": "npm run covers && astro dev",
 		"start": "astro dev",
-		"build": "npm run covers && astro check && astro build && pagefind --site dist",
+		"build": "npm run covers && astro check && astro build && node scripts/hide-breadcrumb.mjs && pagefind --site dist",
 		"preview": "astro preview",
 		"astro": "astro",
 		"preview:search": "npm run build && astro preview",

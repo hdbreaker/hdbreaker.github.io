@@ -57,16 +57,10 @@ const htmlLang = lang === 'es' ? 'es' : siteConfig.lang
 			<Footer />
 		</main>
 
-		{/* The one console.log that is a feature rather than a leftover: opening
-		    devtools on a security blog is a reasonable thing to do, and this is
-		    the reward for it. Deliberate — do not strip it as debug output. */}
-		<script>
-			console.log(
-				'%c hdbreaker %c one post is not in the index. it is not a bug.\n%c   /.well-known/security.txt',
-				'background:#57FD6B;color:#0A0A0A;font-weight:700;padding:2px 6px;border-radius:3px',
-				'color:#A0A0A0',
-				'color:#57FD6B'
-			)
-		</script>
+		{/* The way in to /0x00. Deliberately almost nothing: one word so it reads as
+		    a tell rather than noise, and the path in hex so it has to be decoded
+		    instead of clicked. Anyone who reads source will find it; nobody will
+		    trip over it. Do not expand this into an explanation. */}
+		<Fragment set:html='<!-- unlisted: 2f30783030 -->' />
 	</body>
 </html>
