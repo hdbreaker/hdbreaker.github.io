@@ -4,8 +4,8 @@ publishDate: "2018-12-01"
 description: "Automated vulnerability pattern detection across multiple TP-Link firmware versions using Ghidra scripting and Binwalk to discover CVE-2018-16119."
 tags: ["firmware", "iot", "reverse-engineering", "vulnerability-research", "memory-corruption"]
 coverImage:
-  src: "/assets/blog/photos/pcb.jpg"
-  alt: "Macro photograph of a circuit board"
+  src: "/assets/blog/photos/tplink-realpath-graph.jpg"
+  alt: "Call graph showing chkAbsPath and _fini reaching realpath"
 cve: ["CVE-2018-16119"]
 target: { vendor: "TP-Link" }
 platform: "embedded"

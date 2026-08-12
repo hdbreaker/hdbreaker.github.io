@@ -4,8 +4,8 @@ publishDate: "2024-11-15"
 description: "A powerful, modular, lightweight and efficient command & control framework written in Nim for red team operations."
 tags: ["red-team"]
 coverImage:
-  src: "/assets/blog/photos/nimhawk-splash.jpg"
-  alt: "The Nimhawk framework splash screen"
+  src: "/assets/blog/photos/nimhawk-malware-alert.jpg"
+  alt: "A malware alert on a phone screen in a darkened room"
 draft: false
 lang: "en"
 listed: true
