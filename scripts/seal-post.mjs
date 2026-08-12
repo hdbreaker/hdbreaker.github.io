@@ -11,9 +11,9 @@
  * What ends up committed is the blob and a post file with no body. The plaintext
  * markdown and the original images live in content-private/, which is gitignored.
  *
- * Images go inside the same blob rather than staying in public/assets/. Nine files
- * called [redacted] give the whole thing away on their filenames
- * alone, so encrypting the prose and leaving them next to it protects nothing.
+ * Images go inside the same blob rather than staying in public/assets/. Screenshot
+ * filenames tend to name their subject, so encrypting the prose and leaving them
+ * next to it protects nothing.
  *
  * Raw bytes, not base64: data URIs would inflate 1.4 MB of screenshots by a third
  * for nothing, since the browser can build blob: URLs from the bytes directly.
